@@ -1,0 +1,17 @@
+
+
+<form onsubmit="return validateFormData('addPriceForm');" id="addPriceForm" method="post" action="<?php echo $GLOBALS['SITE_ADMIN_URL']."dashboard/pricesave"?>">
+  
+    <input type="text" id="monthly_service" name="monthly_service" placeholder="monthly service" validation="blank">
+  
+  <input type="text" id="phone_number" name="phone_number"  validation="mobileNumber" placeholder="phone number">
+  <input type="text" id="sms_pack_price" name="sms_pack_price" validation="blank" placeholder="sms_pack_price">
+  
+   <input type="text" id="nbr_of_sms_in_pack" name="nbr_of_sms_in_pack" validation="blank" placeholder="number of sms">
+   
+    <input type="text" id="free_sms" name="free_sms" validation="blank"  placeholder="free sms">
+    
+          <input type="submit" value="save"/>
+      
+</form>
+

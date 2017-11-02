@@ -1,0 +1,31 @@
+<table class="center companylist" cellspacing="5" cellpadding="10" ng-app="newCompanyList" ng-controller="companyListController" border="1">
+    <tr>
+<th>Company Name</th>
+<th>Address</th>
+<th>Email</th>
+<th>Contact Number</th>
+<th>Best Time To Contact</th>
+<th>Best Way To Contact</th>
+<th>Type</th>
+<th>State</th>
+<th>Country</th>
+<th>Permission</th>
+</tr >
+    <tr ng-repeat="company_detail in company_list">
+        <td>{{company_detail.company_name}} </td>
+        <td>{{company_detail.address}} </td>
+        <td>{{company_detail.email}} </td>
+         <td>{{company_detail.phone_number}} </td>
+         <td>{{company_detail.time_to_contact}} </td>
+          <td>{{company_detail.contact_via}} </td>
+        <td>{{company_detail.type}} </td>
+       
+        <td>{{company_detail.state_name}} </td>
+         <td>{{company_detail.country_name}} </td>
+        <td>
+            <a ng-if="!company_detail.status" href="#" ng-click="approveCompany(company_detail.id, 1)">Approve</a>
+            <a ng-if="company_detail.status" href="#" ng-click="approveCompany(company_detail.id, 0)">Deactivate</a>
+        </td>
+    </tr>
+</table>
+<script src="<?=$this->basePath() . '/public/js/adminjs/companylist.js'?>"></script>

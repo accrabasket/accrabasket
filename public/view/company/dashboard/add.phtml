@@ -1,0 +1,23 @@
+<?php
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+?>
+<form onsubmit="return validateFormData('addSchollForm');" id="addSchollForm" method="post" action="<?php echo $GLOBALS['SITE_ADMIN_URL']."dashboard/saveSchool"?>">
+    <input type="text" id="name" name="name" validation="blank" title="Name" placeholder="School Name">
+    <input type="text" id="password" name="password" validation="blank" title="Password" placeholder="Password">
+    <input type="text" id="email" name="email" validation="email" title="Email" placeholder="Email">
+    <input type="text" id="mobilenumber" name="mobilenumber" validation="mobileNumber" title="Phone Number" placeholder="Phone Number">
+    <input type="text" id="country" name="country" validation="blank" title="Country" placeholder="Country">
+    <input type="text" id="state" name="state" validation="blank" title="state" placeholder="State">
+    <input type="text" id="city" name="city" validation="blank" title="City" placeholder="City">
+    <input type="text" id="pincode" name="pincode" validation="blank" title="Pin Code" placeholder="Pin Code">
+    <textarea id="address" name="address" validation="blank" title="Address" placeholder="Address"></textarea>
+    <select id="status" name="status" validation="blank" title="Status">
+        <option value="1">Enable</option>
+        <option value="0">Disable</option>
+    </select>
+    <input type="submit" value="save"/>
+</form>

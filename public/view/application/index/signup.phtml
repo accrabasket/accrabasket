@@ -1,0 +1,38 @@
+<?php
+//    print_r($this->countryList);die;
+?>
+<div ng-app="company_singup" ng-controller="signup">
+    <form action="addcompany" method="post">
+        <input type="text" name="name" placeholder="company name">
+        <input type="text" name="company_url" placeholder="company url">
+        <select name="country_id" ng-model="country_id" ng-change="getStateList()">
+            <option value="0">Select country</option>
+            <?php
+            foreach ($this->countryList['data'] as $country) {
+                echo "<option value=$country[id]>$country[country_name]</option>";
+            }
+            ?>
+        </select>
+        <select name="state_id" id="state" ng-model="state_id">
+            <option value="0">Select State</option>
+            <option ng-repeat="city_detail in state_list" value="{{city_detail.id}}">{{city_detail.state_name}}</option>
+        </select>
+        <input type="text" name="" placeholder="City">
+        <input type="text" name="address" placeholder="Company address">
+        <input type="text" name="zip_code" placeholder="Zip code">
+        <input type="text" name="email_id" placeholder="company email id">
+        <input type="text" name="phone_number" placeholder="phone number with std code">
+        <input type="text" name="alt_phone_number" placeholder="alternative mobile number">
+        <select name="type">
+            <option value="company">company</option>
+        </select>
+        <select name="contact_via">
+            <option value="mail">Mail</option>
+            <option value="phone">Phone</option>
+            <option value="both">both</option>
+        </select>
+        <input type="submit" value="create company">
+    </form>
+</div>
+<script src="<?php echo $this->basePath().'/public/js/company_signup.js'?>">
+</script>

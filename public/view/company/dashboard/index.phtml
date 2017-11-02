@@ -1,0 +1,64 @@
+<!--<ul>
+    <li> <a href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/countrylist"> country list</a></li>
+    <li> <a href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/statelist"> State list</a></li>
+    <li> <a href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/emailsetuplist"> Email Setup</a></li>
+</ul>-->
+
+<section id="error" class="container">
+    <?php
+    if ($this->subscription_validity <= $this->current_time) {
+        ?>
+        <ul class="portfolio-filter text-center">
+            <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_COMPANY_URL'] ?>dashboard/packagelist" >Buy Services</a></li>
+        </ul>        
+    <?php
+    } else {
+        ?>    
+        <div class="col-xs-12 col-sm-2 col-md-12" >
+            <ul class="portfolio-filter text-center">
+                <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/countrylist" >Country</a></li>
+                <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/statelist">State</a></li>
+                <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/emailsetuplist">Email Templates</a></li>
+                <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_ADMIN_URL'] ?>dashboard/newcompanylist">New Company</a></li>
+            </ul>
+
+
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-12" >
+
+            <ul class="portfolio-filter text-center">
+                <li><a class="btn btn-default" href="#" >Users</a></li>
+                <li><a class="btn btn-default" href="#">Companies</a></li>
+                <li><a class="btn btn-default" href="#">Coupon</a></li>
+                <li><a class="btn btn-default" href="#">Pricing</a></li>
+            </ul>
+
+
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-12" >
+
+            <ul class="portfolio-filter text-center">
+                <li><a class="btn btn-default" href="#" >Company Report</a></li>
+                <li><a class="btn btn-default" href="#">SMS Report</a></li>
+                <li><a class="btn btn-default" href="#">Applicant Status</a></li>
+                <li><a class="btn btn-default" href="#">Billing info</a></li>
+            </ul>
+
+
+        </div>
+        <div>
+            <ul class="portfolio-filter text-center">
+                <li><a class="btn btn-default" href="#" >Phone Number</a></li>
+                <li><a class="btn btn-default" href="#">Send Message</a></li>
+                <li><a class="btn btn-default" href="#">View Message</a></li>
+                <li><a class="btn btn-default" href="<?= $GLOBALS['SITE_COMPANY_URL'] ?>dashboard/purchagesubscription">Purchage Subscription</a></li>
+
+            </ul>
+
+
+        </div>
+        <?php
+    }
+    ?>
+
+</section><!--/#error-->
