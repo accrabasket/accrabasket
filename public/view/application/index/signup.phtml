@@ -1,38 +1,86 @@
-<?php
-//    print_r($this->countryList);die;
-?>
-<div ng-app="company_singup" ng-controller="signup">
-    <form action="addcompany" method="post">
-        <input type="text" name="name" placeholder="company name">
-        <input type="text" name="company_url" placeholder="company url">
-        <select name="country_id" ng-model="country_id" ng-change="getStateList()">
-            <option value="0">Select country</option>
-            <?php
-            foreach ($this->countryList['data'] as $country) {
-                echo "<option value=$country[id]>$country[country_name]</option>";
-            }
-            ?>
-        </select>
-        <select name="state_id" id="state" ng-model="state_id">
-            <option value="0">Select State</option>
-            <option ng-repeat="city_detail in state_list" value="{{city_detail.id}}">{{city_detail.state_name}}</option>
-        </select>
-        <input type="text" name="" placeholder="City">
-        <input type="text" name="address" placeholder="Company address">
-        <input type="text" name="zip_code" placeholder="Zip code">
-        <input type="text" name="email_id" placeholder="company email id">
-        <input type="text" name="phone_number" placeholder="phone number with std code">
-        <input type="text" name="alt_phone_number" placeholder="alternative mobile number">
-        <select name="type">
-            <option value="company">company</option>
-        </select>
-        <select name="contact_via">
-            <option value="mail">Mail</option>
-            <option value="phone">Phone</option>
-            <option value="both">both</option>
-        </select>
-        <input type="submit" value="create company">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="index.html"><img src="<?=$this->basePath()?>/public/css/dist/img/logo-big.png" class="" alt="Logo"></a>
+  </div>
+
+  <div class="register-box-body">
+    <p class="login-box-msg">Register A New Merchant</p>
+
+    <form action="addmerchant" method="post">
+      <div class="form-group has-feedback">
+          <input type="text" class="form-control" placeholder="Onwer name" name="name">
+        <span class="fa fa-user form-control-feedback"></span>
+      </div>
+	  <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="IC Number" name="ic_number">
+        <span class="fa fa-user form-control-feedback"></span>
+      </div>
+	  <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Phone Numbmer"  name="phone_number">
+        <span class="fa fa-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="email" class="form-control" placeholder="Email" name="email_id">
+        <span class="fa fa-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Password" name="password">
+        <span class="fa fa-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Retype password" name="confirm_password">
+        <span class="fa fa-sign-in form-control-feedback"></span>
+      </div>
+	  <div class="form-group has-feedback">
+              <input type="text" class="form-control" placeholder="Address" name="address">
+        <span class="fa fa-newspaper-o form-control-feedback"></span>
+      </div>
+	  <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Company Bank name" name="bank_name">
+        <span class="fa fa-bank form-control-feedback"></span>
+      </div>
+	  <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Company Bank Account Number" name="bank_account_number">
+        <span class="fa fa-bank form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox"> I agree to the <a href="#">terms</a>
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+        </div>
+        <!-- /.col -->
+      </div>
     </form>
+
+    <!--<div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
+        Google+</a>
+    </div> -->
+
+    <a href="login.html" class="text-center">I already have a Merchant</a>
+  </div>
+  <!-- /.form-box -->
 </div>
+<!-- /.register-box -->
+
 <script src="<?php echo $this->basePath().'/public/js/company_signup.js'?>">
+</script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' /* optional */
+    });
+  });
 </script>

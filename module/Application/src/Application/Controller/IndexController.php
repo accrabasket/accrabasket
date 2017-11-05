@@ -26,9 +26,9 @@ class IndexController extends AbstractActionController
     }
     
     public function signupAction(){
-        $countryListResponse = $this->commonObj->curlhit('', 'getcountrylist');
-        $countryList = json_decode($countryListResponse, true);  
-        $this->view->countryList = $countryList;
+        //$countryListResponse = $this->commonObj->curlhit('', 'getcountrylist');
+        //$countryList = json_decode($countryListResponse, true);  
+        //$this->view->countryList = $countryList;
         return $this->view;
     }
     
@@ -42,26 +42,30 @@ class IndexController extends AbstractActionController
         $stateListResponse = $this->commonObj->curlhit($params, 'getstatelist');
         echo $stateListResponse;die;
     }
-    public function addcompanyAction() {
+    public function addmerchantAction() {
         $request = $this->getRequest()->getPost();
         $params = array();
         $params['company_name'] = $request['name'];
-        $params['company_url'] = $request['company_url'];
-        $params['country_id'] = $request['country_id'];
-        $params['state_id'] = $request['state_id'];
+        $params['password'] = $request['password'];
+        $params['confirm_password'] = $request['confirm_password'];
+        if(!empty($params['password'])) {
+            $params['password'] = md5($params['password']);
+        }
+        if(!empty($params['confirm_password'])) {
+            $params['confirm_password'] = md5($params['confirm_password']);
+        }        
+        $params['ic_number'] = $request['ic_number'];
         $params['address'] = $request['address'];
-        $params['zip_code'] = $request['zip_code'];
         $params['email'] = $request['email_id'];
         $params['phone_number'] = $request['phone_number'];
-        $params['alt_phone_number'] = $request['alt_phone_number'];
-        $params['type'] = $request['type'];
-        $params['contact_via'] = $request['contact_via'];
+        $params['bank_name'] = $request['bank_name'];
+        $params['bank_account_number'] = $request['bank_account_number'];
         $inputParams['parameters'] = json_encode($params);
         $response = $this->commonObj->curlhit($inputParams, 'addcompany');
         $response = json_decode($response, true);
         if($response['status'] == true){
             $this->flashMessenger()->addMessage('Thank you for your registration, We will contact you soon!');
-            return $this->redirect()->toRoute('application');
+            return $this->redirect()->toRoute('admin', array('controller'=>'index', 'action'=>'login'));
         }
         echo json_encode($response);die;
     }    

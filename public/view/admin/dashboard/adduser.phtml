@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 ?>
-<form onsubmit="return validateFormData('addUserForm');" id="addUserForm" method="post" action="<?php echo $GLOBALS['SITE_ADMIN_URL']."dashboard/usersaveAction"?>">
+<form onsubmit="return validateFormData('addUserForm');" id="addUserForm" method="post" action="<?php echo $GLOBALS['HTTP_SITE_ADMIN_URL']."dashboard/usersaveAction"?>">
     <select id="status" name="status" validation="blank" title="Status">
         <option value="1">Enable</option>
         <option value="0">Disable</option>

@@ -44,8 +44,9 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
             $requestedResourse = $controller . "\\" . $action;
             $session = new Container('User');            
             if ($session->offsetExists('user')) {
+                $GLOBALS['user'] = $session->user;
                 if (in_array($requestedResourse, $GLOBALS['PAGE_BEFORE_LOGIN'])) {
-                    $url = $GLOBALS['SITE_ADMIN_URL'] . 'dashboard';
+                    $url = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard';
                     $response->setHeaders($response->getHeaders()->addHeaderLine('Location', $url));
                     $response->setStatusCode(302);
                     $response->sendHeaders();
@@ -63,7 +64,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
                 }
             } else {
                 if ($requestedResourse != 'Admin\Controller\Index\index' && !in_array($requestedResourse, $GLOBALS['PAGE_BEFORE_LOGIN'])) {
-                    $url = $GLOBALS['SITE_ADMIN_URL'] . 'index/login';
+                    $url = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'index/login';
                     $response->setHeaders($response->getHeaders()->addHeaderLine('Location', $url));
                     $response->setStatusCode(302);
                 }

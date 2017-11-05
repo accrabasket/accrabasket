@@ -38,7 +38,7 @@ class IndexController extends AbstractActionController {
                 $this->session->offsetSet('user', $response);
                 $this->session['userDetail'] = $response;
                 if(in_array(1,$response['userRoleList'][$response['data'][0]['id']])){
-                    return $this->redirect()->toUrl($GLOBALS['SITE_ADMIN_URL'].'dashboard');
+                    return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_ADMIN_URL'].'dashboard');
                 }
                 if(in_array(2,$response['userRoleList'][$response['data'][0]['id']])){
                     return $this->redirect()->toUrl($GLOBALS['SITE_COMPANY_URL'].'dashboard');
@@ -47,7 +47,7 @@ class IndexController extends AbstractActionController {
                 $this->flashMessenger()->addMessage(array('error' => 'invalid credentials.'));
             }              
         }
-        return $this->redirect()->toUrl($GLOBALS['SITE_ADMIN_URL'].'index/login');
+        return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_ADMIN_URL'].'index/login');
     }
     public function loginAction() {
         $viewModel = new ViewModel();
