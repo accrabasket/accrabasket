@@ -119,7 +119,14 @@ class DashboardController extends AbstractActionController {
         exit;
     }
 
-    public function addUserAction() {
+    public function managemerchantAction() {
+        $request = array();
+        $request['method'] = 'getMarchantList';
+        $getMarchantList = $this->commonObj->curlhitApi($request, 'getMarchantList');
+        $getMarchantList = json_decode($getMarchantList,true);
+        if(!empty($getMarchantList['data'])){
+            $this->view->marchantList = $getMarchantList['data'];
+        }
         return $this->view;
     }
 
