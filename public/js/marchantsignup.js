@@ -62,15 +62,20 @@ app.controller('marchantController', function ($scope, $http, $sce,$timeout) {
 			}).success(function (response) {
 				if (response.status) {
 					$scope.successShow = true;
-			                $scope.successMsg = response.msg;
+			                $scope.successMsg = "Thank you for your registration, We will contact you soon!";
+                                        $timeout(function(){
+                                                $scope.successShow = false;
+                                                var path = serverUrl + 'index/login';
+                                                window.location.href = path;
+                                        },1000)
 				}else{
 					$scope.errorShow = true;
 					$scope.errorMsg = response.msg == undefined ? 'somthing went wrong ':response.msg;
+                                        $timeout(function(){
+                                                $scope.errorShow = false;
+                                        },2000)
 				}
-				$timeout(function(){
-					$scope.successShow = false;
-					$scope.errorShow = false;
-				},2000)
+				
 			});
 		}else{
 			$scope.errorShow = true;

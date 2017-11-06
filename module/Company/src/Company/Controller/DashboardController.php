@@ -41,7 +41,8 @@ class DashboardController extends AbstractActionController {
     }
 
     public function indexAction() {      
-        $this->view->subscription_validity = strtotime($this->session->userDetail['data'][0]['expire_validity']);
+        $expire_validity = !empty($this->session->userDetail['data'][0]['expire_validity'])?$this->session->userDetail['data'][0]['expire_validity']:'';
+        $this->view->subscription_validity = strtotime($expire_validity);
         $this->view->current_time = time();        
         return $this->view;
     }

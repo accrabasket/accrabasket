@@ -59,11 +59,11 @@ class IndexController extends AbstractActionController
         $inputParams['parameters'] = json_encode($params);
         $response = $this->commonObj->curlhit($inputParams, 'addcompany');
         $response = json_decode($response, true);
-        print_r($response);die;
-        if($response['status'] == true){
-            $this->flashMessenger()->addMessage('Thank you for your registration, We will contact you soon!');
-            return $this->redirect()->toRoute('admin', array('controller'=>'index', 'action'=>'login'));
-        }
+        
+//        if($response['status'] == true){
+//            $this->flashMessenger()->addMessage('Thank you for your registration, We will contact you soon!');
+//            return $this->redirect()->toRoute('admin', array('controller'=>'index', 'action'=>'login'));
+//        }
         echo json_encode($response);die;
     }    
     public function updatecompanyAction() {
