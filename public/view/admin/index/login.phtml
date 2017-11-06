@@ -10,6 +10,14 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+      <p class="login-box-msg">
+                    <?php
+                        if(!empty($this->flashMessenger()->getMessages())){
+                            $msg =  $this->flashMessenger()->getMessages();
+                            echo $msg[0];
+                        }
+                    ?>          
+      </p> 
     <p class="login-box-msg">Sign in to start your session</p>
 
     <form action="index" method="post">
@@ -37,7 +45,7 @@
       </div>
     </form>
     <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
+    <a href="<?php echo $this->basePath()?>/application/index/signup" class="text-center">Register a new membership</a>
 
   </div>
   <!-- /.login-box-body -->
