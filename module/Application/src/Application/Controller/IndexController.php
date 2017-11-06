@@ -48,12 +48,8 @@ class IndexController extends AbstractActionController
         $params['company_name'] = $request['name'];
         $params['password'] = $request['password'];
         $params['confirm_password'] = $request['confirm_password'];
-        if(!empty($params['password'])) {
-            $params['password'] = md5($params['password']);
-        }
-        if(!empty($params['confirm_password'])) {
-            $params['confirm_password'] = md5($params['confirm_password']);
-        }        
+        $params['password'] = md5($params['password']);
+        $params['confirm_password'] = md5($params['confirm_password']);      
         $params['ic_number'] = $request['ic_number'];
         $params['address'] = $request['address'];
         $params['email'] = $request['email_id'];
@@ -63,6 +59,7 @@ class IndexController extends AbstractActionController
         $inputParams['parameters'] = json_encode($params);
         $response = $this->commonObj->curlhit($inputParams, 'addcompany');
         $response = json_decode($response, true);
+        print_r($response);die;
         if($response['status'] == true){
             $this->flashMessenger()->addMessage('Thank you for your registration, We will contact you soon!');
             return $this->redirect()->toRoute('admin', array('controller'=>'index', 'action'=>'login'));
