@@ -12,7 +12,7 @@ class common{
         }
         $url = NODE_API.$controller.'/'.$method.'?'.$queryStr;
         //echo $url;die;
-        return $this->cObj->callCurl($url);
+       return $this->cObj->callCurl($url);
     }
     
     public function curlhitApi($params=null, $method, $controller='application') {

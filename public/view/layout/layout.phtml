@@ -18,7 +18,9 @@ echo $this->doctype(); ?>
     <?php echo $this->headScript()
         ->prependFile($this->basePath().'/public/css/bower_components/iCheck/icheck.min.js')
         ->prependFile($this->basePath().'/public/css/bower_components/bootstrap/dist/js/bootstrap.min.js')
-        ->prependFile($this->basePath().'/public/css/bower_components/jquery/dist/jquery.min.js');
+        ->prependFile($this->basePath().'/public/css/bower_components/jquery/dist/jquery.min.js')
+        ->prependFile($this->basePath().'/public/js/angular.min.js')
+        ->prependFile($this->basePath().'/public/js/jquery.min.js');
     ?>  
 </head>   
     <?php 
@@ -31,5 +33,9 @@ echo $this->doctype(); ?>
     ?>        
                
         <?php echo $this->inlineScript() ?>
+<script>
+            var serverAppUrl = '<?php echo $GLOBALS['SITE_APP_URL']; ?>';
+            var serverAdminApp = '<?php echo $GLOBALS['HTTP_SITE_ADMIN_URL']; ?>';
+</script>
  
 </html>
