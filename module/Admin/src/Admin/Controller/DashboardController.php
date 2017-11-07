@@ -44,10 +44,6 @@ class DashboardController extends AbstractActionController {
         return $this->view;
     }
 
-    public function priceAction() {
-        return $this->view;
-    }
-
     public function pricesaveAction() {
         $request = $this->getRequest()->getPost();
         $params = array();
@@ -127,6 +123,9 @@ class DashboardController extends AbstractActionController {
         if(!empty($getMarchantList['data'])){
             $this->view->marchantList = $getMarchantList['data'];
         }
+        return $this->view;
+    }
+    public function addproductAction() {
         return $this->view;
     }
 
