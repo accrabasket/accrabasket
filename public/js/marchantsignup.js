@@ -9,7 +9,15 @@ var app = angular.module('marchantapp', []);
 app.controller('marchantController', function ($scope, $http, $sce,$timeout) {
     $scope.errorShow = false;
     
-   
+    $scope.name = '';
+    $scope.ic_number = '';
+    $scope.phone_number = '';
+    $scope.email_id = '';
+    $scope.password = '';
+    $scope.address = '';
+    $scope.bank_name = '';
+    $scope.bank_account_number = '';
+    $scope.confirm_password = '';
     $scope.register = function () {
 		var error = ' ';
 		if($scope.name == undefined || $scope.name == ''){
