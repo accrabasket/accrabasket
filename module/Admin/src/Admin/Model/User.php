@@ -4,7 +4,7 @@ namespace Admin\Model;
 
 class User {
     public function __construct() {
-        $this->cObj = new curl();
+        $this->cObj = new Curl();
     }
     
     public function userAuthenticate($params, $method, $controller='usercontroller') {
