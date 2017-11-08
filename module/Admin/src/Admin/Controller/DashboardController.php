@@ -126,9 +126,6 @@ class DashboardController extends AbstractActionController {
         }
         return $this->view;
     }
-    public function addproductAction() {
-        return $this->view;
-    }
     
     public function addcategoryAction() {
         return $this->view;
