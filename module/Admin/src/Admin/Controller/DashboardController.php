@@ -161,4 +161,8 @@ class DashboardController extends AbstractActionController {
         $getMarchantList = $this->commonObj->curlhitApi($request, 'categoryList');
         echo $getMarchantList;exit;
     }
+    
+    public function editMerchantAction() {
+        return $this->view;
+    } 
 }
