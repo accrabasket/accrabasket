@@ -1,0 +1,75 @@
+/*
+ * jquery-filestyle
+ * doc: http://markusslima.github.io/jquery-filestyle/
+ * github: https://github.com/markusslima/jquery-filestyle
+ *
+ * Copyright (c) 2017 Markus Vinicius da Silva Lima
+ * Version 2.0.0
+ * Licensed under the MIT license.
+ */
+.jfilestyle {
+	display: inline-block;
+	margin: 0px 0px 10px 0px;
+	padding: 0px;
+	position: relative;
+	border-collapse: separate;
+}
+
+div.jfilestyle label, div.jfilestyle input {
+	font-family: sans-serif;
+}
+
+div.jfilestyle input {
+	border: 1px solid #c0c0c0;
+	background: #d9d9d9;
+	margin: 0px -5px 0px 0px;
+	vertical-align: middle;
+	padding: 10px 15px;
+	font-size: 14px;
+	border-radius: 0px;
+	color: #8d8d8d;
+	cursor: default;
+    line-height: normal;
+}
+
+div.jfilestyle label {
+	display: inline-block;
+	border: 1px solid #c0c0c0;
+	background: #ffffff;
+	padding: 10px 15px;
+	color: #0662ba;
+	vertical-align: middle;
+	line-height: normal;
+	text-align: center;
+	margin: 0px;
+	font-size: 14px;
+	width: auto;
+	border-radius: 0px;
+    font-weight: normal;
+}
+
+div.jfilestyle.jfilestyle-corner input:last-child,
+div.jfilestyle.jfilestyle-corner label:last-child {
+	margin-left: -1px;
+}
+
+div.jfilestyle label[disabled] {
+	pointer-events: none;
+	opacity: 0.6;
+	filter: alpha(opacity=65);
+	cursor: not-allowed;
+}
+
+div.jfilestyle label:hover {
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+div.jfilestyle .count-jfilestyle {
+	background: #303030;
+	color: #fff;
+	border-radius: 50%;
+	padding: 1px 5px;
+	font-size: 12px;
+	vertical-align: middle;
+}

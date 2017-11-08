@@ -16,10 +16,18 @@
                   <a href="<?php echo $this->basePath()?>/admin/dashboard/addcategory" class="btn btn-info"> Add Category</a>
               </div>              
             </div>
-            <!-- /.box-header -->
+            <!-- /.box-header -->            
             <div class="box-body">
               <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
+                    <p class="login-box-msg">
+                                  <?php
+                                      if(!empty($this->flashMessenger()->getMessages())){
+                                          $msg =  $this->flashMessenger()->getMessages();
+                                          echo $msg[0];
+                                      }
+                                  ?>          
+                    </p>                    
                   <div class="col-sm-6"></div>
                   <div class="col-sm-6"></div>
                 </div>

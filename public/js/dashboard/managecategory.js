@@ -18,7 +18,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.categoryList = {};
-            if(response.status == 'succes'){
+            if(response.status == 'success'){
                 $scope.categoryList = response.data;
             }
         });
@@ -42,14 +42,12 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout) {
 				url: serverAdminApp + 'dashboard/savecategory',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			}).success(function (response) {
-				if (response.status == 'succes') {
-                                      $scope.successShow = true;
-                                      $scope.successMsg = response.msg ;
-                                      $timeout(function(){
-                                                $scope.successShow = false;
-                                                var path = serverAdminApp + 'dashboard/managecategory';
-                                                window.location.href = path;
-                                        },2000);
+				if (response.status == 'success') {
+                                        $scope.successShow = true;
+                                        $scope.successMsg = response.msg ;
+                                        $scope.successShow = false;
+                                        var path = serverAdminApp + 'dashboard/managecategory';
+                                        window.location.href = path;
 				}else{
                                     $scope.errorShow = true;
                                     $scope.errorMsg = response.msg == undefined ? 'somthing went wrong ':response.msg;
