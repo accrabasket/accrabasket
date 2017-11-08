@@ -22,7 +22,8 @@ class common{
 //            $queryStr = http_build_query($params);
 //            $queryStr = json_encode($queryStr);
         }
-        $url = BASKET_API.$controller.'?parameters='.$queryStr;
+        $data['parameters'] = $queryStr;
+        $url = BASKET_API.$controller.'?'.http_build_query($data);
         return $this->cObj->callCurl($url);
     }
 }

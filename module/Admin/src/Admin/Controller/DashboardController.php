@@ -133,6 +133,10 @@ class DashboardController extends AbstractActionController {
         $request = (array)$this->getRequest()->getPost();;
         $request['method'] = 'addEditCategory';
         $saveCategory = $this->commonObj->curlhitApi($request, 'addEditCategory');
+        $response = json_decode($saveCategory, true);
+        if($response['status'] == 'success'){
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
         echo $saveCategory;
         exit;
         

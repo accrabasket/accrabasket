@@ -44,7 +44,7 @@ class IndexController extends AbstractActionController {
                     return $this->redirect()->toUrl($GLOBALS['SITE_COMPANY_URL'].'dashboard');
                 }                
             } else {
-                $this->flashMessenger()->addMessage(array('error' => 'invalid credentials.'));
+                $this->flashMessenger()->addMessage('invalid credentials.');
             }              
         }
         return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_ADMIN_URL'].'index/login');
