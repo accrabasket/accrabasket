@@ -14,13 +14,11 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use Admin\Model\common;
-use Admin\Model\basketapi;
 class DashboardController extends AbstractActionController {
     public function __construct() {
         $this->view =  new ViewModel();
         $this->session = new Container('User');
-        $this->commonObj = new common();     
-        $this->basketObj = new basketapi();     
+        $this->commonObj = new common();        
     }
 
     public function countrylistAction() {
