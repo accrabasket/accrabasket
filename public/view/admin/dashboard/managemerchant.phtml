@@ -47,7 +47,8 @@
                               <td><?= $value['address']?></td>
                               <td><?= $value['bank_name']?></td>
                               <td><?= $value['bank_account_number']?></td>
-                              <td><a href="#"><i class="fa fa-edit"></i> <i class="fa fa-trash-o"></i></a></td>
+                              <td><a href="editmerchant?data=<?= $value['id']?>"><i class="fa fa-edit"></i> 
+                                  <i class="fa fa-trash-o"></i></a></td>
                             </tr>
                           <?php }}?>
                       </tbody>

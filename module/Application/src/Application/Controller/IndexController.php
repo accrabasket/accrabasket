@@ -66,7 +66,7 @@ class IndexController extends AbstractActionController
 //        }
         echo json_encode($response);die;
     }    
-    public function updatecompanyAction() {
+    public function updatemerchantAction() {
         $request = $this->getRequest()->getQuery();
         $params = array();
         $params['user']['first_name'] = $request['name'];
