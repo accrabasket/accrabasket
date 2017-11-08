@@ -3,7 +3,7 @@ namespace Admin\Model;
 
 class common{
     public function __construct() {
-        $this->cObj = new curl();
+        $this->cObj = new Curl();
     }    
     public function curlhit($params=null, $method, $controller='companycontroller') {
         $queryStr = '';
