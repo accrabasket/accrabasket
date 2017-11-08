@@ -1,0 +1,66 @@
+<div class="content-wrapper" ng-app="app" ng-controller="managecategory"  ng-cloak="true">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Add Product</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage category</a></li>
+            <li class="active"> Add add category</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title"> Add Category</h3>
+                                    <p>Lorem ipsum is a dummy text</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Category Name</label>
+                                            <input type="text" placeholder="Category Name" class="form-control"  name="name"   ng-model="categoryData.name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Parent Category</label>
+                                            <select class="form-control select2" style="width: 100%;"  ng-model="categoryData.parent_category_id">
+                                                <option value="0">Select Category</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea class="form-control" name="description" ng-model="categoryData.description"> </textarea>
+                                            <!-- /.input group -->
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <button class="btn btn-info" ng-click="savecategory(categoryData)">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script src="<?php echo $this->basePath() . '/public/js/managecategory.js' ?>">
+</script>
