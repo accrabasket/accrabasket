@@ -6,3 +6,5 @@ $GLOBALS['PAGE_BEFORE_LOGIN'] = array('Admin\Controller\Index\login','Admin\Cont
 $GLOBALS['SITE_PATH'] = $_SERVER['DOCUMENT_ROOT'];
 define('NODE_API', 'http://localhost:3000/');
 define('BASKET_API', 'http://localhost/basketapi/');
+$GLOBALS['PRODUCTIMAGEPATH'] = $_SERVER['DOCUMENT_ROOT'].'accrabasket/product_img';
+$GLOBALS['ATTRIBUTEIMAGEPATH'] = $_SERVER['DOCUMENT_ROOT'].'accrabasket/attribute_img';

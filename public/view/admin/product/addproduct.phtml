@@ -1,4 +1,10 @@
+
+
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/addproduct.js' ?>">
+
+</script>
 <div class="content-wrapper"  ng-app="product" ng-controller="productController">
+    <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1> Add Product</h1>
         <ol class="breadcrumb">
@@ -11,9 +17,14 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-            <!-- /.box-header -->
+                    <form action="saveproduct" method="post" enctype="multipart/form-data">
+                    <!-- /.box-header -->
                     <div class="box-body">
+                        
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
                         <div class="row">
+                            
                             <div class="col-lg-4 col-sm-4 col-xs-12">
                                 <div class="box-header">
                                     <h3 class="box-title"> Add Product</h3>
@@ -25,14 +36,14 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Product Name</label>
-                                            <input type="text" placeholder="Product Name" class="form-control">
+                                            <input type="text" placeholder="Product Name" id="product_name"  name="product_name" class="form-control" ng-model="productData.product_name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Category</label>
-                                            <select class="form-control select2" style="width: 100%;">
-                                                <option selected="selected" value="">Select Category</option>
+                                            <select class="form-control select2" style="width: 100%;" id="category_id" name="category_id" ng-model="productData.category_id">
+                                                <option selected="selected" value="">select category</option>
                                                 <option ng-repeat="data in categoryList" value="{{data.id}}">{{data.category_name}}</option>
                                             </select>
                                         </div>
@@ -41,61 +52,149 @@
                                         <div class="form-group">
                                             <label>Product Display</label>
                                             <div class="input-group date">
-                                                <input type="text" id="datepicker" class="form-control pull-right">
+                                                <input type="text" id="datepicker" id="product_display_name" name="product_display_name" class="form-control pull-right" ng-model="productData.product_display_name">
                                                 <div class="input-group-addon"> <i class="fa fa-calendar"></i> </div>
                                             </div>
-                        <!-- /.input group -->
+                                            <!-- /.input group -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
-                                        <label>&nbsp; &nbsp;</label>
-                                        <div class="clearfix"></div>  
-                                        <button class="btn btn-default" type="button" id="show-attribute" ng-click="showAttrDiv()"><i class="fa fa-plus"></i> Add Attribute</button>
+                                        <div class="form-group">
+                                            <label>Upload</label>
+                                            <input type="file"  multiple="multiple" name="product_img[]">
+                                        </div>
                                     </div>
+                                    <div id="preview"></div>
+                                    <div class="col-lg-12">
+                                        <div class="full-width">
+                                            <div class="col-sm-3 upload "> 
+                                                <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
+                                                <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">&nbsp;</div>
+                                    </div>
+                                    
+                                    
                                     <div class="clearfix"></div>
-                                    <div id="add-attribute" ng-show="showAttr">
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label>Attribute Name</label>
-                                                <input type="text" placeholder="Attribute Name" class="form-control">
+                                    <span ng-repeat="index in indexVal">
+                                    <div class=" col-lg-12" id="add-attribute" ng-show="showAttr">
+                                        <div class="row border-top">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                <div class="form-group">
+                                                    <label>Attribute Name</label>
+                                                    <input type="text" placeholder="Attribute Name" id="attribute_name_{{index}}" name="attribute_name_{{index}}" class="form-control" >
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label>Unit</label>
-                                                <select class="form-control select2" style="width: 100%;">
-                                                    <option selected="selected">1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                </select>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                <div class="form-group">
+                                                    <label>Unit</label>
+                                                    <select class="form-control select2" style="width: 100%;" id="attribute_unit_{{index}}" name="attribute_unit_{{index}}" >
+                                                        <option selected="selected">1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label>Quantity</label>
-                                                <input type="text" placeholder="Quantity" class="form-control">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Quantity</label>
+                                                    <input type="text" id="attribute_quantity_{{index}}" name="attribute_quantity_{{index}}" placeholder="Quantity" class="form-control" >
+                                                </div>
                                             </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Upload</label>
+                                                    <input type="file" class="test file" multiple="multiple" name="attribute_img_{{index}}[]">
+                                                </div>
+                                            </div>
+<!--                                            <div class="col-lg-12">
+                                                <div class="full-width">
+                                                    <div class="col-sm-3 upload"> 
+                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
+                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
+                                                    </div>
+                                                    <div class="col-sm-3 upload"> 
+                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
+                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
+                                                    </div>
+                                                    <div class="col-sm-3 upload"> 
+                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
+                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
+                                                    </div>
+                                                    <div class="col-sm-3 upload"> 
+                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
+                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix">&nbsp;</div>
+                                            </div>-->
                                         </div>
+                                        <div class="clearfix border-top">&nbsp;</div>
+                                    </div>
+                                    </span>    
+                                    <div class="clearfix"></div>
 
+                                    <div class="col-lg-6 col-sm-6 col-xs-12  pull-right">
+                                        <button class="btn btn-default pull-right" type="button" id="show-attribute" ng-click="showAttrDiv()"><i class="fa fa-plus"></i> Add Attribute</button>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="box-footer">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                        </div>
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Product Status</label>
+                                <div class="clearfix"></div>
+                                <label class="mr10">Active</label>					
+                                <input type="radio" name="r1" class="minimal" checked="checked" >
+
+                                <label class="mr10 ml10">Inactive</label>					
+                                <input type="radio" name="status" class="minimal" >
+                            </div>
+                        </div>			
+                        <input type="hidden" value="{{index}}" id="index" name="index">
                         <div class="pull-right">
                             <button class="btn btn-default mr10" type="submit">Cancel</button>
-                            <button class="btn btn-info" type="submit" ng-click="saveproduct">Save</button>
+                            <button class="btn btn-info" type="submit" onclick="return checkform()">Save</button>
                         </div>
                     </div>
-            <!-- /.box-body -->
+                    <!-- /.box-body -->
+                    </form>
                 </div>
             </div>
         </div>
     </section>
     <!-- /.content -->
 </div>
-<script src="<?php echo $this->basePath() . '/public/js/dashboard/addproduct.js' ?>">
-</script>
+<script>
+    $(function () {
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
 
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#gallery-photo-add').on('change', function () {
+            imagesPreview(this, 'p.gallery');
+        });
+    });
+</script>
