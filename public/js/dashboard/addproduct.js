@@ -11,8 +11,13 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
     $scope.showAttr = false;
     $scope.productData = {};
     $scope.attrbuteData = {};
+    $scope.index = 0;
+    $scope.indexVal = [];
     $scope.showAttrDiv = function(){
         $scope.showAttr = true;
+         var a = ($scope.indexVal).length +1;
+          $scope.index++;
+         ($scope.indexVal).push(a);
     }
     function getCategory() {
         $http({
@@ -29,47 +34,45 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
     
     getCategory();
     
-    $scope.saveproduct = function (categoryData) {
-		var error = ' ';
-		if(categoryData.category_name == undefined || categoryData.category_name == ''){
-			error = 'Please enter Category name' ;
-		}
-//		if(categoryData.name == undefined || categoryData.name == ''){
-//			error = 'Please enter Category name' ;
-//		}      
-                
-		if(error == ' '){       
-			$http({
-				method: 'POST',
-				data : ObjecttoParams(categoryData),
-				url: serverAdminApp + 'dashboard/savecategory',
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			}).success(function (response) {
-				if (response.status == 'succes') {
-                                      $scope.successShow = true;
-                                      $scope.successMsg = response.msg ;
-                                      $timeout(function(){
-                                                $scope.successShow = false;
-                                                var path = serverAdminApp + 'dashboard/managecategory';
-                                                window.location.href = path;
-                                        },2000);
-				}else{
-                                    $scope.errorShow = true;
-                                    $scope.errorMsg = response.msg == undefined ? 'somthing went wrong ':response.msg;
-                                    $timeout(function(){
-                                            $scope.errorShow = false;
-                                    },2000);
-				}
-			});
-		}else{
-			$scope.errorShow = true;
-			$scope.errorMsg = error;
-			$timeout(function(){
-				$scope.errorShow = false;
-			},2000)
-		}
-		
-    };
-	
 	
 });	
+
+
+function checkform(){
+    var ret  = true;
+    var msg = '';
+    if($('#product_name').val() == ''){
+        msg = 'Product name should not blank';
+        ret = false;
+    }
+    if($('#category_id').val() == ''){
+        msg = 'Product category id should not blank';
+        ret = false;
+    }
+    if($('#product_name').val() == ''){
+        msg = 'Product name should not blank';
+        ret = false;
+    }
+    
+    var index = $('#index').val();
+    
+   for(var i=0; i<index ; i++){
+       var newindex  = i+1;
+       if($('#attribute_name_'+newindex).val() == ''){
+            msg = 'attribute name should not blank';
+            ret = false;
+        }
+        if($('#attribute_quantity_'+newindex).val() == ''){
+            msg = 'quantity should not blank';
+            ret = false;
+        }
+        if($('#attribute_unit_'+newindex).val() == ''){
+            msg = 'Unit should not blank';
+            ret = false;
+        }
+   }
+   if(!ret){
+       alert(msg);
+   }
+   return ret;
+}

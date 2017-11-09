@@ -163,5 +163,5 @@ class DashboardController extends AbstractActionController {
     
     public function editMerchantAction() {
         return $this->view;
-    } 
-}
+    }
+        }
