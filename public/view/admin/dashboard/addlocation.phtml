@@ -1,0 +1,83 @@
+<div class="content-wrapper" ng-app="app" id="managelocation" ng-controller="managelocation"  ng-cloak="true">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Add Area Location</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Area Location</a></li>
+            <li class="active"> Add Area Location</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title">Area Location</h3>
+                                    <p>Merchant shop's and Rider will associate with this Location.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Area</label>                                          
+                                            <input id="autocomplete" type="text" placeholder="Search Area Location on google" class="form-control"  name="name"   ng-model="locationData.googlelocation">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input type="text" placeholder="Location Address" class="form-control"  name="name"   ng-model="locationData.address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Select Country</label>
+                                            <select class="form-control select2" style="width: 100%;" ng-model="locationData.country_id">
+                                                <option value="0">Select Country</option>
+                                                <option value="1">India</option>
+                                                <option value="2">USA</option>
+                                                <option value="3">Keniya</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-lg-6 col-sm-12 col-xs-12">
+                                              <div class="form-group">
+                                                       <label>Status</label>
+                                                       <div class="clearfix"></div>
+                                                            <label class="mr10">Active</label>					
+                                                            <input type="radio" name="r1" value="1" class="minimal" checked="checked" ng-model="locationData.active">
+
+                                                    <label class="mr10 ml10">Inactive</label>					
+                                                    <input type="radio" name="r1" class="minimal" value="0"  ng-model="locationData.active">
+                                            </div>
+                                    </div>                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <button class="btn btn-info" ng-click="saveLocation(locationData)">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAzQFGFLSOnByu2P7PQADOTUpNhWA_4wI&libraries=places,geometry&callback=initAutocomplete"
+    async defer></script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/managelocation.js' ?>">
+</script>

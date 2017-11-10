@@ -15,6 +15,7 @@ echo $this->doctype(); ?>
         <!-- Scripts -->
         <?php 
         echo $this->headScript()
+            ->prependFile($this->basePath().'/public/js/common.js')
             ->prependFile($this->basePath().'/public/css/dist/js/adminlte.min.js')    
             ->prependFile($this->basePath().'/public/css/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')
             ->prependFile($this->basePath().'/public/css/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')
@@ -27,27 +28,12 @@ echo $this->doctype(); ?>
             ->prependFile($this->basePath().'/public/js/angular.min.js')
             ->prependFile($this->basePath().'/public/css/bower_components/jquery/dist/jquery.min.js');
         ; ?>
-        
-<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-
-<!-- date-range-picker -->
-<script src="bower_components/moment/min/moment.min.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap datepicker -->
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>        
-
     </head>
    
     <?php
     echo $this->partial('layout/adminlayout/header');
     ?>
-    
-        
-        
+       
             <?php echo $this->content; ?>
             <?php
     echo $this->partial('layout/adminlayout/footer');

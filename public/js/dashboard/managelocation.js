@@ -1,9 +1,10 @@
 var app = angular.module('app', []);
-app.controller('managecategory', function ($scope, $http, $sce,$timeout) {
+app.controller('managelocation', function ($scope, $http, $sce,$timeout) {
     $scope.errorShow = false;
     
-    $scope.categoryData = {};
-    
+    $scope.locationData = {};
+    $scope.locationData.country_id=0;
+    $scope.locationData.active=1;
     function getCategory() {
         $http({
             method: 'POST',
@@ -19,27 +20,29 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout) {
     
     getCategory();
     
-    $scope.savecategory = function (categoryData) {
+    $scope.saveLocation = function (locationData) {
 		var error = ' ';
-		if(categoryData.category_name == undefined || categoryData.category_name == ''){
-			error = 'Please enter Category name' ;
+		if(locationData.country_id == undefined || locationData.country_id == ''){
+			error = 'Please select country.' ;
 		}
-//		if(categoryData.name == undefined || categoryData.name == ''){
-//			error = 'Please enter Category name' ;
-//		}      
-                
+		if(locationData.address == undefined || locationData.address == ''){
+			error = 'Please enter address.' ;
+		}                
+		if(locationData.googlelocation == undefined || locationData.googlelocation == ''){
+			error = 'Please choose location from google.' ;
+		}                
 		if(error == ' '){       
 			$http({
 				method: 'POST',
-				data : ObjecttoParams(categoryData),
-				url: serverAdminApp + 'dashboard/savecategory',
+				data : ObjecttoParams(locationData),
+				url: serverAdminApp + 'dashboard/savelocation',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			}).success(function (response) {
 				if (response.status == 'success') {
                                         $scope.successShow = true;
                                         $scope.successMsg = response.msg ;
                                         $scope.successShow = false;
-                                        var path = serverAdminApp + 'dashboard/managecategory';
+                                        var path = serverAdminApp + 'dashboard/location';
                                         window.location.href = path;
 				}else{
                                     $scope.errorShow = true;
