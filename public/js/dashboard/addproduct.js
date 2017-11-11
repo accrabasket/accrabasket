@@ -19,7 +19,7 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.categoryList = {};
-            if(response.status == 'succes'){
+            if(response.status == 'success'){
                 $scope.categoryList = response.data;
             }
         });

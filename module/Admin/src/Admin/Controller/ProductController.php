@@ -49,7 +49,7 @@ class ProductController extends AbstractActionController {
         $params = array_merge($product,$attributes);
         $params['method'] = 'addEditProduct';
         
-        $saveCategory = $this->commonObj->curlhitApi($params, 'addEditProduct');
+        $saveCategory = $this->commonObj->curlhitApi($params);
         $response = json_decode($saveCategory, true);
         if(isset($_FILES['product_img']))
         {
@@ -83,7 +83,7 @@ class ProductController extends AbstractActionController {
         }
 
 
-        if($response['status'] == 'succes'){
+        if($response['status'] == 'success'){
             $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
             header('Location:'.$path);
         }else{
