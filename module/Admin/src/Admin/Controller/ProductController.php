@@ -20,7 +20,7 @@ class ProductController extends AbstractActionController {
         $this->view =  new ViewModel();
         $this->session = new Container('User');
         $this->commonObj = new common();     
-        $this->basketObj = new basketapi();     
+        //$this->basketObj = new basketapi();     
     }
     public function indexAction() {
         $request = array();
@@ -49,8 +49,8 @@ class ProductController extends AbstractActionController {
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
-           $product['status'] = $request['r1'] == 'on'?TRUE:False;
-           $product['product_display_name'] = $request['product_display_name'];
+           $product['status'] = $request['r1'] == 'on'?1:0;
+           $product['product_desc'] = $request['product_desc'];
         }
         $params = array();
         $params = array_merge($product,$attributes);
