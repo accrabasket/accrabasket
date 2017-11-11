@@ -23,6 +23,9 @@ class ProductController extends AbstractActionController {
         $this->basketObj = new basketapi();     
     }
     public function indexAction() {
+        $request = array();
+        $request['method'] = 'getProductList';
+        $this->view->productList = $this->commonObj->curlhitApi($request);
         return $this->view;
     }
     public function addproductAction() {
