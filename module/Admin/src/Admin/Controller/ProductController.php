@@ -25,7 +25,11 @@ class ProductController extends AbstractActionController {
     public function indexAction() {
         $request = array();
         $request['method'] = 'getProductList';
-        $this->view->productList = $this->commonObj->curlhitApi($request);
+        $productList = $this->commonObj->curlhitApi($request);
+        $productList = json_decode($productList, true);
+        if($productList['status'] == 'success') {
+            $this->view->productList = $productList['data'];
+        }
         return $this->view;
     }
     public function addproductAction() {
