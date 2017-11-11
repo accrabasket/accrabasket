@@ -117,7 +117,7 @@ class DashboardController extends AbstractActionController {
     public function managemerchantAction() {
         $request = array();
         $request['method'] = 'getMarchantList';
-        $getMarchantList = $this->commonObj->curlhitApi($request, 'getMarchantList');
+        $getMarchantList = $this->commonObj->curlhitApi($request);
         $getMarchantList = json_decode($getMarchantList,true);
         if(!empty($getMarchantList['data'])){
             $this->view->marchantList = $getMarchantList['data'];
@@ -130,9 +130,9 @@ class DashboardController extends AbstractActionController {
     } 
     
     public function savecategoryAction() {
-        $request = (array)$this->getRequest()->getPost();;
+        $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'addEditCategory';
-        $saveCategory = $this->commonObj->curlhitApi($request, 'addEditCategory');
+        $saveCategory = $this->commonObj->curlhitApi($request);
         $response = json_decode($saveCategory, true);
         if($response['status'] == 'success'){
             $this->flashMessenger()->addMessage($response['msg']);
@@ -145,7 +145,7 @@ class DashboardController extends AbstractActionController {
     public function managecategoryAction() {
         $request = array();
         $request['method'] = 'categoryList';
-        $getMarchantList = $this->commonObj->curlhitApi($request, 'categoryList');
+        $getMarchantList = $this->commonObj->curlhitApi($request);
         $getMarchantList = json_decode($getMarchantList,true);
         if(!empty($getMarchantList['data'])){
             $this->view->categoryList = $getMarchantList['data'];
@@ -157,11 +157,29 @@ class DashboardController extends AbstractActionController {
         $request = array();
         $return = array();
         $request['method'] = 'categoryList';
-        $getMarchantList = $this->commonObj->curlhitApi($request, 'categoryList');
+        $getMarchantList = $this->commonObj->curlhitApi($request);
         echo $getMarchantList;exit;
     }
     
     public function editMerchantAction() {
         return $this->view;
-    }
+    } 
+    
+    public function locationAction() {
+        return $this->view;
+    }     
+    public function addlocationAction() {
+        return $this->view;
+    }         
+    public function savelocationAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'addEditLocation';
+        $saveCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($saveCategory, true);
+        if($response['status'] == 'success'){
+            $this->flashMessenger()->addMessage($response['msg']);
         }
+        echo $saveCategory;
+        exit;
+    }    
+}

@@ -1,10 +1,3 @@
-function ObjecttoParams(obj) {
-    var p = [];
-    for (var key in obj) {
-        p.push(key + '=' + encodeURIComponent(obj[key]));
-    }
-    return p.join('&');
-};
 var app = angular.module('marchantapp', []);
 app.controller('marchantController', function ($scope, $http, $sce,$timeout) {
     $scope.errorShow = false;
