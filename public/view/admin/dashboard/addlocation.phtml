@@ -79,5 +79,9 @@
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAzQFGFLSOnByu2P7PQADOTUpNhWA_4wI&libraries=places,geometry&callback=initAutocomplete"
     async defer></script>
+ <script>
+    var app = angular.module('app', []);
+    app.value('locationId', '<?php echo $this->params['id']?>');
+</script>
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/managelocation.js' ?>">
 </script>

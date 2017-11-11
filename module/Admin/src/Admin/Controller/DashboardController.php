@@ -166,9 +166,28 @@ class DashboardController extends AbstractActionController {
     } 
     
     public function locationAction() {
+        $locationListData = array();
+        $inputParams = array();
+        $inputParams['pagination'] = 1;
+        $locationList = $this->commonObj->getLocationList($inputParams);
+        $locationListArr = json_decode($locationList, true);
+        if($locationListArr['status'] == 'success') {
+            $locationListData = $locationListArr['data'];
+        }
+        $this->view->locationListData = $locationListData;
         return $this->view;
-    }     
+    }
+    
+    public function locationListAction() {
+        $inputParams = (array)$this->getRequest()->getPost();
+        $locationList = $this->commonObj->getLocationList($inputParams);
+        echo $locationList;
+        exit;
+    }
+    
     public function addlocationAction() {
+        $inputParams = (array)$this->getRequest()->getQuery();
+        $this->view->params = $inputParams;
         return $this->view;
     }         
     public function savelocationAction() {

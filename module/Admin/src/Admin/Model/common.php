@@ -26,4 +26,24 @@ class common{
         $url = BASKET_API.$controller.'?'.http_build_query($data);
         return $this->cObj->callCurl($url);
     }
+    
+    public function getLocationList($inputParams = array()) {
+        $params = array();
+        if(!empty($inputParams['address'])) {
+            $params['address'] = $inputParams['address'];
+        }
+        if(!empty($inputParams['id'])) {
+            $params['id'] = $inputParams['id'];
+        }        
+        if(!empty($inputParams['active'])) {
+            $params['active'] = $inputParams['active'];
+        }        
+        if(!empty($inputParams['pagination'])) {
+            $params['pagination'] = $inputParams['pagination'];
+            $params['page'] = isset($inputParams['page'])?$inputParams['page']:1;
+        }      
+        $params['method'] = 'getLocationList';
+        
+        return $this->curlhitApi($params);
+    }
 }
