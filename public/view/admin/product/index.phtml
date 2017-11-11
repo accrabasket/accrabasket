@@ -28,28 +28,27 @@
                     <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr role="row">
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Onwer name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">IC Number</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Phone Numbmer</th>
-                          <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" aria-sort="descending">Email</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Address</th>
-						  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Company Bank name</th>
-						  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Company Bank Account Number</th>
-						  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Name/th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Attribute Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Attribute Unit</th>
+                          <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" aria-sort="descending">Attribute quantity</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Product Dis</th>
+			  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Category Name</th>
+						  
+			<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                          <?php if(!empty($this->marchantList)){
-                            foreach ($this->marchantList as $key => $value) {
+                          <?php if(!empty($this->productList)){
+                            foreach ($this->productList as $key => $value) {
                               ?>
                             <tr role="row" class="odd">
-                                <td class=""><i class="fa fa-close red"></i> &nbsp;<?= $value['first_name']?></td>
-                              <td class=""><?= $value['ic_number']?></td>
-                              <td class=""><?= $value['phone_number']?></td>
-                              <td class="sorting_1"><?= $value['email']?></td>
-                              <td><?= $value['address']?></td>
-                              <td><?= $value['bank_name']?></td>
-                              <td><?= $value['bank_account_number']?></td>
+                                <td class=""><i class="fa fa-close red"></i> &nbsp;<?= $value['product_name']?></td>
+                              <td class=""><?= $value['name']?></td>
+                              <td class=""><?= $value['unit']?></td>
+                              <td class="sorting_1"><?= $value['quantity']?></td>
+                              <td><?= $value['product_des']?></td>
+                              <td><?= $value['category_name']?></td>
                               <td><a href="#"><i class="fa fa-edit"></i> <i class="fa fa-trash-o"></i></a></td>
                             </tr>
                           <?php }}?>
