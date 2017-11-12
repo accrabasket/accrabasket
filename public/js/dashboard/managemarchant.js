@@ -3,29 +3,26 @@ app.controller('marchantController', function ($scope, $http, $sce,$timeout) {
     $scope.errorShow = false;
     
     $scope.marchantData = {};
-    $scope.savemarchant = function () {
-		var error = ' ';
-		if($scope.marchantData.name == undefined || $scope.marchantData.name == ''){
-			error = 'Please enter owner name' ;
+    $scope.savemerchant = function () {
+		var error = ' ';	                
+                if($scope.marchantData.bank_name == undefined || $scope.marchantData.bank_name == ''){
+			error = 'Bank name can not be empty. ' ;
 		}
-		
-		if($scope.marchantData.phone_number == undefined || $scope.marchantData.phone_number == ''){
-			error = 'Please select phone number' ;
-		}
-                
-                if($scope.marchantData.email_id == undefined || $scope.marchantData.email_id == ''){
-			error = 'Please enter valid email' ;
-		}
-                
-                
                 if($scope.marchantData.address == undefined || $scope.marchantData.address == ''){
 			error = 'Please enter address ' ;
 		}
-                
-                if($scope.marchantData.id == undefined || $scope.marchantData.id == ''){
-			error = 'you cant not update data ' ;
+                if($scope.marchantData.email_id == undefined || $scope.marchantData.email_id == ''){
+			error = 'Please enter valid email' ;
 		}
-                
+		if($scope.marchantData.phone_number == undefined || $scope.marchantData.phone_number == ''){
+			error = 'Please enter phone number' ;
+		}
+		if($scope.marchantData.ic_number == undefined || $scope.marchantData.ic_number == ''){
+			error = 'Please enter ic number' ;
+		}                
+		if($scope.marchantData.name == undefined || $scope.marchantData.name == ''){
+			error = 'Please enter owner name' ;
+		}                
                 
                 
 		if(error == ' '){
