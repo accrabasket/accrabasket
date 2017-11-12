@@ -1,10 +1,9 @@
-var app = angular.module('marchantapp', []);
 app.controller('marchantController', function ($scope, $http, $sce,$timeout, marchantList) {
+    console.log(marchantList);
     $scope.errorShow = false;
     $scope.marchantData = {};
     if(marchantList != ''){
         var marchantList = jQuery.parseJSON(marchantList);
-        console.log(marchantList);
         $scope.marchantData = marchantList;
         $scope.marchantData.name = marchantList.first_name;
     }
@@ -16,7 +15,7 @@ app.controller('marchantController', function ($scope, $http, $sce,$timeout, mar
                 if($scope.marchantData.address == undefined || $scope.marchantData.address == ''){
 			error = 'Please enter address ' ;
 		}
-                if($scope.marchantData.email_id == undefined || $scope.marchantData.email_id == ''){
+                if($scope.marchantData.email == undefined || $scope.marchantData.email == ''){
 			error = 'Please enter valid email' ;
 		}
 		if($scope.marchantData.phone_number == undefined || $scope.marchantData.phone_number == ''){
@@ -33,18 +32,13 @@ app.controller('marchantController', function ($scope, $http, $sce,$timeout, mar
 		if(error == ' '){
 			$http({
 				method: 'POST',
-				data : ObjecttoParams(marchantData),
-				url: serverAppUrl + '/updatemerchant',
+				data : ObjecttoParams($scope.marchantData),
+				url: serverAdminApp + 'dashboard/saveMerchant',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			}).success(function (response) {
-				if (response.status) {
-					$scope.successShow = true;
-			                $scope.successMsg = response.msg
-                                        $timeout(function(){
-                                                $scope.successShow = false;
-                                                var path = serverAdminApp + 'dashboard/managemerchant';
-                                                window.location.href = path;
-                                        },1000)
+				if (response.status=='success') {
+                                    var path = serverAdminApp + 'dashboard/managemerchant';
+                                    window.location.href = path;
 				}else{
 					$scope.errorShow = true;
 					$scope.errorMsg = response.msg == undefined ? 'somthing went wrong ':response.msg;

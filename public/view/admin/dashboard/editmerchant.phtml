@@ -45,13 +45,13 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" placeholder="email" class="form-control"  name="name"   ng-model="marchantData.email_id">
+                                            <input type="email" placeholder="email" class="form-control"  name="name"   ng-model="marchantData.email">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Address</label>
-                                            <input type="text" placeholder="Address" class="form-control"  name="name"   ng-model="marchantData.adddress">
+                                            <input type="text" placeholder="Address" class="form-control"  name="name"   ng-model="marchantData.address">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -71,10 +71,10 @@
                                             <label>Status</label>
                                             <div class="clearfix"></div>
                                             <label class="mr10">Active</label>					
-                                            <input type="radio" name="r1" value="1" class="minimal"  ng-model="marchantData.active">
+                                            <input type="radio" name="r1" value="1" class="minimal"  ng-model="marchantData.status">
 
                                             <label class="mr10 ml10">Inactive</label>					
-                                            <input type="radio" name="r1" class="minimal" value="0"  ng-model="marchantData.active">
+                                            <input type="radio" name="r1" class="minimal" value="0"  ng-model="marchantData.status">
                                         </div>
                                     </div> 
                                     
@@ -95,9 +95,9 @@
     </section>
     <!-- /.content -->
 </div>
-<script src="<?php echo $this->basePath() . '/public/js/dashboard/managemarchant.js' ?>">
-</script>
 <script>
-    
-    app.value('marchantList', '<?php echo !empty($this->marchantData)?json_encode($this->marchantData[0]):'';?>');
+    var app = angular.module('marchantapp', []);    
+    app.value('marchantList', '<?php echo !empty($this->marchantData)?json_encode($this->marchantData):'';?>');
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/managemarchant.js' ?>">
 </script>

@@ -3,6 +3,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
     $scope.errorShow = false;
     
     $scope.categoryData = {};
+    $scope.categoryData.parent_category_id = 0;
     $scope.id = '';
     function getCategory() {
         $http({
@@ -20,7 +21,6 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
         });
     }
     
-    console.log(categoryData);
     if(categoryData != ''){
         var categoryData = jQuery.parseJSON(categoryData);
         $scope.categoryData.category_name = categoryData.category_name;

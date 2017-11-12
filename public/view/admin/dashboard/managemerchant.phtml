@@ -18,6 +18,14 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <p class="danger showMsg" style="color:green">
+                    <?php
+                        if(!empty($this->flashMessenger()->getMessages())){
+                            $msg =  $this->flashMessenger()->getMessages();
+                            echo $msg[0];
+                        }
+                    ?>                         
+                </p>                
               <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                   <div class="col-sm-6"></div>
@@ -43,7 +51,7 @@
                             foreach ($this->marchantList as $key => $value) {
                               ?>
                             <tr role="row" class="odd">
-                                <td class=""><i class="fa fa-close red"></i> &nbsp;<?= $value['first_name']?></td>
+                            <td class=""><?php if($value['status'] == 0) {?><i class="fa fa-close red"></i> &nbsp;<?php }?><?= $value['first_name']?></td>
                               <td class=""><?= $value['ic_number']?></td>
                               <td class=""><?= $value['phone_number']?></td>
                               <td class="sorting_1"><?= $value['email']?></td>
