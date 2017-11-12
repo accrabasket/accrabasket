@@ -6,6 +6,7 @@
              'Admin\Controller\Dashboard' => 'Admin\Controller\DashboardController',
              'Admin\Controller\Common' => 'Admin\Controller\CommonController',
              'Admin\Controller\Product' => 'Admin\Controller\productController',
+             'Admin\Controller\Rider' => 'Admin\Controller\riderController',
          ),
      ),
  'router' => array(
@@ -47,6 +48,7 @@
         'template_map' => array(
             'layout/Dashboard'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
             'layout/Product'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
+            'layout/Rider'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
         ),         
      ),
  );
