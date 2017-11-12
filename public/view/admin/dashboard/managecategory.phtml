@@ -18,16 +18,16 @@
             </div>
             <!-- /.box-header -->            
             <div class="box-body">
+                <p class="danger showMsg" style="color:green">
+                    <?php
+                        if(!empty($this->flashMessenger()->getMessages())){
+                            $msg =  $this->flashMessenger()->getMessages();
+                            echo $msg[0];
+                        }
+                    ?>                         
+                </p>                 
               <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <p class="login-box-msg">
-                                  <?php
-                                      if(!empty($this->flashMessenger()->getMessages())){
-                                          $msg =  $this->flashMessenger()->getMessages();
-                                          echo $msg[0];
-                                      }
-                                  ?>          
-                    </p>                    
+                <div class="row"> 
                   <div class="col-sm-6"></div>
                   <div class="col-sm-6"></div>
                 </div>
