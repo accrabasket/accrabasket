@@ -1,8 +1,18 @@
 var app = angular.module('marchantapp', []);
-app.controller('marchantController', function ($scope, $http, $sce,$timeout) {
+app.controller('marchantController', function ($scope, $http, $sce,$timeout, marchantList) {
     $scope.errorShow = false;
-    
     $scope.marchantData = {};
+    if(marchantList != ''){
+        var marchantList = jQuery.parseJSON(marchantList);
+        console.log(marchantList);
+        $scope.marchantData.name = marchantList.first_name;
+        $scope.marchantData.phone_number = marchantList.phone_number;
+        $scope.marchantData.email_id = marchantList.email;
+        $scope.marchantData.address = marchantList.address;
+        $scope.id = marchantList.id;
+    }
+    
+    
     $scope.savemarchant = function () {
 		var error = ' ';
 		if($scope.marchantData.name == undefined || $scope.marchantData.name == ''){
