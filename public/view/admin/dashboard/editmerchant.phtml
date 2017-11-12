@@ -33,7 +33,7 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Ic Number</label>
-                                            <input type="text" placeholder="Ic Number" class="form-control"  name="name"   ng-model="marchantData.ic_numbur">
+                                            <input type="text" placeholder="Ic Number" class="form-control"  name="name"   ng-model="marchantData.ic_number">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -57,13 +57,13 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Company Bank Name </label>
-                                            <input type="text" placeholder="Company Bank Name" class="form-control"  name="name"   ng-model="marchantData.company_bank_name">
+                                            <input type="text" placeholder="Company Bank Name" class="form-control"  name="name"   ng-model="marchantData.bank_name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Company Bank Account Number</label>
-                                            <input type="text" placeholder="Company Bank Account Number" class="form-control"  name="name"   ng-model="marchantData.company_bank_account_number">
+                                            <input type="text" placeholder="Company Bank Account Number" class="form-control"  name="name"   ng-model="marchantData.bank_account_number">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-12 col-xs-12">
@@ -85,7 +85,7 @@
                     <div class="box-footer">
                         <div class="pull-right">
                             <button class="btn btn-default mr10" type="submit">Cancel</button>
-                            <button class="btn btn-info" ng-click="savemarchants(marchantData)">Edit</button>
+                            <button class="btn btn-info" ng-click="savemerchant()">Save</button>
                         </div>
                     </div>
                     <!-- /.box-body -->
