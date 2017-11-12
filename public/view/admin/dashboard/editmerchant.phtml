@@ -66,7 +66,17 @@
                                             <input type="text" placeholder="Company Bank Account Number" class="form-control"  name="name"   ng-model="marchantData.company_bank_account_number">
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <div class="clearfix"></div>
+                                            <label class="mr10">Active</label>					
+                                            <input type="radio" name="r1" value="1" class="minimal"  ng-model="marchantData.active">
+
+                                            <label class="mr10 ml10">Inactive</label>					
+                                            <input type="radio" name="r1" class="minimal" value="0"  ng-model="marchantData.active">
+                                        </div>
+                                    </div> 
                                     
                                 </div>
                             </div>
@@ -86,4 +96,8 @@
     <!-- /.content -->
 </div>
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/managemarchant.js' ?>">
+</script>
+<script>
+    
+    app.value('marchantList', '<?php echo !empty($this->marchantData)?json_encode($this->marchantData[0]):'';?>');
 </script>
