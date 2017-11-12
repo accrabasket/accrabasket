@@ -36,7 +36,7 @@
                                             <label>Parent Category</label>
                                             <select class="form-control select2" style="width: 100%;"  ng-model="categoryData.parent_category_id">
                                                 <option value="0">Select Category</option>
-                                                <option ng-repeat="data in categoryList" value="{{data.id}}">{{data.category_name}}</option>
+                                                <option ng-repeat="data in categoryList" value="{{data.id}}" ng-selected="{{data.id == categoryData.parent_category_id}}">{{data.category_name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -66,4 +66,8 @@
     <!-- /.content -->
 </div>
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/managecategory.js' ?>">
+</script>
+<script>
+    
+    app.value('categoryData', '<?php echo !empty($this->categoryList)?json_encode($this->categoryList):'';?>');
 </script>
