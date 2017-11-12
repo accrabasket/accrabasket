@@ -126,9 +126,22 @@ class DashboardController extends AbstractActionController {
     }
     
     public function addcategoryAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if (!empty($request)) {
+            $request['method'] = 'categoryList';
+            $categoryList = $this->commonObj->curlhitApi($request);
+            $categoryList = json_decode($categoryList, true);
+            if (!empty($categoryList['data'])) {
+                foreach ($categoryList['data'] as $key => $value) {
+                    $data = $value;
+                }
+                $this->view->categoryList = $data;
+            }
+        }
+
         return $this->view;
-    } 
-    
+    }
+
     public function savecategoryAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'addEditCategory';
