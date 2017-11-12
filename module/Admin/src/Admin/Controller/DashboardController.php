@@ -200,5 +200,17 @@ class DashboardController extends AbstractActionController {
         }
         echo $saveCategory;
         exit;
-    }    
+    }
+
+    public function deleteCategoryAction() {
+            $request = (array)$this->getRequest()->getQuery();
+            $request['method'] = 'deleteCategory';
+            $deleteCategory = $this->commonObj->curlhitApi($request);
+            $response = json_decode($deleteCategory, true);
+            if($response['status'] == 'success'){
+                $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'dashboard/managecategory';
+                header('Location:'.$path);
+            }
+            exit;
+        }    
 }
