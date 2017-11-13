@@ -173,10 +173,9 @@ class DashboardController extends AbstractActionController {
     }
 
     public function getCategoryListAction() {
-        $request = array();
-        $return = array();
-        $request['method'] = 'categoryList';
-        $getMarchantList = $this->commonObj->curlhitApi($request);
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'categoryList';
+        $getMarchantList = $this->commonObj->curlhitApi($postParams);
         echo $getMarchantList;
         exit;
     }

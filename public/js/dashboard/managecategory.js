@@ -6,9 +6,12 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
     $scope.categoryData.parent_category_id = 0;
     $scope.id = '';
     function getCategory() {
+        var filter = {};
+        filter.categoryHavingNoProduct = 1;
         $http({
             method: 'POST',
             url: serverAdminApp + 'dashboard/getCategoryList',
+            data : ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.categoryList = {};
