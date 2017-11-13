@@ -13,9 +13,12 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
          ($scope.indexVal).push(a);
     }
     function getCategory() {
+        var filter = {};
+        filter.categoryHavingNoChild = 1;        
         $http({
             method: 'POST',
             url: serverAdminApp + 'dashboard/getCategoryList',
+            data : ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.categoryList = {};
@@ -23,8 +26,7 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
                 $scope.categoryList = response.data;
             }
         });
-    }
-    
+    }    
     getCategory();
     
 	
