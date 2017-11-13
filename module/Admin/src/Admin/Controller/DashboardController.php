@@ -255,5 +255,53 @@ class DashboardController extends AbstractActionController {
         echo $saveMerchantResponse;
         exit;        
     }
+    
+    public function addtaxAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if(!empty($request)) {
+            $request['method'] = 'taxlist';
+            $getTaxList = $this->commonObj->curlhitApi($request);
+            $getTaxList = json_decode($getTaxList, true);
+            if (!empty($getTaxList['data'])) {
+                $this->view->taxList = $getTaxList['data'][0];
+            }
+        }
+        return $this->view;
+    }
+
+    public function savetaxAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'addedittax';
+        $saveTaxResponse = $this->commonObj->curlhitApi($postParams);
+        $response = json_decode($saveTaxResponse, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveTaxResponse;
+        exit;        
+    }
+    
+    public function managetaxAction() {
+        $request = array();
+        $request['method'] = 'taxlist';
+        $getTaxList = $this->commonObj->curlhitApi($request);
+        $getTaxList = json_decode($getTaxList, true);
+        if (!empty($getTaxList['data'])) {
+            $this->view->taxList = $getTaxList['data'];
+        }
+        return $this->view;
+    }
+    
+    public function deletetaxAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'deletetax';
+        $deleteCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($deleteCategory, true);
+        if ($response['status'] == 'success') {
+            $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/managetax';
+            header('Location:' . $path);
+        }
+        exit;
+    }
 
 }
