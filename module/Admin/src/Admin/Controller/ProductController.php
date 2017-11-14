@@ -35,6 +35,24 @@ class ProductController extends AbstractActionController {
     public function addproductAction() {
         return $this->view;
     } 
+    
+    public function taxListAction() {
+        $request = array();
+        $request['method'] = 'taxlist';
+        $taxList = $this->commonObj->curlhitApi($request);
+        
+        echo $taxList;
+        exit;
+    }
+    
+    public function getCategoryListAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'categoryList';
+        $getMarchantList = $this->commonObj->curlhitApi($postParams);
+        echo $getMarchantList;
+        exit;
+    }
+    
     public function saveproductAction() {
         $saveCategory = array();
         $request = (array)$this->getRequest()->getPost();
@@ -45,12 +63,20 @@ class ProductController extends AbstractActionController {
                $attribute[$i]['name'] = $request['attribute_name_'.$index];
                $attribute[$i]['unit'] = $request['attribute_unit_'.$index];
                $attribute[$i]['quantity'] = $request['attribute_quantity_'.$index];
+               if(!empty($request['attribute_commission_value_'.$index])){
+                    $attribute[$i]['commission_value'] = $request['attribute_commission_value_'.$index];
+                    $attribute[$i]['commission_type'] = $request['attribute_commission_type_'.$index];
+                }
+               
            }
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
            $product['status'] = $request['r1'] == 'on'?1:0;
            $product['product_desc'] = $request['product_desc'];
+           if(!empty($request['tax_id'])){
+               $product['tax_id'] = $request['tax_id'];
+           }
         }
         $params = array();
         $params = array_merge($product,$attributes);
