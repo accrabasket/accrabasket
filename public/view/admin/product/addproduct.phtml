@@ -66,7 +66,15 @@
                                         <div class="clearfix">&nbsp;</div>
                                     </div>
                                     
-                                    
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Tax</label>
+                                            <select class="form-control select2" style="width: 100%;" id="tax_id" name="tax_id" >
+                                                <option selected="selected" value="">Select Tax</option>
+                                                <option ng-repeat="data in taxList" value="{{data.id}}">{{data.tax_name}} ( {{data.tax_value}} %)</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="clearfix"></div>
                                     <span ng-repeat="index in indexVal">
                                     <div class=" col-lg-12" id="add-attribute" ng-show="showAttr">
@@ -97,6 +105,21 @@
                                                 <div class="form-group">
                                                     <label>Upload</label>
                                                     <input type="file" class="test file" multiple="multiple" name="attribute_img_{{index}}[]">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Commission type</label>
+                                                    <select class="form-control select2"  id="attribute_commission_type_{{index}}" name="attribute_commission_type_{{index}}" >
+                                                        <option value="flat">flat</option>
+                                                        <option value="percent">percent</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Commission value </label>
+                                                    <input type="number"  name="attribute_commission_value_{{index}}" id="attribute_commission_value_{{index}}">
                                                 </div>
                                             </div>
 <!--                                            <div class="col-lg-12">
@@ -147,7 +170,7 @@
                                 <label class="mr10 ml10">Inactive</label>					
                                 <input type="radio" name="status" class="minimal" >
                             </div>
-                        </div>			
+                        </div>	
                         <input type="hidden" value="{{index}}" id="index" name="index">
                         <div class="pull-right">
                             <button class="btn btn-default mr10" type="submit">Cancel</button>

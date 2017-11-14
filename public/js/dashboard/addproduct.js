@@ -6,6 +6,7 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
     $scope.attrbuteData = {};
     $scope.index = 0;
     $scope.indexVal = [];
+    $scope.taxList = {};
     $scope.showAttrDiv = function(){
         $scope.showAttr = true;
          var a = ($scope.indexVal).length +1;
@@ -17,7 +18,7 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
         filter.categoryHavingNoChild = 1;        
         $http({
             method: 'POST',
-            url: serverAdminApp + 'dashboard/getCategoryList',
+            url: serverAdminApp + 'product/getCategoryList',
             data : ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
@@ -28,6 +29,19 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
         });
     }    
     getCategory();
+    
+    function getTax() {      
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'product/taxList',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            if(response.status == 'success'){
+                $scope.taxList = response.data;
+            }
+        });
+    }    
+    getTax();
     
 	
 });	
@@ -63,6 +77,10 @@ function checkform(){
         }
         if($('#attribute_unit_'+newindex).val() == ''){
             msg = 'Unit should not blank';
+            ret = false;
+        }
+        if($('#attribute_commission_type_'+newindex).val() == 'percent' && $('#attribute_commission_value_'+newindex).val() > 70){
+            msg = 'Commission percent should be less then 70 %';
             ret = false;
         }
    }
