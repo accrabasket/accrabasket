@@ -1,6 +1,5 @@
 <?php
-namespace Company\Model;
-
+namespace Merchant\Model;
 class curl{
     public function callCurl($url){
         $ch = curl_init(); 

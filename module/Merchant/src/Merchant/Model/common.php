@@ -1,6 +1,5 @@
 <?php
-namespace Company\Model;
-
+namespace Merchant\Model;
 class common{
     public function __construct() {
         $this->cObj = new curl();

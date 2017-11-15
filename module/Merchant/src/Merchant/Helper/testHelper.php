@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Helper;
+namespace Merchant\Helper;
 use Zend\View\Helper\AbstractHelper;
 class testHelper extends AbstractHelper {
     function __invoke() {

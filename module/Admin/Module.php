@@ -36,10 +36,10 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
         $module_array = explode("\\", $controller);
         $viewModel = $event->getViewModel();
         //echo $config['view_manager']['template_map']['layout/'.$module_array[2]];die;
-        if(isset($config['view_manager']['template_map']['layout/'.$module_array[2]]) && file_exists($config['view_manager']['template_map']['layout/'.$module_array[2]])){
-            $viewModel->setTemplate('layout/'.$module_array[2]);        
+        if(isset($config['view_manager']['template_map']['layout/'.$module_array[0].'/'.$module_array[2]]) && file_exists($config['view_manager']['template_map']['layout/'.$module_array[0].'/'.$module_array[2]])){
+            $viewModel->setTemplate('layout/'.$module_array[0].'/'.$module_array[2]);        
         }
-        if ($module_array[0] == 'Admin' || $module_array[0]=='Company') {
+        if ($module_array[0] == 'Admin' || $module_array[0]=='Merchant') {
             $action = $event->getRouteMatch()->getParam('action');
             $requestedResourse = $controller . "\\" . $action;
             $session = new Container('User');            
@@ -51,7 +51,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
                     $response->setStatusCode(302);
                     $response->sendHeaders();
                 }else{
-                    if($module_array[0]=='Company'){
+                    if($module_array[0]=='Merchant'){
                         if(!in_array(2, $session->userDetail['userRoleList'][$session->userDetail['data'][0]['id']])){
                            echo "You are not allowed to access module";die;
                         } 
