@@ -17,12 +17,12 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-            'Company' => array(
+            'Merchant' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/company',
+                    'route'    => '/merchant',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Company\Controller',
+                        '__NAMESPACE__' => 'Merchant\Controller',
                         'controller'    => 'Index',
                         'action'        => 'index',
                     ),
@@ -77,8 +77,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Company\Controller\Index' => 'Company\Controller\IndexController',
-            'Company\Controller\Dashboard' => 'Company\Controller\DashboardController',
+            'Merchant\Controller\Index' => 'Merchant\Controller\IndexController',
+            'Merchant\Controller\Dashboard' => 'Merchant\Controller\DashboardController',
         ),
     ),
     'view_manager' => array(
@@ -88,10 +88,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../../../public/view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../../../public/view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../../../public/view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../../../public/view/error/index.phtml',
+            'layout/Merchant/Dashboard'           => __DIR__ . '/../../../public/view/layout/merchant.phtml',
+            'layout/Merchant/Product'           => __DIR__ . '/../../../public/view/layout/merchant.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../../../public/view',

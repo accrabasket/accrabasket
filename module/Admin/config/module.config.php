@@ -46,9 +46,9 @@
              __DIR__ . '/../../../public/view',
          ),
         'template_map' => array(
-            'layout/Dashboard'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
-            'layout/Product'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
-            'layout/Rider'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
+            'layout/Admin/Dashboard'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
+            'layout/Admin/Product'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
+            'layout/Admin/Rider'           => __DIR__ . '/../../../public/view/layout/admin.phtml',
         ),         
      ),
  );

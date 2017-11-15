@@ -1,7 +1,5 @@
 <?php
-
-namespace Company\Model;
-
+namespace Merchant\Model;
 class User {
     public function __construct() {
         $this->cObj = new curl();

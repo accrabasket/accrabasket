@@ -8,12 +8,12 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Company\Controller;
+namespace Merchant\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
-use Admin\Model\common;
+use Merchant\Model\common;
 class IndexController extends AbstractActionController {
     protected $authservice;
     public $session;
