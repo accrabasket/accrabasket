@@ -87,7 +87,7 @@ class ProductController extends AbstractActionController {
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
-           $product['status'] = $request['r1'] == 'on'?1:0;
+           $product['status'] = $request['status'] ;
            $product['product_desc'] = $request['product_desc'];
            if(!empty($request['tax_id'])){
                $product['tax_id'] = $request['tax_id'];
@@ -102,7 +102,7 @@ class ProductController extends AbstractActionController {
         
         $saveCategory = $this->commonObj->curlhitApi($params);
         $response = json_decode($saveCategory, true);
-        if(isset($_FILES['product_img']))
+        if(!isset($_FILES['product_img']) && !empty($_FILES['product_img']))
         {
             $images_array=array();
              foreach($_FILES['product_img']['name'] as $key=>$val){

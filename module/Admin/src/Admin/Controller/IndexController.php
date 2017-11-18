@@ -33,7 +33,6 @@ class IndexController extends AbstractActionController {
             $params['username'] = $inputParams['username'];
             $method = 'loginuser';
             $response = json_decode($this->userObj->userAuthenticate($params, $method), true);
-            print_r($response);
             if ($response['status'] == 'success') {
                 $this->session->offsetSet('user', $response);
                 $this->session['userDetail'] = $response;
