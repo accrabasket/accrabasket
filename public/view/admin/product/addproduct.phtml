@@ -80,7 +80,7 @@
                                     <?php 
                                     if(!empty($this->productList['atribute'])){
                                     foreach ($this->productList['atribute'] as $key => $value) {
-                                        
+                                        //print_r($value);die;
                                     ?>
                                     <div class=" col-lg-12" id="add-attribute">
                                         <div class="row border-top">
@@ -118,21 +118,15 @@
                                                 <div class="form-group">
                                                     <label>Commission type</label>
                                                     <select class="form-control select2"  id="attribute_commission_type_{{index}}" name="attribute_commission_type[]" >
-                                                        <option value="flat" selected="<?= $value['quantity']?> == 'flat'">flat</option>
-                                                        <option value="percent" selected="<?= $value['quantity']?> == 'percent'">percent</option>
+                                                        <option value="flat" <?php if($value['commission_type'] == 'flat'){ echo "selected";}?>>flat</option>
+                                                        <option value="percent" <?php if($value['commission_type'] == 'percent'){ echo "selected";}?>>percent</option>
                                                     </select>
                                                 </div>
                                             </div>
-<!--                                            <div class="col-lg-6 col-sm-6 col-xs-12">
-                                                <div class="form-group">
-                                                    <label>Commission value </label>
-                                                    <input type="number" value='<?= !empty($value['commission_value']?$value['commission_value']:'')?>'   name="attribute_commission_value[]" id="attribute_commission_value_{{index}}">
-                                                </div>
-                                            </div>-->
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Commission value </label>
-                                                    <input type="text" value='<?= !empty($value['commission_value']?$value['commission_value']:'')?>' name="attribute_commission_value[]" id="attribute_commission_value_{{index}}" placeholder="Commission value " class="form-control" >
+                                                    <input type="text" value='<?= !empty($value['commission_value'])?$value['commission_value']:''?>' name="attribute_commission_value[]" id="attribute_commission_value_{{index}}" placeholder="Commission value " class="form-control" >
                                                 </div>
                                             </div>
 <!--                                            <div class="col-lg-12">
@@ -255,10 +249,10 @@
                                 <label>Product Status</label>
                                 <div class="clearfix"></div>
                                 <label class="mr10">Active</label>					
-                                <input type="radio" name="status" value="1" class="minimal" checked="checked" >
+                                <input type="radio" name="status" value="1" class="minimal" <?php if(!empty($this->productList['status'])){?>checked="checked" <?php }?>>
 
                                 <label class="mr10 ml10">Inactive</label>					
-                                <input type="radio" name="status" class="minimal" >
+                                <input type="radio" name="status" value="0" class="minimal" <?php if(empty($this->productList['status'])){?>checked="checked" <?php }?>>
                             </div>
                         </div>	
                         <input type="hidden" value="{{index}}" id="index" name="index">
