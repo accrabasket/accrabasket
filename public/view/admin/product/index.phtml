@@ -45,12 +45,15 @@
                                                     ?>
                                                     <tr role="row" class="odd">
                                                         <td class=""><i class="fa fa-close red"></i> &nbsp;<?= $value['product_name'] ?></td>
-                                                        <td class=""><?= $value['name'] ?></td>
-                                                        <td class=""><?= $value['unit'] ?></td>
-                                                        <td class="sorting_1"><?= $value['quantity'] ?></td>
+                                                        <td class=""><?= $value['atribute'][0]['name'] ?></td>
+                                                        <td class=""><?= $value['atribute'][0]['unit'] ?></td>
+                                                        <td class="sorting_1"><?= $value['atribute'][0]['quantity'] ?></td>
                                                         <td><?= $value['product_desc'] ?></td>
                                                         <td><?= $value['category_name'] ?></td>
-                                                        <td><a href="#"><i class="fa fa-edit"></i> <i class="fa fa-trash-o"></i></a></td>
+                                                        <td>
+                                                            <a href="product/addproduct?id=<?=$value['id']?>"><i class="fa fa-edit"></i> </a>
+                                                            <a href="#"> <i class="fa fa-trash-o"></i></a>
+                                                        </td>
                                                     </tr>
 
 

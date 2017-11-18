@@ -33,9 +33,19 @@ class ProductController extends AbstractActionController {
         return $this->view;
     }
     public function addproductAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if (!empty($request)) {
+            $request['method'] = 'getProductList';
+            $productList = $this->commonObj->curlhitApi($request);
+            $productList = json_decode($productList, true);
+            if ($productList['status'] == 'success') {
+                $this->view->productList = $productList['data'][$request['id']];
+            }
+        }
+//        print_r($this->view->productList);die;
         return $this->view;
-    } 
-    
+    }
+
     public function taxListAction() {
         $request = array();
         $request['method'] = 'taxlist';
@@ -58,17 +68,22 @@ class ProductController extends AbstractActionController {
         $request = (array)$this->getRequest()->getPost();
         if(!empty($request)){
             $attribute = array();
-           for($i = 0; $i < $request['index'] ; $i++){
-               $index = $i+1;
-               $attribute[$i]['name'] = $request['attribute_name_'.$index];
-               $attribute[$i]['unit'] = $request['attribute_unit_'.$index];
-               $attribute[$i]['quantity'] = $request['attribute_quantity_'.$index];
-               if(!empty($request['attribute_commission_value_'.$index])){
-                    $attribute[$i]['commission_value'] = $request['attribute_commission_value_'.$index];
-                    $attribute[$i]['commission_type'] = $request['attribute_commission_type_'.$index];
+            if (!empty($request['attribute_name'])) {
+                for ($i = 0; $i < count($request['attribute_name']); $i++) {
+                    $index = $i + 1;
+                    $attribute[$i]['name'] = $request['attribute_name'][$i];
+                    $attribute[$i]['unit'] = $request['attribute_unit'][$i];
+                    $attribute[$i]['quantity'] = $request['attribute_quantity'][$i];
+                    if (!empty($request['attribute_commission_value'][$i])) {
+                        $attribute[$i]['commission_value'] = $request['attribute_commission_value'][$i];
+                        $attribute[$i]['commission_type'] = $request['attribute_commission_type'][$i];
+                    }
+                    if (!empty($request['attribute_id'][$i])) {
+                        $attribute[$i]['id'] = $request['attribute_id'][$i];
+                    }
                 }
-               
-           }
+            }
+
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
@@ -76,6 +91,9 @@ class ProductController extends AbstractActionController {
            $product['product_desc'] = $request['product_desc'];
            if(!empty($request['tax_id'])){
                $product['tax_id'] = $request['tax_id'];
+           }
+           if(!empty($request['id'])){
+               $product['id'] = $request['id'];
            }
         }
         $params = array();
