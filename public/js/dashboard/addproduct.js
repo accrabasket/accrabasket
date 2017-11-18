@@ -1,5 +1,5 @@
 var app = angular.module('product', []);
-app.controller('productController', function ($scope, $http, $sce,$timeout) {
+app.controller('productController', function ($scope, $http, $sce,$timeout,productList) {
     $scope.errorShow = false;
     $scope.showAttr = false;
     $scope.productData = {};
@@ -7,12 +7,26 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
     $scope.index = 0;
     $scope.indexVal = [];
     $scope.taxList = {};
+    if(productList != ''){
+        for(var i=1; i <= productList ;i++){
+            console.log(productList);
+            //showAttrDiv();
+        }
+    }
     $scope.showAttrDiv = function(){
         $scope.showAttr = true;
          var a = ($scope.indexVal).length +1;
           $scope.index++;
          ($scope.indexVal).push(a);
     }
+    
+    function showAttrDiv() {
+        $scope.showAttr = true;
+        var a = ($scope.indexVal).length + 1;
+        $scope.index++;
+        ($scope.indexVal).push(a);
+    }
+    
     function getCategory() {
         var filter = {};
         filter.categoryHavingNoChild = 1;        
