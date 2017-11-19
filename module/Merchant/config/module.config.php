@@ -79,6 +79,7 @@ return array(
         'invokables' => array(
             'Merchant\Controller\Index' => 'Merchant\Controller\IndexController',
             'Merchant\Controller\Dashboard' => 'Merchant\Controller\DashboardController',
+            'Merchant\Controller\Product' => 'Merchant\Controller\ProductController',
         ),
     ),
     'view_manager' => array(

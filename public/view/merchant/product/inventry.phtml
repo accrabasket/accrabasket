@@ -1,0 +1,199 @@
+<div class="content-wrapper"  ng-app="product" ng-controller="productController">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Manange Inventry</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Product</a></li>
+            <li class="active"> Manange Inventry</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form action="saveproduct" method="post" enctype="multipart/form-data">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title">Inventry</h3>
+                                    <p>Manange Inventry</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Select Store</label>
+                                            <select class="form-control select2" name="store_id" >
+                                                <option value="1">Noida City Center</option>
+                                                <option value="1">New Delhi</option>
+                                                <option value="1">Eco Village1</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" readonly="true" placeholder="Product Name" id="product_name"  name="product_name" class="form-control" value="<?= !empty($this->productList['product_name'])?$this->productList['product_name']:''?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control select2" style="width: 100%;" id="category_id" name="category_id" ng-model="productData.category_id" readonly="true">
+                                                <option selected="selected" value="">select category</option>
+                                                <option ng-repeat="data in categoryList" ng-selected="data.id ==<?=$this->productList['category_id']?>" value="{{data.id}}">{{data.category_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Product Description</label>
+                                            <textarea  readonly="true" class="form-control" name="product_desc" ><?= !empty($this->productList['product_desc'])?$this->productList['product_desc']:''?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Tax</label>
+                                            <select  readonly="true" class="form-control select2" style="width: 100%;" id="tax_id" name="tax_id" >
+                                                <option selected="selected" value="">Select Tax</option>
+                                                <option ng-repeat="data in taxList" ng-selected="<?= !empty($this->productList['tax_id'])?$this->productList['tax_id']:''?>" value="{{data.id}}">{{data.tax_name}} ( {{data.tax_value}} %)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <?php 
+                                    if(!empty($this->productList['atribute'])){
+                                    foreach ($this->productList['atribute'] as $key => $value) {
+                                        //print_r($value);die;
+                                    ?>
+                                    <div class=" col-lg-12" id="add-attribute">
+                                        <div class="row border-top">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                <div class="form-group">
+                                                    <label>Attribute Name</label>
+                                                    <input type="hidden" value="<?= $value['id']?>"  name="attribute_id[]">
+                                                    <input  readonly="true" type="text" value="<?= $value['name']?>" placeholder="Attribute Name" id="attribute_name_{{index}}" name="attribute_name[]" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                <div class="form-group">
+                                                    <label>Unit</label>
+                                                    <select class="form-control select2" style="width: 100%;" id="attribute_unit_{{index}}" name="attribute_unit[]"  readonly="true">
+                                                        <option value="grams" selected="<?= $value['quantity']?> == 'grams'">Grams</option>
+                                                        <option value="liter" selected="<?= $value['quantity']?> == 'liter'">Liter</option>
+                                                        <option value="kg" selected="<?= $value['quantity']?> == 'kg'">Kg</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Quantity</label>
+                                                    <input  readonly="true" type="text" id="attribute_quantity_{{index}}" value="<?= $value['quantity']?>" name="attribute_quantity[]" placeholder="Quantity" class="form-control" >
+                                                </div>
+                                            </div>                                           
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Commission type</label>
+                                                    <select  readonly="true" class="form-control select2"  id="attribute_commission_type_{{index}}" name="attribute_commission_type[]" >
+                                                        <?php
+                                                            if($value['commission_type'] == 'flat'){
+                                                        ?>
+                                                            <option value="flat" <?php if($value['commission_type'] == 'flat'){ echo "selected";}?>>flat</option>
+                                                        <?php
+                                                        }
+                                                        if($value['commission_type'] == 'percent'){
+                                                        ?>
+                                                        <option value="percent" <?php if($value['commission_type'] == 'percent'){ echo "selected";}?>>percent</option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Commission value </label>
+                                                    <input  readonly="true" type="text" value='<?= !empty($value['commission_value'])?$value['commission_value']:''?>' name="attribute_commission_value[]" id="attribute_commission_value_{{index}}" placeholder="Commission value " class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Price(In Rupees)</label>
+                                                    <input type="text" id="attribute_price_{{index}}" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
+                                                </div>
+                                            </div>                                            
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Item in Store</label>
+                                                    <input type="text" id="attribute_price_{{index}}" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
+                                                </div>
+                                            </div>                                             
+                                        </div>
+                                        <div class="clearfix border-top">&nbsp;</div>
+                                    </div>
+                                    <?php } }?>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                        </div>
+                        <input type="hidden" value="{{index}}" id="index" name="index">
+                        <input type="hidden" value="<?= $this->productList['id']?>" id="id" name="id">
+                        <div class="pull-right">
+                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <button class="btn btn-info" type="submit" onclick="return checkform()">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/addproduct.js' ?>"></script>
+<script>
+    $(function () {
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#gallery-photo-add').on('change', function () {
+            imagesPreview(this, 'p.gallery');
+        });
+    });
+</script>
+<script>
+    app.value('productList', '<?php echo !empty($this->productList['atribute'])?count($this->productList['atribute']):'';?>');
+</script>
+<?php
+
+//echo count($this->productList['atribute']);die;
+        ?>
