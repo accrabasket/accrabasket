@@ -22,54 +22,64 @@ class DashboardController extends AbstractActionController {
         $this->commonObj = new common();     
     }
 
-    public function countrylistAction() {
-        $countryListResponse = $this->commonObj->curlhit('', 'getcountrylist');
-        $countryList = json_decode($countryListResponse, true);
-        if($countryList['status']){
-            $this->view->countryList = $countryList['data'];
+    public function storeAction() {
+        
+        $inputParams['pagination'] = 1;
+        $locationList = $this->commonObj->getLocationList($inputParams);
+        $locationListArr = json_decode($locationList, true);
+        if ($locationListArr['status'] == 'success') {
+            $locationListData = $locationListArr['data'];
         }
-        return $this->view;
-    }
-
-    public function statelistAction() {
-        $stateListResponse = $this->commonObj->curlhit('', 'getstatelist');
-        $stateList = json_decode($stateListResponse, true);
-        if($stateList['status']){
-            $this->view->stateList = $stateList['data'];
+        $request = (array) $this->getRequest()->getQuery();
+        if (!empty($request['id'])) {
+            $request['method'] = 'storeList';
+            $request['merchant_id'] = $this->session['user']['data'][0]['id'];
+            $storeResponse = $this->commonObj->curlhitApi($request);
+            if(!empty($storeResponse)){
+               $storeResponse =  json_decode($storeResponse,TRUE);
+               $this->view->storeList = $storeResponse['data'][$request['id']];
+            }
+            
         }
+        $this->view->locationList = $locationListData;
         return $this->view;
     }
 
-    public function indexAction() {      
-        $expire_validity = !empty($this->session->userDetail['data'][0]['expire_validity'])?$this->session->userDetail['data'][0]['expire_validity']:'';
-        $this->view->subscription_validity = strtotime($expire_validity);
-        $this->view->current_time = time();        
-        return $this->view;
-    }
-
-    public function priceAction() {
-        return $this->view;
-    }
-
-    public function pricesaveAction(){
-        $request = $this->getRequest()->getPost();
-        $params = array();
-        $params["monthly_service"] = $request["monthly_service"];
-        $params["phone_number_charge"] = $request["phone_number"];
-        $params["sms_pack_price"] =$request["sms_pack_price"];
-        $params["nbr_of_sms_in_pack"] = $request["nbr_of_sms_in_pack"];
-        $params["free_sms"] = $request["free_sms"];
-        $inputParams['parameters'] = json_encode($params);
-        //print_r($inputParams);die;
-        $savePrice = $this->commonObj->curlhit($inputParams, 'pricesave');
-        $savePrice = json_decode($savePrice);
-        print_r($savePrice);die;
-        if($savePrice['status']){
-            $this->view->priceList = $priceList['data'];
+    public function savestoreAction() {
+        $request = (array) $this->getRequest()->getPost();
+        $request['method'] = 'addEditStore';
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
+        $saveStoreResponse = $this->commonObj->curlhitApi($request);
+        $response = json_decode($saveStoreResponse, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
         }
-        print_r($SavePrice);
+        echo $saveStoreResponse;
+        exit;
+    }
+
+    public function managestoreAction() { 
+        $request = array();
+        $request['method'] = 'storeList';
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
+        $storeResponse = $this->commonObj->curlhitApi($request);
+        $response = json_decode($storeResponse, true);
+        $this->view->storeList = $response['data'];
         return $this->view;
-      
+    }
+
+    
+
+    public function deleteStoreAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'deleteStore';
+        $deleteCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($deleteCategory, true);
+        if ($response['status'] == 'success') {
+            $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'] . 'managestore';
+            header('Location:' . $path);
+        }
+        exit;
     }
     public function newcompanylistAction(){
         return $this->view;
