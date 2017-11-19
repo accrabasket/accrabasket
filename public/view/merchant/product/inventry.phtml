@@ -31,10 +31,12 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Select Store</label>
-                                            <select class="form-control select2" name="store_id" >
-                                                <option value="1">Noida City Center</option>
-                                                <option value="1">New Delhi</option>
-                                                <option value="1">Eco Village1</option>
+                                            <select class="form-control select2" name="store_id[]"  multiple id="store_id">
+                                               <?php foreach ($this->storeList as $key => $value) {
+                                                    echo'<option value="'.$key.'">'.$value['store_name'].'</option>';
+                                                }?>
+                                                
+                                                
                                             </select>
                                         </div>
                                     </div>                                    
@@ -127,13 +129,13 @@
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Price(In Rupees)</label>
-                                                    <input type="text" id="attribute_price_{{index}}" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
+                                                    <input type="text" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
                                                 </div>
                                             </div>                                            
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Item in Store</label>
-                                                    <input type="text" id="attribute_price_{{index}}" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
+                                                    <input type="text" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
                                                 </div>
                                             </div>                                             
                                         </div>
@@ -148,8 +150,7 @@
                     <div class="box-footer">
                         <div class="col-lg-4 col-sm-4 col-xs-12">
                         </div>
-                        <input type="hidden" value="{{index}}" id="index" name="index">
-                        <input type="hidden" value="<?= $this->productList['id']?>" id="id" name="id">
+                        <input type="hidden" value="<?= $this->productList['id']?>" id="id" name="product_id">
                         <div class="pull-right">
                             <button class="btn btn-default mr10" type="submit">Cancel</button>
                             <button class="btn btn-info" type="submit" onclick="return checkform()">Save</button>
