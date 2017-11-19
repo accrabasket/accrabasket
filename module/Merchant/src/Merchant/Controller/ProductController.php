@@ -34,6 +34,14 @@ class ProductController extends AbstractActionController {
                 $this->view->productList = $productList['data'][$request['id']];
             }
         }
+        $params = array();
+        $params['method'] = 'storeList';
+        $params['merchant_id'] = $this->session['user']['data'][0]['id'];
+        $storeList = $this->commonObj->curlhitApi($params);
+        $storeList = json_decode($storeList, true);
+        if ($storeList['status'] == 'success') {
+            $this->view->storeList = $storeList['data'];
+        }
         
         return $this->view;
     }
@@ -56,82 +64,52 @@ class ProductController extends AbstractActionController {
     public function saveproductAction() {
         $saveCategory = array();
         $request = (array)$this->getRequest()->getPost();
-        if(!empty($request)){
-            $attribute = array();
-            if (!empty($request['attribute_name'])) {
-                for ($i = 0; $i < count($request['attribute_name']); $i++) {
-                    $index = $i + 1;
-                    $attribute[$i]['name'] = $request['attribute_name'][$i];
-                    $attribute[$i]['unit'] = $request['attribute_unit'][$i];
-                    $attribute[$i]['quantity'] = $request['attribute_quantity'][$i];
-                    if (!empty($request['attribute_commission_value'][$i])) {
-                        $attribute[$i]['commission_value'] = $request['attribute_commission_value'][$i];
-                        $attribute[$i]['commission_type'] = $request['attribute_commission_type'][$i];
-                    }
-                    if (!empty($request['attribute_id'][$i])) {
-                        $attribute[$i]['id'] = $request['attribute_id'][$i];
-                    }
-                }
-            }
-
-           $attributes['attribute'] = $attribute;
-           $product['product_name'] = $request['product_name'];
-           $product['category_id'] = $request['category_id'];
-           $product['status'] = $request['status'] ;
-           $product['product_desc'] = $request['product_desc'];
-           if(!empty($request['tax_id'])){
-               $product['tax_id'] = $request['tax_id'];
-           }
-           if(!empty($request['id'])){
-               $product['id'] = $request['id'];
-           }
-        }
-        $params = array();
-        $params = array_merge($product,$attributes);
-        $params['method'] = 'addEditProduct';
         
+        if(!empty($request)){
+            $params = array();
+            $params['product_id'] = $request['product_id'];
+            $params['attribute_id'] = $request['attribute_id'];
+            $params['store_id'] = $request['store_id'];
+            $params['price'] = $request['attribute_price'];
+            $params['stock'] = $request['stock'];
+            $params['merchant_id'] = $this->session['user']['data'][0]['id'];
+        }
+        
+        $params['method'] = 'addEditInventry';
+//        echo'<pre>';
+//                print_r($params);die;
         $saveCategory = $this->commonObj->curlhitApi($params);
         $response = json_decode($saveCategory, true);
-        if(!isset($_FILES['product_img']) && !empty($_FILES['product_img']))
-        {
-            $images_array=array();
-             foreach($_FILES['product_img']['name'] as $key=>$val){
-                $uploadfile = $_FILES['product_img']["tmp_name"][$key];
-                $imagePath = $GLOBALS['PRODUCTIMAGEPATH'].'/'.$response['data']['product_id'].'/';;
-                @mkdir($imagePath, '0777', true);
-                $target_file = $imagePath.$_FILES['product_img']['name'][$key];
-                if(move_uploaded_file($_FILES["product_img"]["tmp_name"][$key], "$imagePath".$_FILES["product_img"]["name"][$key])){
-                    $images_array[] = $target_file;
-                }
-            }
-        }
-        if (!empty($response['data']['attribute'])) {
-            foreach ($response['data']['attribute'] as $key => $value) {
-                $index = $key+1;
-                if (isset($_FILES['attribute_img_'.$index])) {
-                    $images_array = array();
-                    foreach ($_FILES['attribute_img_'.$index]['name'] as $key => $val) {
-                        $uploadfile = $_FILES['attribute_img_'.$index]["tmp_name"][$key];
-                        $imagePath = $GLOBALS['ATTRIBUTEIMAGEPATH'] . '/' . $value . '/';
-                        @mkdir($imagePath, '0777', true);
-                        $target_file = $imagePath . $_FILES['attribute_img_'.$index]['name'][$key];
-                        if (move_uploaded_file($_FILES['attribute_img_'.$index]["tmp_name"][$key], "$imagePath" . $_FILES['attribute_img_'.$index]["name"][$key])) {
-                            $images_array[] = $target_file;
-                        }
-                    }
-                }
-            }
-        }
-
-
         if($response['status'] == 'success'){
-            $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
+            $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'].'storein';
             header('Location:'.$path);
         }else{
-            $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product/addproduct';
+            $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'].'inventry';
             header('Location:'.$path);
         }
         exit;
         
+    }
+    
+    public function storeinAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if (!empty($request)) {
+            $request['method'] = 'getProductList';
+            $productList = $this->commonObj->curlhitApi($request);
+            $productList = json_decode($productList, true);
+            if ($productList['status'] == 'success') {
+                $this->view->productList = $productList['data'][$request['id']];
+            }
+        }
+        $params = array();
+        $params['method'] = 'stockList';
+        $params['merchant_id'] = $this->session['user']['data'][0]['id'];
+        $storeList = $this->commonObj->curlhitApi($params);
+        $storeList = json_decode($storeList, true);
+        if ($storeList['status'] == 'success') {
+            $this->view->stockList = $storeList['data'];
+        }
+        
+        return $this->view;
     }
 }

@@ -64,40 +64,20 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
 function checkform(){
     var ret  = true;
     var msg = '';
-    if($('#product_name').val() == ''){
-        msg = 'Product name should not blank';
+    if($('#attribute_price').val() == ''){
+        msg = 'Attribute price should not blank';
         ret = false;
     }
-    if($('#category_id').val() == ''){
-        msg = 'Product category id should not blank';
+    if($('#store_id').val() == ''){
+        msg = 'Please select store';
         ret = false;
     }
-    if($('#product_name').val() == ''){
-        msg = 'Product name should not blank';
+    if($('#attribute_stock').val() == ''){
+        msg = 'Attribute stock should not blank';
         ret = false;
     }
     
-    var index = $('#index').val();
     
-   for(var i=0; i<index ; i++){
-       var newindex  = i+1;
-       if($('#attribute_name_'+newindex).val() == ''){
-            msg = 'attribute name should not blank';
-            ret = false;
-        }
-        if($('#attribute_quantity_'+newindex).val() == ''){
-            msg = 'quantity should not blank';
-            ret = false;
-        }
-        if($('#attribute_unit_'+newindex).val() == ''){
-            msg = 'Unit should not blank';
-            ret = false;
-        }
-        if($('#attribute_commission_type_'+newindex).val() == 'percent' && $('#attribute_commission_value_'+newindex).val() > 70){
-            msg = 'Commission percent should be less then 70 %';
-            ret = false;
-        }
-   }
    if(!ret){
        alert(msg);
    }
