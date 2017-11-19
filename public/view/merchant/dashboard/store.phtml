@@ -1,0 +1,89 @@
+<div class="content-wrapper"  ng-app="app" ng-controller="managestore">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Add Store</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                            <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                            <div class="row">
+
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="box-header">
+                                        <h3 class="box-title"> Add Store</h3>
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-sm-8 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Store Name</label>
+                                                <input type="text" placeholder="Store Name" id="rider_name"  name="rider_name" class="form-control" ng-model="storeData.store_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Address</label>                                          
+                                                <input type="text" placeholder="Search Store Address " class="form-control"  name="name"   ng-model="storeData.address">
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Select Location</label>
+                                                <select class="form-control select2" style="width: 100%;" id="location_id" name="location_id" ng-model="storeData.location_id">
+                                                    <option selected="selected" value="">select Location Market</option>
+                                                    <?php
+                                                    foreach($this->locationList as $key=>$location) {
+                                                        echo "<option lat='$location[lat]' lng='$location[lng]' value='$key'>$location[address]</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <div class="clearfix"></div>
+                                                <label class="mr10">Active</label>					
+                                                <input type="radio" value="1" name="status" class="minimal" ng-model="storeData.status">
+
+                                                <label class="mr10 ml10">Inactive</label>					
+                                                <input type="radio" value="0" name="status" class="minimal"  ng-model="storeData.status">
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="pull-right">
+                                <button class="btn btn-default mr10" type="submit">Cancel</button>
+                                <button class="btn btn-info" ng-click="saveStore(storeData)">Save</button>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAzQFGFLSOnByu2P7PQADOTUpNhWA_4wI&libraries=places,geometry&callback=initAutocomplete"-->
+    async defer></script>
+ <script>
+    var app = angular.module('app', []);
+    app.value('storeList', '<?=  json_encode($this->storeList)?>');
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/merchant/managestore.js' ?>">
+</script>
