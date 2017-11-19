@@ -19,8 +19,8 @@ app.controller('managestore', function ($scope, $http, $sce,$timeout,storeList) 
             }
         });
     }
-    if(storeList != undefined && storeList != '') {
-        var storeList = jQuery.parseJSON(storeList);
+    var storeList = jQuery.parseJSON(storeList);
+    if(storeList != undefined && storeList != null) {
         $scope.storeData.id = storeList['id'];
         $scope.storeData.location_id = storeList['location_id'];
         $scope.storeData.address = storeList['address'];
