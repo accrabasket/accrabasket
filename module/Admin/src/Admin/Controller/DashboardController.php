@@ -23,14 +23,14 @@ class DashboardController extends AbstractActionController {
         $this->commonObj = new common();
     }
 
-    public function countrylistAction() {
-        $countryListResponse = $this->commonObj->curlhit('', 'getcountrylist');
-        $countryList = json_decode($countryListResponse, true);
-        if ($countryList['status']) {
-            $this->view->countryList = $countryList['data'];
-        }
-        return $this->view;
-    }
+//    public function countrylistAction() {
+//        $countryListResponse = $this->commonObj->curlhit('', 'getcountrylist');
+//        $countryList = json_decode($countryListResponse, true);
+//        if ($countryList['status']) {
+//            $this->view->countryList = $countryList['data'];
+//        }
+//        return $this->view;
+//    }
 
     public function statelistAction() {
         $stateListResponse = $this->commonObj->curlhit('', 'getstatelist');
@@ -300,6 +300,22 @@ class DashboardController extends AbstractActionController {
             $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/managetax';
             header('Location:' . $path);
         }
+        exit;
+    }
+    
+    public function countryListAction() {
+        $inputParams = (array) $this->getRequest()->getPost();
+        $inputParams['method'] = 'countryList';
+        $countryList = $this->commonObj->curlhitApi($inputParams);
+        echo $countryList;
+        exit;
+    }
+    
+    public function cityListAction() {
+        $inputParams = (array) $this->getRequest()->getPost();
+        $inputParams['method'] = 'cityList';
+        $cityList = $this->commonObj->curlhitApi($inputParams);
+        echo $cityList;
         exit;
     }
 

@@ -40,14 +40,21 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Select Country</label>
-                                            <select class="form-control select2" style="width: 100%;" ng-model="locationData.country_id">
+                                            <select class="form-control select2" ng-change="getCity(locationData.country_id)" style="width: 100%;" ng-model="locationData.country_id">
                                                 <option value="0">Select Country</option>
-                                                <option value="1">India</option>
-                                                <option value="2">USA</option>
-                                                <option value="3">Keniya</option>
+                                                <option  ng-repeat="country in countrylist" value="{{country.id}}">{{country.country_name}}</option>
                                             </select>
                                         </div>
-                                    </div>                                    
+                                    </div> 
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Select City</label>
+                                            <select class="form-control select2" style="width: 100%;" ng-model="locationData.city_id">
+                                                <option value="0" >Select City</option>
+                                                <option  ng-repeat="city in citylist" ng-selected="city.id == locationData.city_id" value="{{city.id}}">{{city.city_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div> 
                                     <div class="col-lg-6 col-sm-12 col-xs-12">
                                               <div class="form-group">
                                                        <label>Status</label>
