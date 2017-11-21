@@ -31,7 +31,7 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Select Store</label>
-                                            <select class="form-control select2" name="store_id[]"  multiple id="store_id">
+                                            <select class="form-control select2" name="store_id[]" id="store_id">
                                                <?php foreach ($this->storeList as $key => $value) {
                                                     echo'<option value="'.$key.'">'.$value['store_name'].'</option>';
                                                 }?>
@@ -128,7 +128,7 @@
                                             </div>
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
-                                                    <label>Price(In Rupees)</label>
+                                                    <label>Price(In GHC)</label>
                                                     <input type="text" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
                                                 </div>
                                             </div>                                            

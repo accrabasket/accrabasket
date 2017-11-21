@@ -1,0 +1,92 @@
+<div class="content-wrapper"  ng-app="product" ng-controller="productController">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Import Product</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Product</a></li>
+            <li class="active"> Import Product</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <form action="<?php echo $this->basePath()?>/admin/product/importproduct" method="post" enctype="multipart/form-data">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title"> Import Product</h3>
+                                    <p>Lorem ipsum is a dummy text</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Upload</label>
+                                            <input type="file" name="product_csv">
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <button class="btn btn-info" type="submit">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/addproduct.js' ?>"></script>
+<script>
+    $(function () {
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#gallery-photo-add').on('change', function () {
+            imagesPreview(this, 'p.gallery');
+        });
+    });
+</script>
+<script>
+    app.value('productList', '<?php echo !empty($this->productList['atribute'])?count($this->productList['atribute']):'';?>');
+</script>
+<?php
+
+//echo count($this->productList['atribute']);die;
+        ?>

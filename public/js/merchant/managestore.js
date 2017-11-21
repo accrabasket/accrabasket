@@ -46,14 +46,14 @@ app.controller('managestore', function ($scope, $http, $sce,$timeout,storeList) 
 			$http({
 				method: 'POST',
 				data : ObjecttoParams(storeData),
-				url: serverMerchantApp + 'savestore',
+				url: serverMerchantApp + 'dashboard/savestore',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			}).success(function (response) {
 				if (response.status == 'success') {
                                         $scope.successShow = true;
                                         $scope.successMsg = response.msg ;
                                         $scope.successShow = false;
-                                        var path = serverMerchantApp + 'managestore';
+                                        var path = serverMerchantApp + 'dashboard/managestore';
                                         window.location.href = path;
 				}else{
                                     $scope.errorShow = true;

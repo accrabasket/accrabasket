@@ -62,6 +62,80 @@ class ProductController extends AbstractActionController {
         echo $getMarchantList;
         exit;
     }
+    public function importcsvAction() {
+        return $this->view;
+    }
+    
+    public function importproductAction() {
+        ini_set('max_execution_time', -1);
+        move_uploaded_file($_FILES["product_csv"]["tmp_name"],'productimport.csv');
+        $dataArr = array();
+        if (($handle = fopen("productimport.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $dataArr[] = $data;
+            }
+            fclose($handle);
+        }
+        $params = array();
+        //$params['data'] = $dataArr;
+        $totalNumOfProduct = count($dataArr);
+        for ($i = 0; $i < $totalNumOfProduct; $i++){
+            if($i==0){
+                
+            }else{
+                $counter = 0;
+                $data = array();
+                foreach($dataArr[0] as $column) {
+                    $column = trim($column);
+                    switch($column) {
+                        case 'product name':
+                            $data['product_name'] = $dataArr[$i][$counter];
+                            break;
+                        case 'product desc':
+                            $data['product_desc'] = $dataArr[$i][$counter];
+                            break;
+                        case 'category name':
+                            $data['category_name'] = $dataArr[$i][$counter];
+                            break;
+                        case 'product image':
+                            $data['product_image'][] = $dataArr[$i][$counter];
+                            break;
+                        case 'tax':
+                            $data['tax'] = $dataArr[$i][$counter];
+                            break;
+                        case 'attribute name':
+                            $data['attribute_name'][] = $dataArr[$i][$counter];
+                            break;
+                        case 'unit':
+                            $data['unit'][] = $dataArr[$i][$counter];
+                            break;
+                        case 'quantity':
+                            $data['quantity'][] = $dataArr[$i][$counter];
+                            break;
+                        case 'attribute image':
+                            $data['attribute_image'][] = $dataArr[$i][$counter];
+                            break;
+                        case 'commission type':
+                            $data['commission_type'][] = $dataArr[$i][$counter];                            
+                            break;
+                        case 'commission value':
+                            $data['commission_value'][] = $dataArr[$i][$counter];                            
+                            break;
+                        case 'commition value':
+                            $data['commission_value'][] = $dataArr[$i][$counter];                            
+                            break;                        
+                         
+                        
+                    }
+                    $counter++;
+                }
+                $data['method'] = 'addProductByCsv';
+                $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
+            }
+        }
+        $this->flashMessenger()->addMessage('product Added :'.  json_encode($response));    
+        return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_ADMIN_URL'].'product');
+    }
     
     public function saveproductAction() {
         $saveCategory = array();

@@ -81,7 +81,7 @@ class ProductController extends AbstractActionController {
         $saveCategory = $this->commonObj->curlhitApi($params);
         $response = json_decode($saveCategory, true);
         if($response['status'] == 'success'){
-            $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'].'storein';
+            $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'].'product/storein';
             header('Location:'.$path);
         }else{
             $path = $GLOBALS['HTTP_SITE_MERCHANT_URL'].'inventry';
