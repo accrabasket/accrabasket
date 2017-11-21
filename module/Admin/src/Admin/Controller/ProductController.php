@@ -152,6 +152,10 @@ class ProductController extends AbstractActionController {
                         $attribute[$i]['commission_value'] = $request['attribute_commission_value'][$i];
                         $attribute[$i]['commission_type'] = $request['attribute_commission_type'][$i];
                     }
+                    if(!empty($request['attribute_discount_value'][$i]) && !empty($request['attribute_discount_type'][$i])){
+                        $attribute[$i]['attribute_discount_type'] = $request['attribute_discount_type'][$i] ;
+                        $attribute[$i]['attribute_discount_value'] = $request['attribute_discount_value'][$i] ; 
+                     }
                     if (!empty($request['attribute_id'][$i])) {
                         $attribute[$i]['id'] = $request['attribute_id'][$i];
                     }
@@ -161,6 +165,11 @@ class ProductController extends AbstractActionController {
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
+           if(!empty($request['product_discount_value']) && !empty($request['product_discount_type'])){
+              $product['product_discount_value'] = $request['product_discount_value'] ;
+              $product['product_discount_type'] = $request['product_discount_type'] ; 
+           }
+           
            $product['status'] = $request['status'] ;
            $product['product_desc'] = $request['product_desc'];
            if(!empty($request['tax_id'])){
