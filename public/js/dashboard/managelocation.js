@@ -18,10 +18,41 @@ app.controller('managelocation', function ($scope, $http, $sce,$timeout, locatio
                 console.log($scope.locationList);
                 if($scope.searchLocation.id != undefined && $scope.searchLocation.id>0) {
                     $scope.locationData = $scope.locationList[$scope.searchLocation.id];
+                    $scope.getCity($scope.locationData.country_id);
                 }
             }
         });
     }
+    getCountry();
+    function getCountry() {
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'dashboard/countryList',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.countrylist = {};
+            if(response.status == 'success'){
+                $scope.countrylist = response.data;
+            }
+        });
+    }
+    
+    $scope.getCity = function(country_id) {
+        var data = {};
+        data.country_id = country_id;
+        $http({
+            method: 'POST',
+            data : ObjecttoParams(data),
+            url: serverAdminApp + 'dashboard/cityList',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.citylist = {};
+            if(response.status == 'success'){
+                $scope.citylist = response.data;
+            }
+        });
+    }
+    
     if(locationId != undefined && locationId >0) {
         $scope.searchLocation.id = locationId;
         $scope.getLocation();
@@ -37,7 +68,10 @@ app.controller('managelocation', function ($scope, $http, $sce,$timeout, locatio
 		}                
 		if(locationData.googlelocation == undefined || locationData.googlelocation == ''){
 			error = 'Please choose location from google.' ;
-		}                
+		}  
+                if(locationData.city_id == undefined || locationData.city_id == ''){
+			error = 'Please choose location from google.' ;
+		}  
 		if(error == ' '){       
 			$http({
 				method: 'POST',
