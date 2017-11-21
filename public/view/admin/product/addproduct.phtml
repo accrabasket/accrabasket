@@ -76,6 +76,22 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Discount Type</label>
+                                            <select class="form-control select2" style="width: 100%;" id="product_discount_value" name="product_discount_type" >
+                                                <option value="">Select Discount Type</option>
+                                                <option  <?php if($this->productList['discount_type']== 'flat'){echo'selected';} ?> value="flat">Flat</option>
+                                                <option <?php if($this->productList['discount_type']== 'percent'){echo'selected';}  ?> value="percent">Percent</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Discount Value</label>
+                                            <input type="text" value="<?= !empty($this->productList['discount_value'])?$this->productList['discount_value']:''?>" name="product_discount_value"  placeholder="value " class="form-control" >
+                                        </div>
+                                    </div>
                                     <div class="clearfix"></div>
                                     <?php 
                                     if(!empty($this->productList['atribute'])){
@@ -127,6 +143,22 @@
                                                 <div class="form-group">
                                                     <label>Commission value </label>
                                                     <input type="text" value='<?= !empty($value['commission_value'])?$value['commission_value']:''?>' name="attribute_commission_value[]" id="attribute_commission_value_{{index}}" placeholder="Commission value " class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Discount Type</label>
+                                                    <select class="form-control select2" style="width: 100%;" id="attribute_discount_type" name="attribute_discount_type[]" >
+                                                        <option selected="selected" value="">Select Discount Type</option>
+                                                        <option <?php if($value['discount_type']== 'flat'){echo'selected';} ?> value="flat">Flat</option>
+                                                        <option <?php if($value['discount_type']== 'percent'){echo'selected';} ?> value="percent">Percent</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Discount Value</label>
+                                                    <input type="text" value="<?= !empty($value['discount_value'])?$value['discount_value']:''?>"  name="attribute_discount_value[]"  placeholder="value " class="form-control" >
                                                 </div>
                                             </div>
 <!--                                            <div class="col-lg-12">
@@ -206,6 +238,22 @@
                                                 <div class="form-group">
                                                     <label>Commission value </label>
                                                     <input type="text" name="attribute_commission_value[]" id="attribute_commission_value_{{index}}" placeholder="Commission value " class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Discount Type</label>
+                                                    <select class="form-control select2" style="width: 100%;" id="attribute_discount_type" name="attribute_discount_type[]" >
+                                                        <option selected="selected" value="">Select Discount Type</option>
+                                                        <option  value="flat">Flat</option>
+                                                        <option  value="percent">Percent</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Discount Value</label>
+                                                    <input type="text"  name="attribute_discount_value[]"  placeholder="value " class="form-control" >
                                                 </div>
                                             </div>
 <!--                                            <div class="col-lg-12">
