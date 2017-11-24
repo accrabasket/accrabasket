@@ -25,10 +25,13 @@ class ProductController extends AbstractActionController {
     public function indexAction() {
         $request = array();
         $request['method'] = 'getProductList';
+        $request['page'] = 1;
+        $request['pagination'] = 'pagination';
         $productList = $this->commonObj->curlhitApi($request);
         $productList = json_decode($productList, true);
         if($productList['status'] == 'success') {
-            $this->view->productList = $productList['data'];
+            $this->view->productList = $productList['data']['data'];
+            $this->view->count = $productList['data']['count'];
         }
         return $this->view;
     }
@@ -226,5 +229,15 @@ class ProductController extends AbstractActionController {
         }
         exit;
         
+    }
+    
+    function getProductListAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'getProductList';
+        if(!empty($request['page'])){
+            $request['pagination'] = 'pagination';
+        }
+        echo $productList = $this->commonObj->curlhitApi($request);
+        exit;
     }
 }

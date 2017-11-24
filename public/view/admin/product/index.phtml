@@ -1,4 +1,7 @@
 <div class="content-wrapper">
+    <head>
+        <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    </head>
     <section class="content-header">
         <h1> Manage Merchant</h1>
         <ol class="breadcrumb">
@@ -7,7 +10,7 @@
         </ol>
     </section>
     <section class="content container-fluid">
-        <div class="row">
+        <div class="row" ng-app="product" ng-controller="productController" ng-cloak="true">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
@@ -20,13 +23,63 @@
                         </div>
                     </div>
                     <!-- /.box-header -->
+                    <div class="col-sm-10 col-lg-10  no-rpad">
+                        <label class="ml10">Search By</label></div>
+                    <div class="col-sm-10 col-lg-10  no-rpad">
+                    <form name="searchLogFrm" id="searchLogFrm" ng-submit="querySearch()" class="ng-valid ng-dirty ng-valid-parse ng-submitted"> 
+                    <div class="alert alert-danger alert-dismissable col-md-12 ng-binding ng-hide" ng-show="errorStatus">{{errorMsg}}</div>
+                    <div class="full-width fl">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button id="filtertypeofbutton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{selected_filter_level}}<span class="caret"></span></button>
+                                <ul class="dropdown-menu pos-absolute" role="menu" id="filtertypeof">
+                                        <li><a href="javascript:void(0);" data-type="name" ng-click="setFilterType('Product_name')">Product Name</a></li>
+                                        <li><a href="javascript:void(0);" data-type="email" ng-click="setFilterType('Attribute_name')">Attribute Name</a></li>
+                                        <li><a href="javascript:void(0);" data-type="phone" ng-click="setFilterType('Category_name')">Category Name</a></li>
+                                </ul>
+                            </div>
+
+                            <input ng-model="filterText" type="text" class="form-control search-input ng-valid ng-touched ng-dirty ng-valid-parse" aria-label="..." placeholder="Search {{selected_filter_level}}" value="">
+                            
+                        </div>  
+                    </div>   
+                    </form>
+                    </div>
+                    <div class="col-sm-2 no-lpad">
+                        <a href="#" ng-click="refresh()"><i class="fa fa-refresh" aria-hidden="true" ></i></a>
+                        <button class="btn btn-default pull-right" type="button" id="show-attribute"><i class="fa fa-align-left"></i> Search Filter</button>
+                    </div>
+                    <div class=" col-lg-12" id="add-attribute" style="display: none;">
+                        <div class="full-width pull-left">
+                            <div class="col-lg-5 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control " style="width: 100%;" tabindex="-1" aria-hidden="true" ng-model="filter.active">
+                                        <option selected="selected" value="">Select Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">In-Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-block btn-primary" type="button" ng-click="getProductList()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-width pull-left border-top">&nbsp;</div>
+                    </div>
+                    <div class="clearfix"></div>
+
                     <div class="box-body">
                         <p class="danger showMsg" style="color:green">
                             <?php
-                                if(!empty($this->flashMessenger()->getMessages())){
-                                    $msg =  $this->flashMessenger()->getMessages();
-                                    echo $msg[0];
-                                }
+                            if (!empty($this->flashMessenger()->getMessages())) {
+                                $msg = $this->flashMessenger()->getMessages();
+                                echo $msg[0];
+                            }
                             ?>                         
                         </p>                        
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -50,27 +103,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            if (!empty($this->productList)) {
-                                                foreach ($this->productList as $key => $value) {
-                                                    ?>
-                                                    <tr role="row" class="odd">
-                                                        <td class=""><i class="fa fa-close red"></i> &nbsp;<?= $value['product_name'] ?></td>
-                                                        <td class=""><?= $value['atribute'][0]['name'] ?></td>
-                                                        <td class=""><?= $value['atribute'][0]['unit'] ?></td>
-                                                        <td class="sorting_1"><?= $value['atribute'][0]['quantity'] ?></td>
-                                                        <td><?= $value['product_desc'] ?></td>
-                                                        <td><?= $value['category_name'] ?></td>
-                                                        <td>
-                                                            <a href="product/addproduct?id=<?=$value['id']?>"><i class="fa fa-edit"></i> </a>
-                                                            <a href="#"> <i class="fa fa-trash-o"></i></a>
-                                                        </td>
-                                                    </tr>
-
-
-
-    <?php }
-} ?>
+                                            <tr role="row" class="odd" ng-repeat="data in productList">
+                                                <td class=""><i class="fa fa-close red"></i> &nbsp;{{data.product_name}}</td>
+                                                <td class="">{{data['atribute'][0].name}}</td>
+                                                <td class="">{{data['atribute'][0].unit}}</td>
+                                                <td class="sorting_1">{{data['atribute'][0].quantity}}</td>
+                                                <td>{{data.product_desc}}</td>
+                                                <td>{{data.category_name}}</td>
+                                                <td>
+                                                    <a href="addproduct?id={{data.id}}"><i class="fa fa-edit"></i> </a>
+                                                    <a href="#"> <i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                            
                                         </tbody>
 
                                     </table>
@@ -78,25 +123,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing <?= count($this->marchantList) ?> entries</div>
+                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Total {{numberOfRecord}} entries</div>
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                        <ul class="pagination pull-right mt0">
-                                            <li class="paginate_button previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a></li>
-                                            <!--                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a></li>-->
-                                            <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
-                                        </ul>
+                                        <pagination  class="pagination pull-right mt0" ng-model="currentPage" total-items="numberOfRecord" max-size="3" boundary-links="true" ng-click="selectPage(currentPage)"></pagination>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <!-- /.box-body -->
                 </div>
             </div>
@@ -104,3 +140,19 @@
     </section>
 </div>
 
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/productlist.js' ?>"></script>
+<script>
+var PAGE_COUNT = 5;
+var PAGING_GAP = 3;
+$(document).ready(function(){
+        $("#show-attribute").click(function(){
+                $("#add-attribute").toggle();
+        });
+        $('.test').jfilestyle();
+});
+  
+</script>
+<script>
+    app.value('productList', '<?php echo !empty($this->productList)?  json_encode($this->productList):'';?>');
+    app.value('count', '<?php echo !empty($this->count)?  json_encode($this->count):'';?>');
+</script>
