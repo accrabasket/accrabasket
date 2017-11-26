@@ -64,8 +64,8 @@ app.controller('productController', function ($scope, $http,count,productList) {
         }).success(function (response) {
             $scope.productList = {};
             if(response.status == 'success'){
-                $scope.productList = response.data.data;
-                $scope.numberOfRecord = response.data.count;
+                $scope.productList = response.data;
+                $scope.numberOfRecord = response.count;
             }
         });
     }    

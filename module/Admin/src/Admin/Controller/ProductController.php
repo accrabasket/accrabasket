@@ -30,8 +30,8 @@ class ProductController extends AbstractActionController {
         $productList = $this->commonObj->curlhitApi($request);
         $productList = json_decode($productList, true);
         if($productList['status'] == 'success') {
-            $this->view->productList = $productList['data']['data'];
-            $this->view->count = $productList['data']['count'];
+            $this->view->productList = $productList['data'];
+            $this->view->count = $productList['totalRecord'];
         }
         return $this->view;
     }
