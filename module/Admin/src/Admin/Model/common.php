@@ -23,8 +23,10 @@ class common{
 //            $queryStr = json_encode($queryStr);
         }
         $data['parameters'] = $queryStr;
-        $url = BASKET_API.$controller.'?'.http_build_query($data);
-        return $this->cObj->callCurl($url);
+        $url = BASKET_API.$controller;
+        $parametes = http_build_query($data);
+        //echo $url = $url.'?'.$parametes;die;
+        return $this->cObj->callPostCurl($url, $parametes);
     }
     
     public function getLocationList($inputParams = array()) {
