@@ -41,7 +41,11 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
 		}
 		if($scope.id != ''){
 			$scope.categoryData.id = $scope.id;
-		}      
+		}
+                
+                if($('#cat_img').val() != ''){
+			$scope.categoryData.image = $('#cat_img').val();
+		}
                 
 		if(error == ' '){       
 			$http({
@@ -73,6 +77,21 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
 		}
 		
     };
-	
-	
-});	
+    
+    
+});
+
+
+ function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#cat_img').val(e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function uploadImageInTemp(obj) {
+    readURL(obj);
+}
+;
