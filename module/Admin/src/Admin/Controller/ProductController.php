@@ -147,7 +147,7 @@ class ProductController extends AbstractActionController {
             $attribute = array();
             if (!empty($request['attribute_name'])) {
                 for ($i = 0; $i < count($request['attribute_name']); $i++) {
-                    $index = $i + 1;
+                    $index = $i;
                     $attribute[$i]['name'] = $request['attribute_name'][$i];
                     $attribute[$i]['unit'] = $request['attribute_unit'][$i];
                     $attribute[$i]['quantity'] = $request['attribute_quantity'][$i];
@@ -162,9 +162,17 @@ class ProductController extends AbstractActionController {
                     if (!empty($request['attribute_id'][$i])) {
                         $attribute[$i]['id'] = $request['attribute_id'][$i];
                     }
+                    if (!empty($_FILES['attribute_img_'.$index]['name'][0])) {
+                        foreach ($_FILES['attribute_img_'.$index]['name'] as $key => $val) {
+                            
+                            if(file_exists($_FILES['attribute_img_'.$index]['tmp_name'][$key])) {
+                                $base64 = 'data:image/' . $_FILES['attribute_img_'.$index]['type'][$key] . ';base64,' . base64_encode(file_get_contents($_FILES['attribute_img_'.$index]['tmp_name'][$key]));
+                                $attribute[$i]['images'][] = $base64;
+                            }
+                        }
+                    }                    
                 }
             }
-
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
            $product['category_id'] = $request['category_id'];
@@ -182,44 +190,20 @@ class ProductController extends AbstractActionController {
                $product['id'] = $request['id'];
            }
         }
-        $params = array();
-        $params = array_merge($product,$attributes);
-        $params['method'] = 'addEditProduct';
-        
-        $saveCategory = $this->commonObj->curlhitApi($params);
-        $response = json_decode($saveCategory, true);
-        if(!isset($_FILES['product_img']) && !empty($_FILES['product_img']))
+        if(!empty($_FILES['product_img']))
         {
             $images_array=array();
              foreach($_FILES['product_img']['name'] as $key=>$val){
-                $uploadfile = $_FILES['product_img']["tmp_name"][$key];
-                $imagePath = $GLOBALS['PRODUCTIMAGEPATH'].'/'.$response['data']['product_id'].'/';;
-                @mkdir($imagePath, '0777', true);
-                $target_file = $imagePath.$_FILES['product_img']['name'][$key];
-                if(move_uploaded_file($_FILES["product_img"]["tmp_name"][$key], "$imagePath".$_FILES["product_img"]["name"][$key])){
-                    $images_array[] = $target_file;
+                if(file_exists($_FILES['product_img']['tmp_name'][$key])) { 
+                    $product['images'][] = $base64 = 'data:image/' . $_FILES['product_img']['type'][$key] . ';base64,' . base64_encode(file_get_contents($_FILES['product_img']['tmp_name'][$key]));
                 }
             }
-        }
-        if (!empty($response['data']['attribute'])) {
-            foreach ($response['data']['attribute'] as $key => $value) {
-                $index = $key+1;
-                if (isset($_FILES['attribute_img_'.$index])) {
-                    $images_array = array();
-                    foreach ($_FILES['attribute_img_'.$index]['name'] as $key => $val) {
-                        $uploadfile = $_FILES['attribute_img_'.$index]["tmp_name"][$key];
-                        $imagePath = $GLOBALS['ATTRIBUTEIMAGEPATH'] . '/' . $value . '/';
-                        @mkdir($imagePath, '0777', true);
-                        $target_file = $imagePath . $_FILES['attribute_img_'.$index]['name'][$key];
-                        if (move_uploaded_file($_FILES['attribute_img_'.$index]["tmp_name"][$key], "$imagePath" . $_FILES['attribute_img_'.$index]["name"][$key])) {
-                            $images_array[] = $target_file;
-                        }
-                    }
-                }
-            }
-        }
-
-
+        }        
+        $params = array();
+        $params = array_merge($product,$attributes);
+        $params['method'] = 'addEditProduct';    
+        $saveCategory = $this->commonObj->curlhitApi($params);
+        $response = json_decode($saveCategory, true);
         if($response['status'] == 'success'){
             $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
             header('Location:'.$path);

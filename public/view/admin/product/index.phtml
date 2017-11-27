@@ -111,7 +111,7 @@
                                                 <td>{{data.product_desc}}</td>
                                                 <td>{{data.category_name}}</td>
                                                 <td>
-                                                    <a href="addproduct?id={{data.id}}"><i class="fa fa-edit"></i> </a>
+                                                    <a href="<?php echo $this->basePath()?>/admin/product/addproduct?id={{data.id}}"><i class="fa fa-edit"></i> </a>
                                                     <a href="#"> <i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>

@@ -111,9 +111,11 @@
                                                 <div class="form-group">
                                                     <label>Unit</label>
                                                     <select class="form-control select2" style="width: 100%;" id="attribute_unit_{{index}}" name="attribute_unit[]" >
-                                                        <option value="grams" selected="<?= $value['quantity']?> == 'grams'">Grams</option>
-                                                        <option value="liter" selected="<?= $value['quantity']?> == 'liter'">Liter</option>
-                                                        <option value="kg" selected="<?= $value['quantity']?> == 'kg'">Kg</option>
+                                                        <option value="gm" <?php if($value['unit']== 'gm') echo "selected"?>>Grams</option>
+                                                        <option value="liter"  <?php if($value['unit']== 'liter') echo "selected"?>>Liter</option>
+                                                        <option value="kg"  <?php if($value['unit']== 'kg') echo "selected"?>>Kg</option>
+                                                        <option value="ml" <?php if($value['unit']== 'ml') echo "selected"?> >ML</option>
+                                                        <option value="sticks" <?php if($value['unit']== 'sticks') echo "selected"?>>Sticks</option>
                                                     </select>
                                                 </div>
                                             </div>
