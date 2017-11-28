@@ -96,9 +96,31 @@ class DashboardController extends AbstractActionController {
     }    
 
 
-    public function emailsetupAction() {
+    public function updateprofileAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['id'] = $this->session['user']['data'][0]['id'];
+        $request['method'] = 'getMarchantList';
+        $getMarchantList = $this->commonObj->curlhitApi($request);
+        $getMarchantList = json_decode($getMarchantList, true);
+        if (!empty($getMarchantList['data'])) {
+            $this->view->marchantData = $getMarchantList['data'][0];
+        }
         return $this->view;
     }
+    
+    public function saveMerchantAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'saveMerchant';
+        $postParams['id'] = $this->session['user']['data'][0]['id'];
+        $saveMerchantResponse = $this->commonObj->curlhitApi($postParams);
+        $response = json_decode($saveMerchantResponse, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveMerchantResponse;
+        exit;        
+    }
+    
     public function emailsetuplistAction() {
         return $this->view;
     }
