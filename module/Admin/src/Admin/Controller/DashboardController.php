@@ -128,6 +128,7 @@ class DashboardController extends AbstractActionController {
         $getMarchantList = json_decode($getMarchantList, true);
         if (!empty($getMarchantList['data'])) {
             $this->view->marchantList = $getMarchantList['data'];
+            $this->view->marchantListImg = $getMarchantList['images'];
         }
         return $this->view;
     }
