@@ -71,9 +71,9 @@ class ProductController extends AbstractActionController {
     
     public function importproductAction() {
         ini_set('max_execution_time', -1);
-        move_uploaded_file($_FILES["product_csv"]["tmp_name"],'productimport.csv');
+        //move_uploaded_file($_FILES["product_csv"]["tmp_name"],'productimport.csv');
         $dataArr = array();
-        if (($handle = fopen("productimport.csv", "r")) !== FALSE) {
+        if (($handle = fopen($_FILES["product_csv"]["tmp_name"], "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $dataArr[] = $data;
             }
@@ -87,7 +87,9 @@ class ProductController extends AbstractActionController {
                 
             }else{
                 $counter = 0;
+                $index = 1;
                 $data = array();
+                $featuredBulletsDetails = array();
                 foreach($dataArr[0] as $column) {
                     $column = trim(strtolower($column));
                     switch($column) {
@@ -127,13 +129,14 @@ class ProductController extends AbstractActionController {
                         case 'commition value':
                             $data['commission_value'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
                             break;                        
-                        case 'feature bullets':
+                        case 'feature bullets '.$index:
+                            $index++;
                             if(!empty($dataArr[$i][$counter])) {
                                 $featuredBullets = array();
                                 $featuredBullets = explode(":", $dataArr[$i][$counter]);
-                                $featuredBulletsDetails = array();
+                                
                                 $featuredBulletsDetails[$featuredBullets[0]] = $featuredBullets[1]; 
-                                $data['custom_info'][] = $featuredBulletsDetails;                            
+                                                           
                             }
                             break;                          
                                  
@@ -141,6 +144,7 @@ class ProductController extends AbstractActionController {
                     $counter++;
                 }
                 $data['method'] = 'addProductByCsv';
+                $data['custom_info'] = json_encode($featuredBulletsDetails);
                 $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
             }
         }
