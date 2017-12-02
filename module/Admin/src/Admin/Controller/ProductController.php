@@ -89,46 +89,54 @@ class ProductController extends AbstractActionController {
                 $counter = 0;
                 $data = array();
                 foreach($dataArr[0] as $column) {
-                    $column = trim($column);
+                    $column = trim(strtolower($column));
                     switch($column) {
                         case 'product name':
-                            $data['product_name'] = $dataArr[$i][$counter];
+                            $data['product_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'product desc':
-                            $data['product_desc'] = $dataArr[$i][$counter];
+                            $data['product_desc'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'category name':
-                            $data['category_name'] = $dataArr[$i][$counter];
+                            $data['category_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'product image':
-                            $data['product_image'][] = $dataArr[$i][$counter];
+                            $data['product_image'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'tax':
-                            $data['tax'] = $dataArr[$i][$counter];
+                            $data['tax'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'attribute name':
-                            $data['attribute_name'][] = $dataArr[$i][$counter];
+                            $data['attribute_name'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'unit':
-                            $data['unit'][] = $dataArr[$i][$counter];
+                            $data['unit'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'quantity':
-                            $data['quantity'][] = $dataArr[$i][$counter];
+                            $data['quantity'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'attribute image':
-                            $data['attribute_image'][] = $dataArr[$i][$counter];
+                            $data['attribute_image'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'commission type':
-                            $data['commission_type'][] = $dataArr[$i][$counter];                            
+                            $data['commission_type'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
                             break;
                         case 'commission value':
-                            $data['commission_value'][] = $dataArr[$i][$counter];                            
+                            $data['commission_value'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
                             break;
                         case 'commition value':
-                            $data['commission_value'][] = $dataArr[$i][$counter];                            
+                            $data['commission_value'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
                             break;                        
-                         
-                        
+                        case 'feature bullets':
+                            if(!empty($dataArr[$i][$counter])) {
+                                $featuredBullets = array();
+                                $featuredBullets = explode(":", $dataArr[$i][$counter]);
+                                $featuredBulletsDetails = array();
+                                $featuredBulletsDetails[$featuredBullets[0]] = $featuredBullets[1]; 
+                                $data['custom_info'][] = $featuredBulletsDetails;                            
+                            }
+                            break;                          
+                                 
                     }
                     $counter++;
                 }
@@ -211,6 +219,7 @@ class ProductController extends AbstractActionController {
         $params['method'] = 'addEditProduct';    
         $saveCategory = $this->commonObj->curlhitApi($params);
         $response = json_decode($saveCategory, true);
+        //print_r($response);die;
         if($response['status'] == 'success'){
             $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
             header('Location:'.$path);
