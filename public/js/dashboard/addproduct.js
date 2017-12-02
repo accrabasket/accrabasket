@@ -6,6 +6,8 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
     $scope.attrbuteData = {};
     $scope.index = 0;
     $scope.indexVal = [];
+    $scope.indexDis = 0;
+    $scope.indexValDis = [];
     $scope.taxList = {};
     if(productList != ''){
         for(var i=1; i <= productList ;i++){
@@ -18,6 +20,13 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
          var a = ($scope.indexVal).length +1;
           $scope.index++;
          ($scope.indexVal).push(a);
+    }
+    
+    $scope.showAttrDivDis = function(){
+        $scope.showAttrDis = true;
+         var a = ($scope.indexValDis).length +1;
+          $scope.indexDis++;
+         ($scope.indexValDis).push(a);
     }
     
     function showAttrDiv() {
@@ -68,10 +77,10 @@ function checkform(){
         msg = 'Product name should not blank';
         ret = false;
     }
-    if($('#category_id').val() == ''){
-        msg = 'Product category id should not blank';
-        ret = false;
-    }
+//    if($('#category_id').val() == ''){
+//        msg = 'Product category id should not blank';
+//        ret = false;
+//    }
     if($('#product_name').val() == ''){
         msg = 'Product name should not blank';
         ret = false;

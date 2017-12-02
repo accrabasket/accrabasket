@@ -163,33 +163,39 @@
                                                     <input type="text" value="<?= !empty($value['discount_value'])?$value['discount_value']:''?>"  name="attribute_discount_value[]"  placeholder="value " class="form-control" >
                                                 </div>
                                             </div>
-<!--                                            <div class="col-lg-12">
-                                                <div class="full-width">
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix">&nbsp;</div>
-                                            </div>-->
                                         </div>
                                         <div class="clearfix border-top">&nbsp;</div>
                                     </div>
                                     <?php } }?>
                                     
-                                    
+                                    <?php
+                                    if (!empty($this->productList['custom_info'])) {
+                                        $features = json_decode($this->productList['custom_info'],true);
+                                        
+                                        foreach ($features as $key => $value) {
+                                        ?>
+                                        <div class=" col-lg-12" id="add-attribute">
+                                            <div class="row border-top">
+                                                <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                    <div class="form-group">
+                                                        <label>Title</label>
+                                                        <input type="text"  placeholder="Title" id="attribute_name_{{index}}" name="custom_title[]" class="form-control" value="<?=$key?>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Title Description </label>
+                                                        <textarea class="form-control" name="custom_dis[]" ><?= !empty($value) ? $value : '' ?></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix border-top">&nbsp;</div>
+                                        </div>
+                                        <?php
+                                    }
+                                    }
+                                    ?>
                                     <div class="clearfix"></div>
                                     
                                     <span ng-repeat="index in indexVal">
@@ -258,27 +264,28 @@
                                                     <input type="text"  name="attribute_discount_value[]"  placeholder="value " class="form-control" >
                                                 </div>
                                             </div>
-<!--                                            <div class="col-lg-12">
-                                                <div class="full-width">
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
-                                                    <div class="col-sm-3 upload"> 
-                                                        <img alt="Photo" src="dist/img/user1-128x128.jpg" class="img-responsive"> 
-                                                        <a class="pull-right close" href="#"><i class="fa fa-times"></i></a> 
-                                                    </div>
+                                        </div>
+                                        <div class="clearfix border-top">&nbsp;</div>
+                                    </div>
+                                    </span>    
+                                    <div class="clearfix"></div>
+                                    
+                                    <span ng-repeat="index in indexValDis">
+                                    <div class=" col-lg-12" id="add-attribute" ng-show="showAttrDis">
+                                        <div class="row border-top">
+                                            <div class="col-lg-6 col-sm-6 col-xs-12 mt10">
+                                                <div class="form-group">
+                                                    <label>Title</label>
+                                                    <input type="text" value="" placeholder="Title" id="attribute_name_{{index}}" name="custom_title[]" class="form-control" >
                                                 </div>
-                                                <div class="clearfix">&nbsp;</div>
-                                            </div>-->
+                                            </div>
+                                            
+                                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Title Description </label>
+                                                    <textarea class="form-control" name="custom_dis[]" ></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="clearfix border-top">&nbsp;</div>
                                     </div>
@@ -287,6 +294,9 @@
 
                                     <div class="col-lg-6 col-sm-6 col-xs-12  pull-right">
                                         <button class="btn btn-default pull-right" type="button" id="show-attribute" ng-click="showAttrDiv()"><i class="fa fa-plus"></i> Add Attribute</button>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12  pull-right">
+                                        <button class="btn btn-default pull-right" type="button" id="show-attribute" ng-click="showAttrDivDis()"><i class="fa fa-plus"></i> Add Custom Fields </button>
                                     </div>
                                 </div>
                             </div>

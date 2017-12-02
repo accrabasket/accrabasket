@@ -143,6 +143,7 @@ class ProductController extends AbstractActionController {
     public function saveproductAction() {
         $saveCategory = array();
         $request = (array)$this->getRequest()->getPost();
+ 
         if(!empty($request)){
             $attribute = array();
             if (!empty($request['attribute_name'])) {
@@ -180,7 +181,13 @@ class ProductController extends AbstractActionController {
               $product['product_discount_value'] = $request['product_discount_value'] ;
               $product['product_discount_type'] = $request['product_discount_type'] ; 
            }
-           
+           $featureArr = array();
+           if(!empty($request['custom_title'])){
+               foreach ($request['custom_title'] as $key => $value) {
+                   $featureArr[$value] = $request['custom_dis'][$key];
+                }
+                $product['custom_info'] = json_encode($featureArr) ;
+           }
            $product['status'] = $request['status'] ;
            $product['product_desc'] = $request['product_desc'];
            if(!empty($request['tax_id'])){
