@@ -62,15 +62,17 @@ class ProductController extends AbstractActionController {
             $csvData[$counter][]= 'stock';
             $counter ++;
             foreach($data as $row) {
-                foreach ($row['atribute'] as $key => $value) {
-                    $csvData[$counter][]= $row['id'];
-                    $csvData[$counter][] = $row['product_name'];
-                    $csvData[$counter][] = $row['category_name'];
-                    $csvData[$counter][] = $value['name'];
-                    $csvData[$counter][] = $value['id'];
-                    $csvData[$counter][] = $value['quantity'].' '.$value['unit'];
-                    
-                    $counter++;
+                if(!empty($row['atribute'])) {
+                    foreach ($row['atribute'] as $key => $value) {
+                        $csvData[$counter][]= $row['id'];
+                        $csvData[$counter][] = $row['product_name'];
+                        $csvData[$counter][] = $row['category_name'];
+                        $csvData[$counter][] = $value['name'];
+                        $csvData[$counter][] = $value['id'];
+                        $csvData[$counter][] = $value['quantity'].' '.$value['unit'];
+
+                        $counter++;
+                    }
                 }
                 
             }
