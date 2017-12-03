@@ -18,14 +18,52 @@ class ProductController extends AbstractActionController {
     
     public function getproductlistAction() {
         $request = (array) $this->getRequest()->getPost();
+        $query = (array) $this->getRequest()->getQuery();
         $request['method'] = 'getProductList';
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
         }
         $productList = $this->commonObj->curlhitApi($request);
+        if(!empty($query['download_csv'])) {
+            $this->downloadCsv($productList);
+        }
         echo $productList;
         exit();
-
+    }
+    public function downloadCsv($data) {
+    $filename = "product_list_" . date("Y-m-d") . ".csv";
+    // disable caching
+    $now = gmdate("D, d M Y H:i:s");
+    header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+    header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+    header("Last-Modified: {$now} GMT");
+ 
+    // force download  
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+ 
+    // disposition / encoding on response body
+    header("Content-Disposition: attachment;filename={$filename}");
+    header("Content-Transfer-Encoding: binary");        
+        $data = json_decode($data, true);
+        //$csvData = '';
+        if(!empty($data['data'])) {
+            $data = $data['data'];
+            $counter = 0;
+            foreach($data as $row) {
+                $csvData[$counter][]= $row['id'];
+                $csvData[$counter][] = $row['category_name'];
+                $counter++;
+            }
+        }
+        $df = fopen("php://output", 'w');
+        foreach ($csvData as $row) {
+            fputcsv($df, $row);
+        }
+    fclose($df);
+    die();          
+        echo $csvData; exit();        
     }
     public function inventryAction() {
         $request = (array) $this->getRequest()->getQuery();

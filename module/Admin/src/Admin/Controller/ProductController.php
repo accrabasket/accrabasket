@@ -129,14 +129,10 @@ class ProductController extends AbstractActionController {
                         case 'commition value':
                             $data['commission_value'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
                             break;                        
-                        case 'feature bullets '.$index:
-                            $index++;
+                        case 'feature bullets':
                             if(!empty($dataArr[$i][$counter])) {
-                                $featuredBullets = array();
-                                $featuredBullets = explode(":", $dataArr[$i][$counter]);
                                 
-                                $featuredBulletsDetails[$featuredBullets[0]] = $featuredBullets[1]; 
-                                                           
+                                $featuredBulletsDetails[] = json_encode($dataArr[$i][$counter]); 
                             }
                             break;                          
                                  
@@ -144,7 +140,7 @@ class ProductController extends AbstractActionController {
                     $counter++;
                 }
                 $data['method'] = 'addProductByCsv';
-                $data['custom_info'] = json_encode($featuredBulletsDetails);
+                $data['custom_info'] = $featuredBulletsDetails;
                 $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
             }
         }
