@@ -170,7 +170,7 @@
                                     
                                     <?php
                                     if (!empty($this->productList['custom_info'])) {
-                                        $features = json_decode($this->productList['custom_info'],true);
+                                        $features = $this->productList['custom_info'];
                                         
                                         foreach ($features as $key => $value) {
                                         ?>
