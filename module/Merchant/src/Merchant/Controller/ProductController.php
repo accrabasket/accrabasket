@@ -51,10 +51,28 @@ class ProductController extends AbstractActionController {
         if(!empty($data['data'])) {
             $data = $data['data'];
             $counter = 0;
+            $csvData[$counter][]= 'product id';
+            $csvData[$counter][]= 'product name';
+            $csvData[$counter][]= 'category name';
+            $csvData[$counter][]= 'atribute name';
+            $csvData[$counter][]= 'atribute id';
+            $csvData[$counter][]= 'quantity';
+            $csvData[$counter][]= 'store name';
+            $csvData[$counter][]= 'price';
+            $csvData[$counter][]= 'stock';
+            $counter ++;
             foreach($data as $row) {
-                $csvData[$counter][]= $row['id'];
-                $csvData[$counter][] = $row['category_name'];
-                $counter++;
+                foreach ($row['atribute'] as $key => $value) {
+                    $csvData[$counter][]= $row['id'];
+                    $csvData[$counter][] = $row['product_name'];
+                    $csvData[$counter][] = $row['category_name'];
+                    $csvData[$counter][] = $value['name'];
+                    $csvData[$counter][] = $value['id'];
+                    $csvData[$counter][] = $value['quantity'].' '.$value['unit'];
+                    
+                    $counter++;
+                }
+                
             }
         }
         $df = fopen("php://output", 'w');
@@ -65,6 +83,70 @@ class ProductController extends AbstractActionController {
     die();          
         echo $csvData; exit();        
     }
+    
+    public function exportcsvAction() {
+        return $this->view;
+    }
+    
+    public function importinventryAction() {
+        ini_set('max_execution_time', -1);
+        $dataArr = array();
+        if (($handle = fopen($_FILES["product_csv"]["tmp_name"], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $dataArr[] = $data;
+            }
+            fclose($handle);
+        }
+        $params = array();
+        $totalNumOfProduct = count($dataArr);
+        for ($i = 0; $i < $totalNumOfProduct; $i++){
+            if($i==0){
+                
+            }else{
+                $counter = 0;
+                $index = 1;
+                $data = array();
+                $featuredBulletsDetails = array();
+                foreach($dataArr[0] as $column) {
+                    $column = trim(strtolower($column));
+                    switch($column) {
+                        case 'product name':
+                            $data['product_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'product id':
+                            $data['product_id'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'category name':
+                            $data['category_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'atribute id':
+                            $data['attribute_id'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'atribute name':
+                            $data['atribute_name'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'store name':
+                            $data['store_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'price':
+                            $data['price'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                        case 'stock':
+                            $data['stock'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
+                           
+                    }
+                    $counter++;
+                }
+                $data['method'] = 'addInventryByCsv';
+                $data['merchant_id'] = $this->session['user']['data'][0]['id'];
+                $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
+            }
+        }
+        $this->flashMessenger()->addMessage('Inventry updated :'.  json_encode($response));    
+        return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_MERCHANT_URL'].'product');
+    }
+    
     public function inventryAction() {
         $request = (array) $this->getRequest()->getQuery();
         if (!empty($request)) {
