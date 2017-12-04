@@ -319,5 +319,24 @@ class DashboardController extends AbstractActionController {
         echo $cityList;
         exit;
     }
+    
+    public function managesettingAction() {
+        $request = array();
+        $request['method'] = 'settinglist';
+        $getSettingList = $this->commonObj->curlhitApi($request);
+        $getSettingList = json_decode($getSettingList, true);
+        if (!empty($getSettingList['data'])) {
+            $this->view->settingList = $getSettingList['data'];
+        }
+        return $this->view;
+    }
+
+    public function savesettingAction() {
+        $inputParams = (array) $this->getRequest()->getPost();
+        $inputParams['method'] = 'saveSetting';
+        $response = $this->commonObj->curlhitApi($inputParams);
+        echo $response;
+        exit;
+    }
 
 }
