@@ -304,6 +304,55 @@ class DashboardController extends AbstractActionController {
         exit;
     }
     
+    public function addcityAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if(!empty($request)) {
+            $request['method'] = 'cityList';
+            $getCityList = $this->commonObj->curlhitApi($request);
+            $getCityList = json_decode($getCityList, true);
+            if (!empty($getCityList['data'])) {
+                $this->view->cityList = $getCityList['data'][$request['id']];
+            }
+        }
+//        print_r($getCityList['data']);die;
+        return $this->view;
+    }
+
+    public function savecityAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'addeditcity';
+        $saveCityResponse = $this->commonObj->curlhitApi($postParams);
+        $response = json_decode($saveCityResponse, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveCityResponse;
+        exit;        
+    }
+    
+    public function managecityAction() {
+        $request = array();
+        $request['method'] = 'cityList';
+        $getCityList = $this->commonObj->curlhitApi($request);
+        $getCityList = json_decode($getCityList, true);
+        if (!empty($getCityList['data'])) {
+            $this->view->cityList = $getCityList['data'];
+        }
+        return $this->view;
+    }
+    
+    public function deletecityAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'deletecity';
+        $deleteCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($deleteCategory, true);
+        if ($response['status'] == 'success') {
+            $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/managecity';
+            header('Location:' . $path);
+        }
+        exit;
+    }
+    
     public function countryListAction() {
         $inputParams = (array) $this->getRequest()->getPost();
         $inputParams['method'] = 'countryList';
