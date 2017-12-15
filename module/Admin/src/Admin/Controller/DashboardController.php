@@ -353,6 +353,55 @@ class DashboardController extends AbstractActionController {
         exit;
     }
     
+    public function addtimeslotAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if(!empty($request)) {
+            $request['method'] = 'deliveryTimeSlotList';
+            $getTimeslotList = $this->commonObj->curlhitApi($request);
+            $getTimeslotList = json_decode($getTimeslotList, true);
+            if (!empty($getTimeslotList['data'])) {
+                $this->view->timeslotList = $getTimeslotList['data'][$request['id']];
+            }
+        }
+//        print_r($getCityList['data']);die;
+        return $this->view;
+    }
+
+    public function savetimeslotAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'addedittimeslot';
+        $saveCityResponse = $this->commonObj->curlhitApi($postParams);
+        $response = json_decode($saveCityResponse, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveCityResponse;
+        exit;        
+    }
+    
+    public function managetimeslotAction() {
+        $request = array();
+        $request['method'] = 'deliveryTimeSlotList';
+        $getTimeslotList = $this->commonObj->curlhitApi($request);
+        $getTimeslotList = json_decode($getTimeslotList, true);
+        if (!empty($getTimeslotList['data'])) {
+            $this->view->timeslotList = $getTimeslotList['data'];
+        }
+        return $this->view;
+    }
+    
+    public function deletetimeslotAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'deletetimeslot';
+        $deleteTimeslot = $this->commonObj->curlhitApi($request);
+        $response = json_decode($deleteTimeslot, true);
+        if ($response['status'] == 'success') {
+            $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/managetimeslot';
+            header('Location:' . $path);
+        }
+        exit;
+    }
+    
     public function countryListAction() {
         $inputParams = (array) $this->getRequest()->getPost();
         $inputParams['method'] = 'countryList';
