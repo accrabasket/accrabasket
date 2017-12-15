@@ -1,0 +1,65 @@
+<div class="content-wrapper" ng-app="app" id="managetimeslot" ng-controller="managetimeslot"  ng-cloak="true">
+    <!-- Content Header (Page header) -->
+    
+    <section class="content-header">
+        <h1> Add Time Slot</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Time Slot</a></li>
+            <li class="active"> Add Time Slot</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title">Area Time Slot</h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                   
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Start Time Slot</label>
+                                            <input type="text" placeholder="End time like 12" maxlength="2" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control"  name="name"   ng-model="timeslotData.start_time_slot">
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>End Time Slot</label>
+                                            <input type="text" placeholder="End time like 16" class="form-control"  name="name" maxlength="2" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"  ng-model="timeslotData.end_time_slot">
+                                        </div>
+                                    </div>
+                                                                  
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <button class="btn btn-info" ng-click="saveTimeslot(timeslotData)">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+ <script>
+    var app = angular.module('app', []);
+    app.value('timeslotList', <?php echo !empty($this->timeslotList)?json_encode($this->timeslotList):'';?>);
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/addtimeslot.js' ?>">
+</script>
