@@ -1,0 +1,169 @@
+<div class="content-wrapper">
+    <head>
+        <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    </head>
+    <section class="content-header">
+        <h1> Manage Order</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Systems setup</a></li>
+            <li class="active"> Manage Order</li>
+        </ol>
+    </section>
+    <section class="content container-fluid">
+        <div class="row" ng-app="order" ng-controller="orderController" ng-cloak="true" ng-init="getOrderList()">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"> Order List</h3>
+                          
+                        <div class="pull-right"> 
+                            &nbsp;<a ng-click="shortUsingStatus('cancelled')" class="btn btn-info"> Cancelled</a>
+                        </div>
+                        <div class="pull-right"> 
+                            &nbsp;<a ng-click="shortUsingStatus('completed')" class="btn btn-info"> Completed</a>
+                        </div> 
+                        <div class="pull-right"> 
+                            &nbsp;<a ng-click="shortUsingStatus('ready_to_dispatch')" class="btn btn-info"> Dispatch</a>
+                        </div>
+                        <div class="pull-right"> 
+                            &nbsp;<a ng-click="shortUsingStatus('order_placed')" class="btn btn-info"> Placed</a>
+                        </div> 
+                        
+                    </div>
+                    <!-- /.box-header -->
+<!--                    <div class="col-sm-10 col-lg-10  no-rpad">
+                        <label class="ml10">Search By</label></div>
+                    <div class="col-sm-10 col-lg-10  no-rpad">
+                    <form name="searchLogFrm" id="searchLogFrm" ng-submit="querySearch()" class="ng-valid ng-dirty ng-valid-parse ng-submitted"> 
+                    <div class="alert alert-danger alert-dismissable col-md-12 ng-binding ng-hide" ng-show="errorStatus">{{errorMsg}}</div>
+                    <div class="full-width fl">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button id="filtertypeofbutton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{selected_filter_level}}<span class="caret"></span></button>
+                                <ul class="dropdown-menu pos-absolute" role="menu" id="filtertypeof">
+                                        <li><a href="javascript:void(0);" data-type="name" ng-click="setFilterType('Product_name')">Product Name</a></li>
+                                        <li><a href="javascript:void(0);" data-type="email" ng-click="setFilterType('Attribute_name')">Attribute Name</a></li>
+                                        <li><a href="javascript:void(0);" data-type="phone" ng-click="setFilterType('Category_name')">Category Name</a></li>
+                                </ul>
+                            </div>
+
+                            <input ng-model="filterText" type="text" class="form-control search-input ng-valid ng-touched ng-dirty ng-valid-parse" aria-label="..." placeholder="Search {{selected_filter_level}}" value="">
+                            
+                        </div>  
+                    </div>   
+                    </form>
+                    </div>
+                    <div class="col-sm-2 no-lpad">
+                        <a href="#" ng-click="refresh()"><i class="fa fa-refresh" aria-hidden="true" ></i></a>
+                        <button class="btn btn-default pull-right" type="button" id="show-attribute"><i class="fa fa-align-left"></i> Search Filter</button>
+                    </div>
+                    <div class=" col-lg-12" id="add-attribute" style="display: none;">
+                        <div class="full-width pull-left">
+                            <div class="col-lg-5 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control " style="width: 100%;" tabindex="-1" aria-hidden="true" ng-model="filter.active">
+                                        <option selected="selected" value="">Select Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">In-Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-block btn-primary" type="button" ng-click="getProductList()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-width pull-left border-top">&nbsp;</div>
+                    </div>-->
+                    <div class="clearfix"></div>
+
+                    <div class="box-body">
+                        <p class="danger showMsg" style="color:green">
+                            <?php
+                            if (!empty($this->flashMessenger()->getMessages())) {
+                                $msg = $this->flashMessenger()->getMessages();
+                                echo $msg[0];
+                            }
+                            ?>                         
+                        </p>                        
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Order id</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">User Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Shipping Address</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Commission amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
+
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="odd" ng-repeat="data in orderList">
+                                                <td class=""><i class="fa fa-close red"></i> &nbsp;{{data.order_details.order_id}}</td>
+                                                <td class="">{{user_details[data.order_details.user_id].name}}</td>
+                                                <td class="">{{shipping_address_list[data.order_details.shipping_address_id].address_nickname}}
+                                                {{shipping_address_list[data.order_details.shipping_address_id].house_number}}
+                                                {{shipping_address_list[data.order_details.shipping_address_id].city}}</td>
+                                                <td class="">{{data.order_details.commission_amount}}</td>
+                                                <td>{{data.order_details.payable_amount}}</td>
+                                                <td>{{data.order_details.order_status|underscoreless}}</td>
+                                                <td>
+                                                    <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
+                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" href="<?php echo $this->basePath()?>/admin/product/orderdetails?id={{data.order_details.order_id}}"> Assign Rider</a>
+                                                    
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Total {{numberOfRecord}} entries</div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                        <pagination  class="pagination pull-right mt0" ng-model="currentPage" total-items="numberOfRecord" max-size="3" boundary-links="true" ng-click="selectPage(currentPage)"></pagination>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/orderlist.js' ?>"></script>
+<script>
+var PAGE_COUNT = 5;
+var PAGING_GAP = 3;
+$(document).ready(function(){
+        $("#show-attribute").click(function(){
+                $("#add-attribute").toggle();
+        });
+        $('.test').jfilestyle();
+});
+  
+</script>
+<script>
+//    app.value('orderList', '<?php echo !empty($this->orderList)?  json_encode($this->orderList):'';?>');
+//    app.value('count', '<?php echo !empty($this->count)?  json_encode($this->count):'';?>');
+</script>
