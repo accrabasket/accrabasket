@@ -5,21 +5,12 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> Manage Tax</h3>
-              <div class="pull-right"> 
-                  <a href="<?php echo $this->basePath()?>/admin/dashboard/addtax" class="btn btn-info"> Add Tax</a>
-              </div>              
+              <h3 class="box-title"> Order Details</h3>
+                            
             </div>
             <!-- /.box-header -->            
             <div class="box-body">
-                <p class="danger showMsg" style="color:green">
-                    <?php
-                        if(!empty($this->flashMessenger()->getMessages())){
-                            $msg =  $this->flashMessenger()->getMessages();
-                            echo $msg[0];
-                        }
-                    ?>                         
-                </p>                 
+                                
               <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row"> 
                   <div class="col-sm-6"></div>
@@ -30,45 +21,48 @@
                     <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr role="row">
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Tax name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Tax value</th>
-						  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Product amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Product Des.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Commission amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Discount amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tax amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Shipping address</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Image</th>
                         </tr>
                       </thead>
                       <tbody>
-                          <?php if(!empty($this->taxList)){
-                            foreach ($this->taxList as $key => $value) {
-                              ?>
-                            <tr role="row" class="odd">
-                                <td class=""><?= $value['tax_name']?></td>
-                              <td class=""><?= $value['tax_value']?></td>
-                              
-                              <td><a href="addtax?id=<?=$value['id']?>"><i class="fa fa-edit"></i> </a>
-                                  <a href="deletetax?id=<?=$value['id']?>"> <i class="fa fa-trash-o"></i></a></td>
-                            </tr>
-                          <?php }}?>
+                            <?php
+                                if(!empty($this->productDetails)){
+                                    foreach ($this->productDetails['data'] as $key => $value) {
+                                        foreach ($value['orderitem'] as $keys => $orderitem) {
+                                            $imgpath = $this->productDetails['imageRootPath'].'/'.$orderitem['product_dump']['product_image_data'][0]['type'].'/'.$orderitem['product_dump']['product_details']['product_id'].'/'.$orderitem['product_dump']['product_image_data'][0]['image_name'];
+
+                            ?>
+
+                              <tr role="row" class="odd">
+                                        <td class=""><?=$orderitem['product_dump']['product_details']['product_name']?></td>
+                                        <td class=""><?=$orderitem['amount']?></td>
+                                        <td class=""><?=$orderitem['product_dump']['product_details']['product_desc']?></td>
+                                        <td class=""><?=$orderitem['commission_amount']?></td>
+                                        <td class=""><?=$orderitem['discount_amount']?></td>
+                                        <td class=""><?=$orderitem['tax_amount']?></td>
+                                        <td class=""><?=$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['house_number'].' '
+                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['street_detail'].' '
+                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['area'].' '
+                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['city_name'].' '
+                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['zipcode']?></td>
+                                        <td class=""><img src="<?=$imgpath?>"  height="60" width="60"></td>
+                                    </tr>
+                            <?php            
+                                    }
+                                }
+                            }
+
+                            ?>
                       </tbody>
                       
                     </table>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing <?= count($this->categoryList)?> entries</div>
-                  </div>
-                  <div class="col-sm-8">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                      <ul class="pagination pull-right mt0">
-                        <li class="paginate_button previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
-                        <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a></li>
-<!--                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a></li>
-                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a></li>
-                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a></li>
-                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a></li>
-                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a></li>-->
-                        <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
-                      </ul>
-                    </div>
                   </div>
                 </div>
               </div>
