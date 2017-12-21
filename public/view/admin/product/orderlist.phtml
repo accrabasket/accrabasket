@@ -122,7 +122,7 @@
                                                 <td>{{data.order_details.order_status|underscoreless}}</td>
                                                 <td>
                                                     <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
-                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" href="<?php echo $this->basePath()?>/admin/product/orderdetails?id={{data.order_details.order_id}}"> Assign Rider</a>
+                                                    &nbsp; | &nbsp;<a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" href="<?php echo $this->basePath()?>/admin/product/orderdetails?id={{data.order_details.order_id}}"> Assign Rider</a>
                                                     
                                                 </td>
                                             </tr>
