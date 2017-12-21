@@ -5,7 +5,8 @@ app.controller('orderController', function ($scope, $http) {
     $scope.productData = {};
     $scope.filter = {};
     $scope.index = 0;
-
+    $scope.filter.order_status = 'current_order';
+    
     $scope.indexVal = [];
     $scope.errorStatus = false;
     $scope.errorMsg = '';
@@ -55,7 +56,7 @@ app.controller('orderController', function ($scope, $http) {
     }
     
     $scope.getOrderList = function() { 
-        $scope.filter.order_status = 'current_order';
+        
         $http({
             method: 'POST',
             url: serverAdminApp + 'product/getOrderList',
@@ -73,22 +74,8 @@ app.controller('orderController', function ($scope, $http) {
     }    
     
     $scope.shortUsingStatus = function(status){
-        var data = {};
-        data.order_status = status;
-        $http({
-            method: 'POST',
-            url: serverAdminApp + 'product/getOrderList',
-            data : ObjecttoParams(data),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        }).success(function (response) {
-            $scope.orderList = {};
-            if(response.status == 'success'){
-                $scope.orderList = response.data;
-                $scope.shipping_address_list = response.shipping_address_list;
-                $scope.user_details = response.user_details;
-                $scope.numberOfRecord = response.totalNumberOfOrder;
-            }
-        });
+        $scope.filter.order_status = status;
+        $scope.getOrderList();
     }
     
 	
