@@ -262,13 +262,10 @@ class ProductController extends AbstractActionController {
     function getOrderListAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'orderlist';
-        if(empty($request['page'])){
-            $request['pagination'] = 1;
-            $request['page'] = 1;
-        }else{
-            $request['pagination'] = $request['page'];
+        $request['pagination'] = 1;
+        if(!empty($request['page'])) {
+            $request['page'] = $request['page'];
         }
-
         echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
         exit;
     }

@@ -73,6 +73,39 @@ app.controller('orderController', function ($scope, $http) {
         });
     }    
     
+    $scope.fetchRiders = function(store_id, order_id) {
+        var data = {};
+        data.store_id = store_id;
+        $scope.order_id = order_id;
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'rider/fetchRidersByStoreId',
+            data : ObjecttoParams(data),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.riderList = {};
+            if(response.status == 'success'){
+                $scope.riderList = response.data;
+                $scope.numberOfRecord = response.totalNumberOfOrder;
+            }
+        });        
+    };
+    $scope.assignRider = function(order_id, rider_id){
+        var data = {};
+        data.order_id = order_id;
+        data.rider_id = rider_id;
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'rider/assignOrder',
+            data : ObjecttoParams(data),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            if(response.status == 'success'){
+                location.reload();
+            }
+        });        
+    };
+    
     $scope.shortUsingStatus = function(status){
         $scope.filter.order_status = status;
         $scope.getOrderList();

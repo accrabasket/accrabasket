@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" ng-app="order" ng-controller="orderController" ng-cloak="true" ng-init="getOrderList()">
     <head>
         <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
     </head>
@@ -10,7 +10,7 @@
         </ol>
     </section>
     <section class="content container-fluid">
-        <div class="row" ng-app="order" ng-controller="orderController" ng-cloak="true" ng-init="getOrderList()">
+        <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
@@ -124,7 +124,8 @@
                                                 <td>{{data.order_details.order_status|underscoreless}}</td>
                                                 <td>
                                                     <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
-                                                    &nbsp; | &nbsp;<a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" href="<?php echo $this->basePath()?>/admin/product/orderdetails?id={{data.order_details.order_id}}"> Assign Rider</a>
+                                                    &nbsp; | &nbsp;
+                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" ng-click="fetchRiders(data.order_details.store_id, data.order_details.order_id)" href="javascript:void(0)" data-toggle="modal" data-target="#assignRiderModal"> Assign Rider</a>
                                                     
                                                 </td>
                                             </tr>
@@ -151,6 +152,37 @@
             </div>
         </div>
     </section>
+    <div id="assignRiderModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Rider</h4>
+                </div>
+                <div class="modal-body">
+                    <table border="1" cellspacing="5" cellpadding='10'>
+                        <tr>
+                            <th>Name</th>
+                            <th>Mobile Number</th>
+                            <th>Email</th>
+                            <th>Location</th> 
+                            <th>Action</th>
+                        </tr>
+                        <tr ng-repeat="(rider_id, riders) in riderList">
+                            <td>{{riders.name}}</td>
+                            <td>{{riders.mobile}}</td>
+                            <td>{{riders.email}}</td>
+                            <td>{{riders.location_name}}</td>
+                            <td><a href='javascript:void(0)' ng-click="assignRider(order_id, rider_id)"> Assign </a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>    
 </div>
 
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/orderlist.js' ?>"></script>
@@ -164,8 +196,4 @@ $(document).ready(function(){
         $('.test').jfilestyle();
 });
   
-</script>
-<script>
-//    app.value('orderList', '<?php echo !empty($this->orderList)?  json_encode($this->orderList):'';?>');
-//    app.value('count', '<?php echo !empty($this->count)?  json_encode($this->count):'';?>');
 </script>

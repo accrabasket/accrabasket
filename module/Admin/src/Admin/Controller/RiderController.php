@@ -41,6 +41,26 @@ class RiderController extends AbstractActionController {
         $this->view->params = $inputParams;
         return $this->view;
     } 
+    
+    function fetchRidersByStoreIdAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'getRidersByStoreId';
+        echo $productList = $this->commonObj->curlhitApi($request);
+        exit;
+    }    
+    
+    function assignOrderAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'assignordertorider';
+        
+        echo $response = $this->commonObj->curlhitApi($request, 'application/customer');
+        $response = json_decode($response, true);
+        if($response['status'] == 'success'){
+            $this->flashMessenger()->addMessage($response['msg']);
+        }         
+        exit;
+    }    
+    
     public function saveriderAction() {
         $saveCategory = array();
         $postParams = (array)$this->getRequest()->getPost();

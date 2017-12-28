@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" ng-app="app" ng-controller="managedashboard"  ng-cloak="true">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1> Dashboard <small>Control panel</small> </h1>
@@ -12,32 +12,34 @@
     <section class="content container-fluid">
         <div class="box-body">
             <div class="row">
-                <div class="col-lg-5 col-xs-12">
+                <div class="col-md-3 col-xs-12">
                     <div class="form-group">
-                        <label>Filter By</label>
-                        <select class="form-control select2" style="width: 100%;">
-                            <option selected="selected">Current Date</option>
-                            <option>Last Week</option>
-                            <option>Current Month</option>
-                            <option>Current Year</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-xs-12">
-                    <div class="form-group">
-                        <label>Date range:</label>
+                        <label>Start Date</label>
 
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" id="reservation" class="form-control pull-right">
+                            <input class="datepicker" data-date-format="mm/dd/yyyy" ng-model="filter.startDate">
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>                
+                <div class="col-md-3 col-xs-12">
+                    <div class="form-group">
+                        <label>End Date</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input class="datepicker" data-date-format="mm/dd/yyyy" ng-model="filter.endDate">
                         </div>
                         <!-- /.input group -->
                     </div>
                 </div>
-                <div class="col-lg-2 col-xs-12 no-rpad"><label>&nbsp;</label>
-                    <button class="btn btn-block btn-primary" type="button">Apply</button>
+                <div class="col-md-2 col-xs-12 no-rpad"><label>&nbsp;</label>
+                    <button class="btn btn-block btn-primary" type="button" ng-click="applyFilter()">Apply</button>
                 </div>
             </div>
 
@@ -124,56 +126,7 @@ immediately after the control sidebar -->
 <script type="text/javascript" src="<?=$this->basePath()?>/public/js/waypoints.js"></script>
 <script>
     $(function () {
-        $('#container13').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Today Order'
-            },
-            xAxis: {
-                categories: [
-                    '9:00AM',
-                    '10:00AM',
-                    '11:00AM',
-                    '12:00AM',
-                    '1:00PM',
-                    '2:00PM',
-                    '3:00PM',
-                    '4:00PM',
-                    '5:00PM',
-                    '6:00PM'
-                ],
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Sales'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                    name: 'Web Sales',
-                    data: [49.9, 371.5, 106.4, 129.2, 144.0, 376.0, 135.6, 148.5, 216.4, 434.3]
-                }, {
-                    name: 'Mobile Sales',
-                    data: [83.6, 278.8, 98.5, 93.4, 106.0, 464.5, 105.0, 104.3, 91.2, 134.3]
-                }, ]
-        });
+        $('.datepicker').datepicker();
     });
 </script>
 <script type='text/javascript'>
@@ -181,14 +134,14 @@ immediately after the control sidebar -->
         $('#container14').highcharts({
             title: {
                 text: 'Order Status',
-                x: -20 //center
+                x: -30 //center
             },
             subtitle: {
                 text: '',
-                x: -20
+                x: -30
             },
             xAxis: {
-                categories: ['1/01/2017', '1/02/2017', '1/03/2017', '1/04/2017', '1/05/2017', '1/06/2017',
+                categories: ['1 Jan 17 - 2 Jan 17', '1/02/2017', '1/03/2017', '1/04/2017', '1/05/2017', '1/06/2017',
                     '1/07/2017', '1/08/2017', '1/08/2017', '1/09/2017', '1/10/2017', '1/11/2017', '1/12/2017']
             },
             yAxis: {
@@ -226,3 +179,5 @@ immediately after the control sidebar -->
         });
     });
 </script> 
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/dashboard.js' ?>">
+</script>
