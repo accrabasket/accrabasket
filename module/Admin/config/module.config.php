@@ -6,7 +6,7 @@
              'Admin\Controller\Dashboard' => 'Admin\Controller\DashboardController',
              'Admin\Controller\Common' => 'Admin\Controller\CommonController',
              'Admin\Controller\Product' => 'Admin\Controller\ProductController',
-             'Admin\Controller\Rider' => 'Admin\Controller\riderController',
+             'Admin\Controller\Rider' => 'Admin\Controller\RiderController',
          ),
      ),
  'router' => array(
