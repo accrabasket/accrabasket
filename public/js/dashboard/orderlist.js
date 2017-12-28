@@ -18,6 +18,7 @@ app.controller('orderController', function ($scope, $http) {
     
     $scope.selectPage = function(page_number) {
         $scope.filter.page = page_number;
+        $scope.currentPage = page_number;
         $scope.getOrderList();
     };
     
