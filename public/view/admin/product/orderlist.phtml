@@ -23,9 +23,12 @@
                         </div>
                         <div class="pull-right"> 
                             &nbsp;<a ng-click="shortUsingStatus('completed')" class="btn btn-info"> Completed</a>
-                        </div> 
+                        </div>
                         <div class="pull-right"> 
-                            &nbsp;<a ng-click="shortUsingStatus('ready_to_dispatch')" class="btn btn-info"> Dispatch</a>
+                            &nbsp;<a ng-click="shortUsingStatus('assigned_to_rider')" class="btn btn-info"> Assigned To Riders</a>
+                        </div>                        
+                        <div class="pull-right"> 
+                            &nbsp;<a ng-click="shortUsingStatus('ready_to_dispatch')" class="btn btn-info"> Ready To Dispatch</a>
                         </div>
                         <div class="pull-right"> 
                             &nbsp;<a ng-click="shortUsingStatus('order_placed')" class="btn btn-info"> Placed</a>
@@ -125,7 +128,10 @@
                                                 <td>
                                                     <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
                                                     &nbsp; | &nbsp;
-                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'||data.order_details.order_status == 'ready_to_dispatch'}}" ng-click="fetchRiders(data.order_details.store_id, data.order_details.order_id)" href="javascript:void(0)" data-toggle="modal" data-target="#assignRiderModal"> Assign Rider</a>
+                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'|| data.order_details.order_status == 'ready_to_dispatch' || data.order_details.order_status == 'assigned_to_rider'}}" ng-click="fetchRiders(data.order_details.store_id, data.order_details.order_id)" href="javascript:void(0)" data-toggle="modal" data-target="#assignRiderModal"> 
+                                                        <span ng-if="data.order_details.order_status == 'assigned_to_rider'"> Reassign Order</span>
+                                                        <span ng-if="data.order_details.order_status != 'assigned_to_rider'">  Assign Rider</span>
+                                                    </a>
                                                     
                                                 </td>
                                             </tr>
