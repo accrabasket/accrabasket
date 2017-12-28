@@ -86,7 +86,6 @@ app.controller('orderController', function ($scope, $http) {
             $scope.riderList = {};
             if(response.status == 'success'){
                 $scope.riderList = response.data;
-                $scope.numberOfRecord = response.totalNumberOfOrder;
             }
         });        
     };
