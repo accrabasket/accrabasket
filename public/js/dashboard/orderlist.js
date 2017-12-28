@@ -57,7 +57,7 @@ app.controller('orderController', function ($scope, $http) {
     }
     
     $scope.getOrderList = function() { 
-        $scope.numberOfRecord = 0;
+        //$scope.numberOfRecord = 0;
         $http({
             method: 'POST',
             url: serverAdminApp + 'product/getOrderList',
