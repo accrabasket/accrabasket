@@ -42,7 +42,7 @@ class RiderController extends AbstractActionController {
         return $this->view;
     } 
     
-    function fetchRidersByStoreIdAction() {
+    function fetchridersbystoreidAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'getRidersByStoreId';
         echo $productList = $this->commonObj->curlhitApi($request);

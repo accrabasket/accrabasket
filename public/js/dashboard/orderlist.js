@@ -79,7 +79,7 @@ app.controller('orderController', function ($scope, $http) {
         $scope.order_id = order_id;
         $http({
             method: 'POST',
-            url: serverAdminApp + 'rider/fetchRidersByStoreId',
+            url: serverAdminApp + 'rider/fetchridersbystoreid',
             data : ObjecttoParams(data),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
