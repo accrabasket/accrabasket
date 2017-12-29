@@ -237,4 +237,30 @@ class ProductController extends AbstractActionController {
         
         return $this->view;
     }
+    
+    function orderlistAction() {
+       $request = (array) $this->getRequest()->getQuery();
+        return $this->view;
+    }
+    
+    function getOrderListAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'orderlist';
+        $request['merchant_id'] = 43;
+        $request['pagination'] = 1;
+        if(!empty($request['page'])) {
+            $request['page'] = $request['page'];
+        }
+        echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
+        exit;
+    }
+    
+    function changestatusAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'updateOrderstatus';
+        $request['merchant_id'] = 43;//$this->session['user']['data'][0]['id'];
+        
+        echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
+        exit;
+    }
 }

@@ -18,12 +18,10 @@ app.controller('orderController', function ($scope, $http) {
     
     $scope.selectPage = function(page_number) {
         $scope.filter.page = page_number;
-        $scope.currentPage = page_number;
         $scope.getOrderList();
     };
     
     $scope.currentPage = 1;
-    $scope.numberOfRecord = 0;
     
     $scope.querySearch = function(){
         if($scope.selected_filter_level == 'Action'){
@@ -57,12 +55,9 @@ app.controller('orderController', function ($scope, $http) {
     }
     
     $scope.getOrderList = function() { 
-
-        //$scope.numberOfRecord = 0;
-
         $http({
             method: 'POST',
-            url: serverAdminApp + 'product/getOrderList',
+            url: serverMerchantApp + 'product/getOrderList',
             data : ObjecttoParams($scope.filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
@@ -76,36 +71,24 @@ app.controller('orderController', function ($scope, $http) {
         });
     }    
     
-    $scope.fetchRiders = function(store_id, order_id) {
+    $scope.changeStatus = function (store_id, order_id ) {
         var data = {};
-        data.store_id = store_id;
-        $scope.order_id = order_id;
+        data.role = 'merchant';
+        data.order_status = 'ready_to_dispatch';
+        data.order_id = order_id;
         $http({
             method: 'POST',
-            url: serverAdminApp + 'rider/fetchridersbystoreid',
-            data : ObjecttoParams(data),
+            url: serverMerchantApp + 'product/changestatus',
+            data: ObjecttoParams(data),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.riderList = {};
-            if(response.status == 'success'){
+            if (response.status == 'success') {
                 $scope.riderList = response.data;
+                $scope.getOrderList();
+                
             }
-        });        
-    };
-    $scope.assignRider = function(order_id, rider_id){
-        var data = {};
-        data.order_id = order_id;
-        data.rider_id = rider_id;
-        $http({
-            method: 'POST',
-            url: serverAdminApp + 'rider/assignOrder',
-            data : ObjecttoParams(data),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        }).success(function (response) {
-            if(response.status == 'success'){
-                location.reload();
-            }
-        });        
+        });
     };
     
     $scope.shortUsingStatus = function(status){
