@@ -246,7 +246,7 @@ class ProductController extends AbstractActionController {
     function getOrderListAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'orderlist';
-        $request['merchant_id'] = 43;
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
         $request['pagination'] = 1;
         if(!empty($request['page'])) {
             $request['page'] = $request['page'];
@@ -258,7 +258,7 @@ class ProductController extends AbstractActionController {
     function changestatusAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'updateOrderstatus';
-        $request['merchant_id'] = 43;//$this->session['user']['data'][0]['id'];
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
         
         echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
         exit;
