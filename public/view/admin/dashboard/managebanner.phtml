@@ -47,7 +47,10 @@
                                                 foreach ($this->bannerList as $key => $value) {
                                                     ?>
                                                     <tr role="row" class="odd">
-                                                        <td class=""><a href="<?= !empty($this->bannerListImg) ? $this->bannerListImg.'/'.$value['image_name'] : 'javascript:void(0)' ?>" target="blank"><img src="<?= !empty($this->bannerList[$value['id']]) ? $this->bannerListImg.'/'.$value['image_name'] : '' ?>" class="img-rounded" alt="No Image Found" style="height: 50px;width:50px;"></a></td>
+                                                        <td class="">
+                                                            <a href="<?= !empty($this->bannerListImg) ? $this->bannerListImg.'/'.$value['image_name'] : 'javascript:void(0)' ?>" target="blank">
+                                                            <img src="<?= !empty($this->bannerListImg) ? $this->bannerListImg.'/'.$value['image_name'] : '' ?>" class="img-rounded" alt="No Image Found" style="height: 50px;width:50px;"></a>
+                                                        </td>
                                                         
                                                         <td class=""><?= $value['image_name'] ?></td>
                                                         <td class=""><?= $value['description'] ?></td>
