@@ -269,4 +269,19 @@ class ProductController extends AbstractActionController {
         echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
         exit;
     }
+    
+    function stockAction() {
+       return $this->view; 
+    }
+    function stockListAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'stockList';
+        $request['out_of_stock'] = 1;
+        $request['pagination'] = 1;
+        if(!empty($request['page'])) {
+            $request['page'] = $request['page'];
+        }
+        echo $productList = $this->commonObj->curlhitApi($request,'application');
+        exit;        
+    }
 }
