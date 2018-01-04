@@ -37,7 +37,7 @@ app.controller('managebanner', function ($scope, $http, $sce,$timeout) {
                                         $scope.successShow = true;
                                         $scope.successMsg = response.msg ;
                                         $scope.successShow = false;
-                                        var path = serverAdminApp + 'dashboard/managetax';
+                                        var path = serverAdminApp + 'dashboard/managebanner';
                                         window.location.href = path;
 				}else{
                                     $scope.errorShow = true;
