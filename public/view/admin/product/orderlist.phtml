@@ -116,6 +116,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
                                                 <th class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">Rider Info</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                <th class="sorting" tabindex="0" rowspan="1">Order Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -141,6 +142,7 @@
                                                     </a>
                                                     
                                                 </td>
+                                                <td>{{data.order_details.created_date}}</td>
                                             </tr>
                                             
                                         </tbody>
