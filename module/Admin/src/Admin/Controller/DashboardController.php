@@ -455,5 +455,26 @@ class DashboardController extends AbstractActionController {
         echo $saveCategory;
         exit;
     }
+    public function updatebannerAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'addEditBanner';
+        $savebanner = $this->commonObj->curlhitApi($request);
+        $response = json_decode($savebanner, true);
+        $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/managebanner';
+        header('Location:' . $path);
+
+        exit;
+    }
+    public function managebannerAction() {
+        $postParams['method'] = 'banner';
+        $postParams['status'] = 1;
+        $banner = $this->commonObj->curlhitApi($postParams);
+        $getBannerList = json_decode($banner, true);
+        if (!empty($getBannerList['data'])) {
+            $this->view->bannerList = $getBannerList['data'];
+            $this->view->bannerListImg = $getBannerList['imageRootPath'];
+        }
+        return $this->view;
+    }
 
 }
