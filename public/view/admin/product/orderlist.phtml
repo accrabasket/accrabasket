@@ -114,7 +114,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Commission amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
-
+                                                <th class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">Rider Info</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
                                             </tr>
                                         </thead>
@@ -128,6 +128,10 @@
                                                 <td class="">{{data.order_details.commission_amount}}</td>
                                                 <td>{{data.order_details.payable_amount}}</td>
                                                 <td>{{data.order_details.order_status|underscoreless}}</td>
+                                                <td class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">
+                                                    Rider Name - {{rider_list[order_assignment_list[data.order_details.order_id].rider_id].name}}<br/>
+                                                    Rider Mobile - {{rider_list[order_assignment_list[data.order_details.order_id].rider_id].mobile_number}}<br/>
+                                                </td>                                                
                                                 <td>
                                                     <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
                                                     &nbsp; | &nbsp;

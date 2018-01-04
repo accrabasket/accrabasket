@@ -67,6 +67,8 @@ app.controller('orderController', function ($scope, $http) {
                 $scope.shipping_address_list = response.shipping_address_list;
                 $scope.user_details = response.user_details;
                 $scope.numberOfRecord = response.totalNumberOfOrder;
+                $scope.order_assignment_list = response.order_assignment_list;
+                $scope.rider_list = response.rider_list;                
             }
         });
     }    
