@@ -436,5 +436,24 @@ class DashboardController extends AbstractActionController {
         echo $response;
         exit;
     }
+    
+    public function addbannerAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        return $this->view;
+    }
+    
+    public function savebannerAction() {
+        $request = (array) $this->getRequest()->getPost();
+        $request['method'] = 'addEditBanner';
+        $request['status'] = 1;
+//        print_r($request);die;
+        $saveCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($saveCategory, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveCategory;
+        exit;
+    }
 
 }
