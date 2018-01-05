@@ -1,5 +1,5 @@
 var app = angular.module('product', []);
-app.controller('productController', function ($scope, $http, $sce,$timeout,productList) {
+app.controller('productController', function ($scope, $http, $sce, $timeout, inventryDetail) {
     $scope.errorShow = false;
     $scope.showAttr = false;
     $scope.productData = {};
@@ -7,19 +7,21 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
     $scope.index = 0;
     $scope.indexVal = [];
     $scope.taxList = {};
-    if(productList != ''){
-        for(var i=1; i <= productList ;i++){
-            console.log(productList);
-            //showAttrDiv();
-        }
-    }
-    $scope.showAttrDiv = function(){
+    $scope.inventryDetails = inventryDetail;
+    $scope.inventryData = {};
+    $scope.showAttrDiv = function () {
         $scope.showAttr = true;
-         var a = ($scope.indexVal).length +1;
-          $scope.index++;
-         ($scope.indexVal).push(a);
+        var a = ($scope.indexVal).length + 1;
+        $scope.index++;
+        ($scope.indexVal).push(a);
     }
     
+    $scope.changeStore = function() {
+        $scope.inventryData = {};
+        if($scope.inventryDetails[$scope.store_id] != undefined) {
+            $scope.inventryData = $scope.inventryDetails[$scope.store_id];
+        }
+    }    
     function showAttrDiv() {
         $scope.showAttr = true;
         var a = ($scope.indexVal).length + 1;
@@ -29,57 +31,57 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
     
     function getCategory() {
         var filter = {};
-        filter.categoryHavingNoChild = 1;        
+        filter.categoryHavingNoChild = 1;
         $http({
             method: 'POST',
             url: serverMerchantApp + 'product/getCategoryList',
-            data : ObjecttoParams(filter),
+            data: ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.categoryList = {};
-            if(response.status == 'success'){
+            if (response.status == 'success') {
                 $scope.categoryList = response.data;
             }
         });
-    }    
+    }
     getCategory();
-    
-    function getTax() {      
+
+    function getTax() {
         $http({
             method: 'POST',
             url: serverMerchantApp + 'product/taxList',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
-            if(response.status == 'success'){
+            if (response.status == 'success') {
                 $scope.taxList = response.data;
             }
         });
-    }    
+    }
     getTax();
-    
-	
-});	
 
 
-function checkform(){
-    var ret  = true;
+});
+
+
+function checkform() {
+    var ret = true;
     var msg = '';
-    if($('#attribute_price').val() == ''){
+    if ($('#attribute_price').val() == '') {
         msg = 'Attribute price should not blank';
         ret = false;
     }
-    if($('#store_id').val() == ''){
+    if ($('#store_id').val() == '') {
         msg = 'Please select store';
         ret = false;
     }
-    if($('#attribute_stock').val() == ''){
+    if ($('#attribute_stock').val() == '') {
         msg = 'Attribute stock should not blank';
         ret = false;
     }
-    
-    
-   if(!ret){
-       alert(msg);
-   }
-   return ret;
+
+
+    if (!ret) {
+        alert(msg);
+    }
+    return ret;
 }

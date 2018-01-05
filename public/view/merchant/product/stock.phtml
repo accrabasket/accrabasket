@@ -33,6 +33,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Attribute Unit</th>
                                                 <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" aria-sort="descending">Attribute quantity</th>
                                                 <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" aria-sort="descending">Product In Stock</th>
+                                                <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" aria-sort="descending">Store Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
                                             </tr>
                                         </thead>
@@ -43,8 +44,9 @@
                                                 <td class="">{{data.unit}}</td>
                                                 <td class="sorting_1">{{data.quantity}}</td>
                                                 <td class="sorting_1">{{data.stock}}</td>
+                                                <td class="sorting_1">{{data.store_name}}</td>
                                                 <td>
-                                                    <a href="<?php echo $this->basePath()?>/admin/product/addproduct?id={{data.product_id}}"><i class="fa fa-edit"></i> </a>
+                                                    <a href="<?php echo $this->basePath()?>/merchant/product/inventry?id={{data.product_id}}"><i class="fa fa-edit"></i> </a>
                                                 </td>
                                             </tr>
                                             
@@ -72,7 +74,7 @@
     </section>
 </div>
 
-<script src="<?php echo $this->basePath() . '/public/js/dashboard/outofstock.js' ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/outofstock.js' ?>"></script>
 <script>
 var PAGE_COUNT = 5;
 var PAGING_GAP = 3;  

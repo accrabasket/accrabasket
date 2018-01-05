@@ -31,7 +31,7 @@
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Select Store</label>
-                                            <select class="form-control select2" name="store_id[]" id="store_id">
+                                            <select class="form-control select2" name="store_id[]" id="store_id" ng-model="store_id" ng-change="changeStore()">
                                                <?php foreach ($this->storeList as $key => $value) {
                                                     echo'<option value="'.$key.'">'.$value['store_name'].'</option>';
                                                 }?>
@@ -129,13 +129,13 @@
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Price(In GHC)</label>
-                                                    <input type="text" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
+                                                    <input type="text" ng-model="inventryData.price" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
                                                 </div>
                                             </div>                                            
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Item in Store</label>
-                                                    <input type="text" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
+                                                    <input type="text" ng-model="inventryData.stock" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
                                                 </div>
                                             </div>                                             
                                         </div>
@@ -193,6 +193,7 @@
 </script>
 <script>
     app.value('productList', '<?php echo !empty($this->productList['atribute'])?count($this->productList['atribute']):'';?>');
+    app.value('inventryDetail', <?php echo json_encode($this->inventryDetails)?>);
 </script>
 <?php
 
