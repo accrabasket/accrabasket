@@ -6,7 +6,7 @@ app.controller('orderController', function ($scope, $http) {
     $scope.filter = {};
     $scope.index = 0;
     $scope.filter.order_status = 'current_order';
-    
+    $scope.ajaxLoadingData = false;
     $scope.indexVal = [];
     $scope.errorStatus = false;
     $scope.errorMsg = '';
@@ -24,18 +24,15 @@ app.controller('orderController', function ($scope, $http) {
     $scope.currentPage = 1;
     
     $scope.querySearch = function(){
-        if($scope.selected_filter_level == 'Action'){
-           $scope.errorStatus = true;
-           $scope.errorMsg = 'Please select a action '; 
-        }
-        
+       
         if($scope.filterText == '' || $scope.filterText == undefined){
            $scope.errorStatus = true;
-           $scope.errorMsg = 'Please enter '+$scope.selected_filter_level; 
+           $scope.errorMsg = 'Please enter order id'; 
         }
         if(!$scope.errorStatus){
-            $scope.filter.value = $scope.filterText;
+            $scope.filter.order_id = $scope.filterText;
             delete $scope.filter.page;
+            delete $scope.filter.order_status;
             $scope.getOrderList();
         }else{
             $timeout(function () {
@@ -51,16 +48,19 @@ app.controller('orderController', function ($scope, $http) {
         $scope.filter.page = 1;
         $scope.selected_filter_level = 'Action';
         $scope.filterText = '';
+        $scope.filter.order_status = 'current_order';
         $scope.getOrderList();
     }
     
-    $scope.getOrderList = function() { 
+    $scope.getOrderList = function() {
+        $scope.ajaxLoadingData = true;
         $http({
             method: 'POST',
             url: serverMerchantApp + 'product/getOrderList',
             data : ObjecttoParams($scope.filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
+            $scope.ajaxLoadingData = false;
             $scope.orderList = {};
             if(response.status == 'success'){
                 $scope.orderList = response.data;
@@ -69,6 +69,8 @@ app.controller('orderController', function ($scope, $http) {
                 $scope.numberOfRecord = response.totalNumberOfOrder;
                 $scope.order_assignment_list = response.order_assignment_list;
                 $scope.rider_list = response.rider_list;                
+            }else{
+                $scope.numberOfRecord = 0;
             }
         });
     }    
@@ -95,10 +97,18 @@ app.controller('orderController', function ($scope, $http) {
     
     $scope.shortUsingStatus = function(status){
         $scope.filter.order_status = status;
+        delete $scope.filter.order_id;
+        $scope.filterText = '';
         $scope.getOrderList();
     }
     
-	
+$scope.shortByDate = function(status){
+        $scope.filter.short_by = 'order_date';
+        $scope.filter.short_type = status;
+        delete $scope.filter.order_id;
+        $scope.filterText = '';
+        $scope.getOrderList();
+    }	
 });	
 
 
