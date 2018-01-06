@@ -280,5 +280,13 @@ class ProductController extends AbstractActionController {
         }
         echo $productList = $this->commonObj->curlhitApi($request,'application');
         exit;        
-    }    
+    }
+
+    function storelistAction() {
+        $params = array();
+        $params['method'] = 'storeList';
+        $params['merchant_id'] = $this->session['user']['data'][0]['id'];
+        echo $storeList = $this->commonObj->curlhitApi($params);
+        exit;        
+    }
 }
