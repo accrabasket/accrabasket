@@ -5,6 +5,7 @@ app.controller('productController', function ($scope, $http,count,productList) {
     $scope.productData = {};
     $scope.filter = {};
     $scope.index = 0;
+    $scope.ajaxLoadingData = false;
 
     $scope.indexVal = [];
     $scope.errorStatus = false;
@@ -56,6 +57,7 @@ app.controller('productController', function ($scope, $http,count,productList) {
     }
     
     $scope.getProductList = function() { 
+        $scope.ajaxLoadingData = true;
         $http({
             method: 'POST',
             url: serverAdminApp + 'product/getProductList',
@@ -63,9 +65,12 @@ app.controller('productController', function ($scope, $http,count,productList) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.productList = {};
+            $scope.ajaxLoadingData = false;
             if(response.status == 'success'){
                 $scope.productList = response.data;
                 $scope.numberOfRecord = response.totalRecord;
+            }else{
+                $scope.numberOfRecord = 0;
             }
         });
     }    

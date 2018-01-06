@@ -320,7 +320,7 @@
                         <input type="hidden" value="{{index}}" id="index" name="index">
                         <input type="hidden" value="<?= $this->productList['id']?>" id="id" name="id">
                         <div class="pull-right">
-                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <a href="<?php echo $this->basePath() ?>/admin/product/index" class="btn btn-info"> Cancel</a>
                             <button class="btn btn-info" type="submit" onclick="return checkform()">Save</button>
                         </div>
                     </div>
