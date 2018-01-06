@@ -108,7 +108,22 @@ $scope.shortByDate = function(status){
         delete $scope.filter.order_id;
         $scope.filterText = '';
         $scope.getOrderList();
-    }	
+    }
+    
+    $scope.fetchStore = function() {
+        $http({
+            method: 'POST',
+            url: serverMerchantApp + 'product/storelist',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.storeList = {};
+            if(response.status == 'success'){
+                $scope.storeList = response.data;
+            }
+        });        
+    };
+    
+    $scope.fetchStore();
 });	
 
 
