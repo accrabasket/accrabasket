@@ -1,0 +1,145 @@
+<div class="content-wrapper" ng-app="app" ng-controller="ledger" ng-cloak="true" ng-init="intCall()">
+    <section class="content-header">
+        <h1> Manage Ledger</h1>
+    </section>
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"> Manage Ledger</h3>
+                        <div class="pull-right"> 
+                            <!--<a href="<?php echo $this->basePath() ?>/admin/dashboard/addcity" class="btn btn-info"> Add City</a>-->
+                        </div>              
+                    </div>
+                    <!-- /.box-header -->
+                    <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                    <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                    <div class="col-sm-3 col-lg-3  no-rpad">
+                        <div class="form-group">
+                            <label>Merchant</label>
+                            <select class="form-control " style="width: 100%;" tabindex="-1" aria-hidden="true" ng-model="filter.merchant_id">
+                                <option selected="selected" value="">Select Merchant</option>
+                                <option ng-repeat="data in merchantList" value="{{data.user_id}}">{{data.first_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3  no-rpad">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.startDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 col-lg-3  no-rpad">
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.endDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3  no-rpad">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-block btn-primary" type="button" ng-click="applyFilter()">Apply</button>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-sm-4 col-lg-4  no-rpad">
+                        <label> Total Revenue : {{ledgerSummery.total_revenue}}</label>
+
+                    </div>
+                    <div class="col-sm-4 col-lg-4  no-rpad">
+                        <label> Total Merchant Revenue : {{ledgerSummery.tota_merchant_amount}}</label>
+
+                    </div>
+                    <div class="col-sm-4 col-lg-4  no-rpad">
+                        <label> Total Commission : {{ledgerSummery.total_commission}}</label>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <div class="box-body">
+                        <p class="danger showMsg" style="color:green">
+                            <?php
+                            if (!empty($this->flashMessenger()->getMessages())) {
+                                $msg = $this->flashMessenger()->getMessages();
+                                echo $msg[0];
+                            }
+                            ?>                         
+                        </p>                 
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row"> 
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Order id</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total Amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Merchant Amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Commission Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="odd" ng-repeat="data in ledgerList">
+                                                <td class="">{{data.order_id}}</td>
+                                                <td class="">{{data.total_amount}}</td>
+                                                <td class="">{{data.merchant_amount}}</td>
+                                                <td class="">{{data.commission_amount}}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing <?= count($this->categoryList) ?> entries</div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                        <ul class="pagination pull-right mt0">
+                                            <li class="paginate_button previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
+                                            <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a></li>
+                                            <!--                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a></li>
+                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a></li>
+                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a></li>
+                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a></li>
+                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a></li>-->
+                                            <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="position: fixed; top: 0; left: 0; background: rgba(0,0,0,0.3); z-index: 99999999; width: 100%; height: 100%;"  ng-show="ajaxLoadingData">
+        <img style="position: absolute; top: 40%; left: 45%; width: 250px; " alt="loader" src="<?= $this->basePath() ?>/public/img/loading_cart.gif">
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/ledger.js' ?>">
+</script>

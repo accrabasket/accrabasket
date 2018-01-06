@@ -476,5 +476,20 @@ class DashboardController extends AbstractActionController {
         }
         return $this->view;
     }
+    
+    public function manageledgerAction() {
+        return $this->view;
+    }
+    
+    public function getledgerAction() {
+        $request = (array) $this->getRequest()->getPost();
+        $data = array();
+        $data['method'] = 'ledgersummery';
+        $data['merchant_id'] = $request['merchant_id'];
+        $data['start_date'] = $request['startDate'].' 00:00:00';
+        $data['end_date'] = $request['endDate'].' 00:00:00';
+        echo$savebanner = $this->commonObj->curlhitApi($data,'application/customer');
+        exit;
+    }
 
 }
