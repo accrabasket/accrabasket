@@ -59,7 +59,28 @@
                     </div>
                     <div class="col-sm-2 no-lpad">
                         <a href="#" ng-click="refresh()"><i class="fa fa-refresh" aria-hidden="true" ></i></a>
-                        
+                     <button class="btn btn-default pull-right" type="button" id="show-attribute"><i class="fa fa-align-left"></i> Search Filter</button>
+                    </div>
+                    <div class=" col-lg-12" id="add-attribute" style="display: none;">
+                        <div class="full-width pull-left">
+                            <div class="col-lg-5 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>Store</label>
+                                    <select class="form-control " style="width: 100%;" tabindex="-1" aria-hidden="true" ng-model="filter.store_id" data-live-search="true" data-size="3">
+                                        <option selected="selected" value="">Select Store</option>
+                                        <option ng-repeat="data in storeList" value="{{data.id}}">{{data.store_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-2 col-sm-6 col-xs-12 mt10">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-block btn-primary" type="button" ng-click="getOrderList()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-width pull-left border-top">&nbsp;</div>
                     </div>
                     
                     <div class="clearfix"></div>
