@@ -1,7 +1,7 @@
 <div class="content-wrapper" ng-app="app" ng-controller="managetax"  ng-cloak="true">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1> Add Category</h1>
+        <h1> Add Tax</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Manage Tax</a></li>
             <li class="active"> Add Tax</li>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
-                            <button class="btn btn-default mr10" type="submit">Cancel</button>
+                            <a href="<?php echo $this->basePath() ?>/admin/dashboard/managetax" class="btn btn-info"> Cancel</a>
                             <button class="btn btn-info" ng-click="savetax(taxData)">Save</button>
                         </div>
                     </div>

@@ -5,17 +5,20 @@ app.controller('managerider', function ($scope, $http, $sce,$timeout, riderId, r
     if(resetPassword != undefined && resetPassword==1) {
         $scope.resetPassword = true;
     }
+    $scope.ajaxLoadingData = false;
     $scope.riderData = {};
     $scope.riderData.location_id='';
     $scope.riderData.status=1;
     $scope.searchRiderParams = {};
     $scope.getRiders = function() {
+        $scope.ajaxLoadingData = true;
         $http({
             method: 'POST',
             data : ObjecttoParams($scope.searchRiderParams),
             url: serverAdminApp + 'rider/riderList',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
+            $scope.ajaxLoadingData = false;
             $scope.riderList = {};
             if(response.status == 'success'){
                 $scope.riderList = response.data;
