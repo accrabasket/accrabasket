@@ -115,6 +115,12 @@ app.controller('orderController', function ($scope, $http) {
         $scope.getOrderList();
     }
     
+    $scope.shortByDate = function(status){
+        $scope.filter.short_by = 'order_date';
+        $scope.filter.short_type = status;
+        $scope.getOrderList();
+    }
+    
 	
 });	
 
