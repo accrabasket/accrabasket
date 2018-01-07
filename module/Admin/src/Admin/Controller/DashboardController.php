@@ -487,7 +487,7 @@ class DashboardController extends AbstractActionController {
         $data['method'] = 'ledgersummery';
         $data['merchant_id'] = $request['merchant_id'];
         $data['start_date'] = $request['startDate'].' 00:00:00';
-        $data['end_date'] = $request['endDate'].' 00:00:00';
+        $data['end_date'] = $request['endDate'].' 23:59:59';
         echo$savebanner = $this->commonObj->curlhitApi($data,'application/customer');
         exit;
     }
