@@ -67,7 +67,7 @@
 
                     </div>
                     <div class="clearfix"></div>
-                   
+                   <hr>
                     <p></p>
                     <div class="col-sm-4 col-lg-4  no-rpad">
                         <label> &nbsp;</label>
@@ -77,12 +77,12 @@
                         <label> Enter Amount</label>
                         <input type="text" placeholder="Enter amount " class="form-control"  name="name"   ng-model="paytomerchant.amount">
                     </div>
-                    <div class="col-sm-3 col-lg-3  no-rpad">
+                    <div class="col-sm-4 col-lg-4  no-rpad">
                         <label>&nbsp;</label>
                         <button class="btn btn-block btn-primary" type="button" ng-click="payToMerchant()">Pay</button>
                     </div>
                      <div class="clearfix"></div>
-                     
+                     <hr>
                      
                     <div class="box-body">
                         <p class="danger showMsg" style="color:green">
@@ -108,40 +108,24 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Merchant Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Commission Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Type</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Transection Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr role="row" class="odd" ng-repeat="data in ledgerList">
-                                                <td class="">{{data.order_id}}</td>
+                                                <td class="">{{data.order_id == 0?'Cash':data.order_id}}</td>
                                                 <td class="">{{data.total_amount}}</td>
                                                 <td class="">{{data.merchant_amount}}</td>
                                                 <td class="">{{data.commission_amount}}</td>
                                                 <td class="">{{data.type}}</td>
+                                                <td class="">{{data.created_date}}</td>
                                             </tr>
                                         </tbody>
 
                                     </table>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing <?= count($this->categoryList) ?> entries</div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                        <ul class="pagination pull-right mt0">
-                                            <li class="paginate_button previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a></li>
-                                            <!--                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a></li>-->
-                                            <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <!-- /.box-body -->
