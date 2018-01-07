@@ -491,5 +491,11 @@ class DashboardController extends AbstractActionController {
         echo$savebanner = $this->commonObj->curlhitApi($data,'application/customer');
         exit;
     }
+    public function paytomerchantAction() {
+        $request = (array) $this->getRequest()->getPost();
+        $request['method'] = 'paytomerchant';
+        echo$savebanner = $this->commonObj->curlhitApi($request,'application/customer');
+        exit;
+    }
 
 }
