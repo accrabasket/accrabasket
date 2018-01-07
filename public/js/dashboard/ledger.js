@@ -92,6 +92,7 @@ app.controller('ledger', function ($scope, $http,$timeout,$filter) {
             }).success(function (response) {
                 $scope.ajaxLoadingData = false;
                 if(response.status == 'success'){
+                    $scope.fetchLedgerData();
                     $scope.successShow = true;
                     $scope.successMsg = response.msg;
                 }else{
