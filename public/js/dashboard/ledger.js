@@ -7,7 +7,7 @@ app.controller('ledger', function ($scope, $http,$timeout,$filter) {
     $scope.numberOfRecord = 0;
     $scope.ajaxLoadingData = false;
     $scope.paytomerchant = {};
-    
+    $scope.showLedger = false;
     var nowTemp = new Date();
     nowTemp.setMonth(nowTemp.getMonth() - 1);
     $scope.filter.startDate =  $filter('date')(nowTemp, 'yyyy-MM-dd');
@@ -46,6 +46,7 @@ app.controller('ledger', function ($scope, $http,$timeout,$filter) {
             $scope.filter.endDate = ($scope.filter.endDate);
             $scope.filter.startDate = ($scope.filter.startDate);
             $scope.fetchLedgerData(); 
+            $scope.showLedger = true;
         }else{
             $scope.errorShow = true;
             $scope.errorMsg = error;
