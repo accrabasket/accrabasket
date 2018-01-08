@@ -497,5 +497,75 @@ class DashboardController extends AbstractActionController {
         echo$savebanner = $this->commonObj->curlhitApi($request,'application/customer');
         exit;
     }
+    
+    public function downloadledgerAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $data = array();
+        $data['method'] = 'ledgersummery';
+        $data['merchant_id'] = $request['merchant_id'];
+        $data['start_date'] = $request['start_date'].' 00:00:00';
+        $data['end_date'] = $request['end_date'].' 23:59:59';
+        
+        $legerdata = $this->commonObj->curlhitApi($data,'application/customer');
+        
+        $this->downloadCsv($legerdata);
+    }
+    
+    public function downloadCsv($data) {
+    $filename = "ledger" . date("Y-m-d") . ".csv";
+    // disable caching
+    $now = gmdate("D, d M Y H:i:s");
+    header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+    header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+    header("Last-Modified: {$now} GMT");
+ 
+    // force download  
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+ 
+    // disposition / encoding on response body
+    header("Content-Disposition: attachment;filename={$filename}");
+    header("Content-Transfer-Encoding: binary");        
+        $data = json_decode($data, true);
+        //$csvData = '';
+        if(!empty($data['data'])) {
+            $data = $data['data'];
+            $counter = 0;
+            $csvData[$counter][]= 'Order id';
+            $csvData[$counter][]= 'Total Amount';
+            $csvData[$counter][]= 'Merchant Amount';
+            $csvData[$counter][]= 'Commission Amount';
+            $csvData[$counter][]= 'Type';
+            $csvData[$counter][]= 'Transection Date';
+            $counter ++;
+            foreach ($data as $key=>$row) {
+                if($key !='total_summery'){
+                        $csvData[$counter][] = $row['order_id'] == 0?'Cash':$row['order_id'];
+                        $csvData[$counter][] = $row['total_amount'];
+                        $csvData[$counter][] = $row['merchant_amount'];
+                        $csvData[$counter][] = $row['commission_amount'];
+                        $csvData[$counter][] = $row['type'];
+                        $csvData[$counter][] = $row['created_date'];
+                }  else {
+                    $csvData[$counter][] = 'Total Summery';
+                    $csvData[$counter][] = $row['total_revenue'];
+                    $csvData[$counter][] = $row['total_merchant_amount'];
+                    $csvData[$counter][] = $row['total_commission'];
+                    $csvData[$counter][] = '---';
+                    $csvData[$counter][] = $row['created_date'];
+                }
+                $counter++;
+            }
+        }
+        $df = fopen("php://output", 'w');
+        foreach ($csvData as $row) {
+            fputcsv($df, $row);
+        }
+    fclose($df);
+    die();          
+        echo $csvData; exit();        
+    }
+
 
 }
