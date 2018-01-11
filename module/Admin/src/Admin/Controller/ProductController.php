@@ -90,6 +90,7 @@ class ProductController extends AbstractActionController {
                 $index = 1;
                 $data = array();
                 $featuredBulletsDetails = array();
+                $attributeDetails = array();
                 foreach($dataArr[0] as $column) {
                     $column = trim(strtolower($column));
                     switch($column) {
@@ -105,12 +106,18 @@ class ProductController extends AbstractActionController {
                         case 'product image':
                             $data['product_image'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
+                        case 'nutrition':
+                            $data['nutrition'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;                        
+                        case 'nutrition_image':
+                            $data['nutrition_image'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;                        
                         case 'tax':
                             $data['tax'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
                         case 'attribute name':
                             $data['attribute_name'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
-                            break;
+                            break;                        
                         case 'unit':
                             $data['unit'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
@@ -128,11 +135,25 @@ class ProductController extends AbstractActionController {
                             break;
                         case 'commition value':
                             $data['commission_value'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';                            
-                            break;                        
+                            break;
+                        case 'brand name':
+                            $data['brand_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;                          
+                        case 'product attribute':
+                            $attributeName = '';
+                            if(!empty($dataArr[$i][$counter])) {
+                                $attributeName = $dataArr[$i][$counter];
+                            }
+                            break;            
+                        case 'product attribute value':
+                            
+                            if(!empty($dataArr[$i][$counter]) && !empty($attributeName)) {
+                                $attributeDetails[$attributeName] = $dataArr[$i][$counter]; 
+                            }
+                            break;                            
                         case 'feature bullets':
                             if(!empty($dataArr[$i][$counter])) {
-                                
-                                $featuredBulletsDetails[] = json_encode($dataArr[$i][$counter]); 
+                                $featuredBulletsDetails[] = $dataArr[$i][$counter]; 
                             }
                             break;                          
                                  
@@ -140,7 +161,8 @@ class ProductController extends AbstractActionController {
                     $counter++;
                 }
                 $data['method'] = 'addProductByCsv';
-                $data['custom_info'] = $featuredBulletsDetails;
+                $data['custom_info'] = $attributeDetails;
+                $data['bullet_desc'] = $featuredBulletsDetails;
                 $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
             }
         }

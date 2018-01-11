@@ -11,7 +11,7 @@ app.controller('productController', function ($scope, $http,count,productList) {
     $scope.errorStatus = false;
     $scope.errorMsg = '';
     $scope.selected_filter_level = 'Action';
-    $scope.productList = jQuery.parseJSON(productList);
+    $scope.productList = productList;
     $scope.setFilterType = function(id){
         $scope.filter.filter_type = id;
         $scope.selected_filter_level = id.replace("_", " ");

@@ -156,6 +156,6 @@ $(document).ready(function(){
   
 </script>
 <script>
-    app.value('productList', '<?php echo !empty($this->productList)?  json_encode($this->productList):'';?>');
+    app.value('productList', <?php echo !empty($this->productList)?  json_encode($this->productList):'';?>);
     app.value('count', '<?php echo !empty($this->count)?  json_encode($this->count):'';?>');
 </script>
