@@ -30,7 +30,7 @@ class ProductController extends AbstractActionController {
         $productList = $this->commonObj->curlhitApi($request);
         $productList = json_decode($productList, true);
         if($productList['status'] == 'success') {
-            $this->view->productList = $productList['data'];
+            $this->view->productList = $productList['data'];            
             $this->view->count = $productList['totalRecord'];
         }
         return $this->view;
@@ -43,6 +43,9 @@ class ProductController extends AbstractActionController {
             $productList = json_decode($productList, true);
             if ($productList['status'] == 'success') {
                 $this->view->productList = $productList['data'][$request['id']];
+                $this->view->productImage = $productList['productimage'];
+                $this->view->attributeImage = $productList['attributeimage'];
+                $this->view->imageRootPath = $productList['imageRootPath'];
             }
         }
 //        print_r($this->view->productList);die;
@@ -206,6 +209,8 @@ class ProductController extends AbstractActionController {
             }
            $attributes['attribute'] = $attribute;
            $product['product_name'] = $request['product_name'];
+           $product['brand_name'] = $request['brand_name'];
+           $product['nutrition'] = $request['nutrition'];
            $product['category_id'] = $request['category_id'];
            if(!empty($request['product_discount_value']) && !empty($request['product_discount_type'])){
               $product['product_discount_value'] = $request['product_discount_value'] ;
@@ -236,6 +241,12 @@ class ProductController extends AbstractActionController {
                 }
             }
         }        
+        if(!empty($_FILES['nutrition_image']))
+        {
+            if(file_exists($_FILES['nutrition_image']['tmp_name'])) { 
+                $product['nutrition_img'][] = $base64 = 'data:image/' . $_FILES['nutrition_image']['type']. ';base64,' . base64_encode(file_get_contents($_FILES['nutrition_image']['tmp_name']));
+            }
+        }       
         $params = array();
         $params = array_merge($product,$attributes);
         $params['method'] = 'addEditProduct';    
@@ -252,7 +263,23 @@ class ProductController extends AbstractActionController {
         exit;
         
     }
-    
+
+    function deleteProductAction() {
+        $request = (array)$this->getRequest()->getQuery();
+        if(!empty($request['product_id'])) {
+            $request['method'] = 'deleteproduct';
+            $deleteStatus = $this->commonObj->curlhitApi($request);
+            $response = json_decode($deleteStatus, true);
+            if($response['status'] == 'success'){
+                $this->flashMessenger()->addMessage('product Deleted');  
+            }else{
+                $this->flashMessenger()->addMessage('product deletion failed');  
+            }        
+        }
+        $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
+        header('Location:'.$path);        
+        exit;
+    }
     function getProductListAction() {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'getProductList';

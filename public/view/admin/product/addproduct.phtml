@@ -54,8 +54,33 @@
                                             <label>Upload</label>
                                             <input type="file"  multiple="multiple" name="product_img[]">
                                         </div>
+                                        <?php
+                                            $nutritionImg = '';
+                                            foreach($this->productImage[$this->productList['id']] as $images) {
+                                                if($images['type']=='product'){
+                                            ?>
+                                                    <img src="<?=$this->imageRootPath.'/'.$images['type'].'/'.$images['image_id'].'/'.$images['image_name']?>" width="50" height="50" />
+                                            <?php
+                                                }else{
+                                                    $nutritionImg .= "<img src=$this->imageRootPath/$images[type]/$images[image_id]/$images[image_name] width='200' height='50' />";
+                                                }
+                                            }
+                                        ?>
                                     </div>
-                                    
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Nutrition</label>
+                                            <textarea class="form-control" name="nutrition" ><?= !empty($this->productList['nutrition'])?$this->productList['nutrition']:''?></textarea>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Nutrition image</label>
+                                            <input type="file" name="nutrition_image">
+                                            <?=$nutritionImg?>
+                                        </div>
+                                    </div>                                    
                                     <!--div id="preview"></div>
                                     <div class="col-lg-12">
                                         <div class="full-width">
@@ -76,6 +101,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Brand Name</label>
+                                            <input type="text" value="<?= !empty($this->productList['brand_name'])?$this->productList['brand_name']:''?>" name="brand_name"  placeholder="Brand name" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>                                    
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Discount Type</label>
@@ -306,7 +338,19 @@
                     <div class="box-footer">
                         <div class="col-lg-4 col-sm-4 col-xs-12">
                         </div>
-                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                                <label>Hot Deals And New Offers</label>
+                                <div class="clearfix"></div>
+                                <label class="mr10">Hot Deals</label>					
+                                <input type="checkbox" name="hotdeals" value="1" class="minimal" <?php if(!empty($this->productList['hot_deals'])){?>checked="checked" <?php }?>>
+                                <label class="mr10 ml10">New Offers</label>					
+                                <input type="checkbox" name="offers" value="1" class="minimal" <?php if(!empty($this->productList['offers'])){?>checked="checked" <?php }?>>
+                                <label class="mr10 ml10">New Arrival</label>					
+                                <input type="checkbox" name="new_arrival" value="1" class="minimal" <?php if(!empty($this->productList['new_arrival'])){?>checked="checked" <?php }?>>                                
+                            </div>
+                        </div>                        
+                        <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="form-group">
                                 <label>Product Status</label>
                                 <div class="clearfix"></div>

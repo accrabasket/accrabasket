@@ -112,7 +112,7 @@
                                                 <td>{{data.category_name}}</td>
                                                 <td>
                                                     <a href="<?php echo $this->basePath()?>/admin/product/addproduct?id={{data.id}}"><i class="fa fa-edit"></i> </a>
-                                                    <a href="#"> <i class="fa fa-trash-o"></i></a>
+                                                    <a href="<?php echo $this->basePath()?>/admin/product/deleteProduct?product_id={{data.id}}"> <i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>
                                             
@@ -145,17 +145,10 @@
 
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/productlist.js' ?>"></script>
 <script>
-var PAGE_COUNT = 5;
-var PAGING_GAP = 3;
-$(document).ready(function(){
-        $("#show-attribute").click(function(){
-                $("#add-attribute").toggle();
-        });
-        $('.test').jfilestyle();
-});
-  
+    var PAGE_COUNT = 5;
+    var PAGING_GAP = 3;
 </script>
 <script>
     app.value('productList', <?php echo !empty($this->productList)?  json_encode($this->productList):'';?>);
-    app.value('count', '<?php echo !empty($this->count)?  json_encode($this->count):'';?>');
+    app.value('count', <?php echo !empty($this->count)?  json_encode($this->count):0;?>);
 </script>

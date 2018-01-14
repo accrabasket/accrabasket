@@ -10,7 +10,7 @@ class common{
         if(!empty($params)){
             $queryStr = http_build_query($params);
         }
-        echo $url = NODE_API.$controller.'/'.$method.'?'.$queryStr;die;
+        $url = NODE_API.$controller.'/'.$method.'?'.$queryStr;
         return $this->cObj->callCurl($url);
     }  
 }
