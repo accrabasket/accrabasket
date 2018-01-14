@@ -56,13 +56,15 @@
                                         </div>
                                         <?php
                                             $nutritionImg = '';
-                                            foreach($this->productImage[$this->productList['id']] as $images) {
-                                                if($images['type']=='product'){
-                                            ?>
-                                                    <img src="<?=$this->imageRootPath.'/'.$images['type'].'/'.$images['image_id'].'/'.$images['image_name']?>" width="50" height="50" />
-                                            <?php
-                                                }else{
-                                                    $nutritionImg .= "<img src=$this->imageRootPath/$images[type]/$images[image_id]/$images[image_name] width='200' height='50' />";
+                                            if(!empty($this->productImage[$this->productList['id']])) {
+                                                foreach($this->productImage[$this->productList['id']] as $images) {
+                                                    if($images['type']=='product'){
+                                                ?>
+                                                        <img src="<?=$this->imageRootPath.'/'.$images['type'].'/'.$images['image_id'].'/'.$images['image_name']?>" width="50" height="50" />
+                                                <?php
+                                                    }else{
+                                                        $nutritionImg .= "<img src=$this->imageRootPath/$images[type]/$images[image_id]/$images[image_name] width='200' height='50' />";
+                                                    }
                                                 }
                                             }
                                         ?>
