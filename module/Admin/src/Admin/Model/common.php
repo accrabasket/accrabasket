@@ -15,7 +15,7 @@ class common{
        return $this->cObj->callCurl($url);
     }
     
-    public function curlhitApi($params=null, $controller='application') {
+    public function curlhitApi($params=null, $controller='index', $module='application') {
         $queryStr = '';
         if(!empty($params)){
             $queryStr = json_encode($params);
@@ -23,7 +23,7 @@ class common{
 //            $queryStr = json_encode($queryStr);
         }
         $data['parameters'] = $queryStr;
-        $url = BASKET_API.$controller;
+        $url = BASKET_API.$module.'/'.$controller;
         $parametes = http_build_query($data);        
 //        echo $url = $url.'?'.$parametes;die;
         return $this->cObj->callPostCurl($url, $parametes);

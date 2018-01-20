@@ -45,27 +45,23 @@ class DashboardController extends AbstractActionController {
         return $this->view;
     }
 
-    public function pricesaveAction() {
-        $request = $this->getRequest()->getPost();
+    public function dashboardAction(){
+        $request = (array)$this->getRequest()->getPost();
         $params = array();
-        $params["monthly_service"] = $request["monthly_service"];
-        $params["phone_number_charge"] = $request["phone_number"];
-        $params["sms_pack_price"] = $request["sms_pack_price"];
-        $params["nbr_of_sms_in_pack"] = $request["nbr_of_sms_in_pack"];
-        $params["free_sms"] = $request["free_sms"];
-        $inputParams['parameters'] = json_encode($params);
-        //print_r($inputParams);die;
-        $savePrice = $this->commonObj->curlhit($inputParams, 'pricesave');
-        $savePrice = json_decode($savePrice);
-        print_r($savePrice);
-        die;
-        if ($savePrice['status']) {
-            $this->view->priceList = $priceList['data'];
-        }
-        print_r($SavePrice);
-        return $this->view;
+        $params["start_date"] = date('Y-m-d', strtotime($request['startDate']));
+        $params["end_date"] = date('Y-m-d', strtotime($request['endDate']));
+        $params["method"] = 'getcustomersaledetail';
+        $customerSaleResponse = $this->commonObj->curlhitApi($params,'customer');        
+        $customerSaleArr = json_decode($customerSaleResponse, true);
+        $params["method"] = 'getmerchantproductdetail';
+        $merchantProductResponse = $this->commonObj->curlhitApi($params);        
+        $merchantProductArr = json_decode($merchantProductResponse, true);
+        $data = array('customerData'=>$customerSaleArr, 'merchantData'=>$merchantProductArr);
+        
+        echo json_encode($data);
+        exit;
     }
-
+    
     public function newcompanylistAction() {
         return $this->view;
     }
@@ -87,7 +83,7 @@ class DashboardController extends AbstractActionController {
         $params['activate_by'] = $this->session['user']->data[0]->id;
         $response = $this->commonObj->curlhit($params, 'activateordeactivatecompany');
         echo $response;
-        exit();
+        exit();    
     }
 
     public function emailsetupAction() {
