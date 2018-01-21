@@ -1,9 +1,12 @@
 var app = angular.module('app', []);
-app.controller('managedashboard', function ($scope, $http, $sce,$timeout) {
+app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filter) {
     $scope.filter = {};
-    $scope.filter.startDate = new Date();
-    $scope.filter.endDate = new Date();
+    $scope.analytics = {};
+    $scope.filter.startDate = $filter('date')(new Date(), 'yyyy-MM-dd');;
+    $scope.filter.endDate = $filter('date')(new Date(), 'yyyy-MM-dd');
     $scope.applyFilter = function(){
+        $scope.totalOrder = 0;
+        $scope.totalConfirmedOrder = 0;  
         $scope.ajaxLoadingData = true;
         $http({
             method: 'POST',
@@ -21,18 +24,41 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout) {
         });        
     }
     $scope.applyFilter();
+    
+    $scope.getTotalDashboardDetail = function() {
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'dashboard/getTotalDashboardDetail',
+            data : ObjecttoParams($scope.filter),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.totalActiveCustomer = response.totalActiveCustomer;
+            $scope.totalNumberOfMerchant = response.totalNumberOfMerchant;
+            $scope.totalNumberOfProduct = response.totalNumberOfProduct;
+        });        
+    }
+    
+    $scope.getTotalDashboardDetail();    
+    
     $scope.getDateArray = function(start, end) {
 
         start = new Date(start);
         end = new Date(end);
         $scope.arr = new Array();
         $scope.dt = new Date(start);
-        while ($scope.dt <= end) {
-            $scope.arr.push(formatDate($scope.dt));
-            $scope.dt.setDate($scope.dt.getDate() + 1);
+        if($scope.filter.report=='monthly'){
+            while ($scope.dt <= end) {
+                $scope.arr.push(formatDate($scope.dt));
+                $scope.dt.setMonth($scope.dt.getMonth() + 1);
+            }
+        }else {
+            while ($scope.dt <= end) {
+                $scope.arr.push(formatDate($scope.dt));
+                $scope.dt.setDate($scope.dt.getDate() + 1);
+            }
         }
     };    
-
+        
     $scope.getWeekArray = function(start, end) {
 
         start = new Date(start);
@@ -74,7 +100,10 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout) {
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-
-        return [year, month, day].join('-');
+        if($scope.filter.report == 'monthly'){
+            return [year, month].join('-');
+        }else{
+            return [year, month, day].join('-');
+        }
     }    
 });

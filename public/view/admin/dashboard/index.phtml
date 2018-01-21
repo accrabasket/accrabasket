@@ -32,7 +32,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input class="datepicker" data-date-format="mm/dd/yyyy" ng-model="filter.startDate">
+                            <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.startDate">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -45,7 +45,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input class="datepicker" data-date-format="mm/dd/yyyy" ng-model="filter.endDate">
+                            <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.endDate">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -85,7 +85,7 @@
                             <!-- small box -->
                             <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <h3>150</h3>
+                                    <h3>{{analytics.customerData.data.totalOrder}}</h3>
                                     <p>Total sales confirmed</p>
                                 </div>
                                 <div class="icon"> <i class="ion ion-bag"></i> </div>
@@ -96,7 +96,7 @@
                             <!-- small box -->
                             <div class="small-box bg-olive">
                                 <div class="inner">
-                                    <h3>530</h3>
+                                    <h3>{{analytics.customerData.data.totalConfirmedOrder}}</h3>
                                     <p>Total Order Confirmed</p>
                                 </div>
                                 <div class="icon"> <i class="ion ion-clipboard"></i> </div>
@@ -106,8 +106,8 @@
                             <!-- small box -->
                             <div class="small-box bg-red">
                                 <div class="inner">
-                                    <h3>530</h3>
-                                    <p>No of Active Customer</p>
+                                    <h3>{{totalActiveCustomer}}</h3>
+                                    <p>Total No of Active Customer</p>
                                 </div>
                                 <div class="icon"> <i class="fa fa-users"></i> </div>
                             </div>
@@ -116,8 +116,8 @@
                             <!-- small box -->
                             <div class="small-box bg-yellow">
                                 <div class="inner">
-                                    <h3>530</h3>
-                                    <p>No of product added</p>
+                                    <h3>{{totalNumberOfProduct}}</h3>
+                                    <p>Total No of product added</p>
                                 </div>
                                 <div class="icon"> <i class="fa fa-dropbox"></i> </div>
                             </div>
@@ -127,8 +127,8 @@
                             <!-- small box -->
                             <div class="small-box bg-bllue-dark">
                                 <div class="inner">
-                                    <h3>44</h3>
-                                    <p>No of Merchant Added</p>
+                                    <h3>{{totalNumberOfMerchant}}</h3>
+                                    <p>Total No of Merchant</p>
                                 </div>
                                 <div class="icon"> <i class="fa fa-bank"></i> </div>
                             </div>

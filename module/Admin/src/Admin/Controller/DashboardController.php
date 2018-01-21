@@ -50,6 +50,7 @@ class DashboardController extends AbstractActionController {
         $params = array();
         $params["start_date"] = date('Y-m-d', strtotime($request['startDate']));
         $params["end_date"] = date('Y-m-d', strtotime($request['endDate']));
+        $params["report"] = $request['report'];
         $params["method"] = 'getcustomersaledetail';
         $customerSaleResponse = $this->commonObj->curlhitApi($params,'customer');        
         $customerSaleArr = json_decode($customerSaleResponse, true);
@@ -60,6 +61,32 @@ class DashboardController extends AbstractActionController {
         
         echo json_encode($data);
         exit;
+    }
+    
+    public function getTotalDashboardDetailAction() {
+        $response = array();
+        $params = array();
+        $params["method"] = 'gettotalcustomer';
+        $customerResponse = $this->commonObj->curlhitApi($params, 'customer');           
+        $customerResponse = json_decode($customerResponse, true);
+        $response['totalActiveCustomer'] = 0;
+        if($customerResponse['status']=='success'){
+            $response['totalActiveCustomer'] = $customerResponse['data']['totalNumberOfCustomer'];
+        }        
+        $params = array();
+        $params["method"] = 'gettotalproductandmerchant';
+        $productAndMerchantResponse = $this->commonObj->curlhitApi($params);
+        $productAndMerchantResponse = json_decode($productAndMerchantResponse, true);
+        
+        $response['totalNumberOfMerchant'] = 0;
+        $response['totalNumberOfProduct'] = 0;
+        if($productAndMerchantResponse['status']=='success'){
+            $response['totalNumberOfMerchant'] = $productAndMerchantResponse['data']['totalNumberOfMerchant'];
+            $response['totalNumberOfProduct'] = $productAndMerchantResponse['data']['totalNumberOfProduct'];
+        }
+        
+        echo json_encode($response);
+        exit;        
     }
     
     public function newcompanylistAction() {
