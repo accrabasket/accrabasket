@@ -11,7 +11,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
         $scope.ajaxLoadingData = true;
         $http({
             method: 'POST',
-            url: serverAdminApp + 'dashboard/dashboard',
+            url: serverMerchantApp + 'dashboard/dashboard',
             data : ObjecttoParams($scope.filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
@@ -29,7 +29,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
     $scope.getTotalDashboardDetail = function() {
         $http({
             method: 'POST',
-            url: serverAdminApp + 'dashboard/getTotalDashboardDetail',
+            url: serverMerchantApp + 'dashboard/getTotalDashboardDetail',
             data : ObjecttoParams($scope.filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {

@@ -302,7 +302,7 @@ class ProductController extends AbstractActionController {
        $request = (array) $this->getRequest()->getQuery();
        if (!empty($request['order_id'])) {
             $request['method'] = 'orderlist';
-            $productList = $this->commonObj->curlhitApi($request,'application/customer');
+            $productList = $this->commonObj->curlhitApi($request,'customer');
             $productList = json_decode($productList,true);
             if(!empty($productList['data'])){
                 $this->view->productDetails = $productList;
@@ -318,7 +318,7 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])) {
             $request['page'] = $request['page'];
         }
-        echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
+        echo $productList = $this->commonObj->curlhitApi($request,'customer');
         exit;
     }
     

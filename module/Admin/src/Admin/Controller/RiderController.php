@@ -53,7 +53,7 @@ class RiderController extends AbstractActionController {
         $request = (array)$this->getRequest()->getPost();
         $request['method'] = 'assignordertorider';
         
-        echo $response = $this->commonObj->curlhitApi($request, 'application/customer');
+        echo $response = $this->commonObj->curlhitApi($request, 'customer');
         $response = json_decode($response, true);
         if($response['status'] == 'success'){
             $this->flashMessenger()->addMessage($response['msg']);

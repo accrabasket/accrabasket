@@ -56,9 +56,9 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-xs-12 no-rpad">
+                <!--div class="col-lg-8 col-md-8 col-xs-12 no-rpad">
                     <div class="box box-info">
-                        <div id="container14" style="width: 100%; max-width: 850px;"> 
+                        <div id="container4" style="width: 100%; max-width: 850px;"> 
                             <table border="1" cellspacing="10" cellpadding="10">
                                 <tr>
                                     <th>Date</th>
@@ -78,7 +78,12 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div-->
+                <div class="col-lg-8 col-md-8 col-xs-12 no-rpad">
+                    <div class="box box-info">
+                        <div id="container14" style="width: 100%; max-width: 850px; height: 350px; margin: 0 auto;"> </div>
+                    </div>
+                </div>                                
                 <div class="col-lg-4 col-md-4 col-xs-12 ">
                     <div class="row">
                         <div class="col-lg-6 col-xs-12 no-rpad">
@@ -151,7 +156,10 @@
 <!-- /.control-sidebar -->
 <!-- Add the sidebar's background. This div must be placed
 immediately after the control sidebar -->
+<script type="text/javascript" src="<?=$this->basePath()?>/public/js/highcharts.js"></script>
+<script type="text/javascript" src="<?=$this->basePath()?>/public/js/exporting.js"></script>
 <script type="text/javascript" src="<?=$this->basePath()?>/public/js/waypoints.js"></script>
+
 <script>
     $(function () {
         $('.datepicker').datepicker();

@@ -14,13 +14,13 @@ class common{
        return $this->cObj->callCurl($url);
     }
     
-    public function curlhitApi($params=null, $controller='application') {
+    public function curlhitApi($params=null, $controller='index', $module='application') {
         $queryStr = '';
         if(!empty($params)){
             $queryStr = json_encode($params);
         }
         $data['parameters'] = $queryStr;
-        $url = BASKET_API.$controller.'?'.http_build_query($data);
+        $url = BASKET_API.$module.'/'.$controller.'?'.http_build_query($data);
         return $this->cObj->callCurl($url);
     }
     

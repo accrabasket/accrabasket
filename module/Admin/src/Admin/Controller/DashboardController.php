@@ -511,13 +511,13 @@ class DashboardController extends AbstractActionController {
         $data['merchant_id'] = $request['merchant_id'];
         $data['start_date'] = $request['startDate'].' 00:00:00';
         $data['end_date'] = $request['endDate'].' 23:59:59';
-        echo$savebanner = $this->commonObj->curlhitApi($data,'application/customer');
+        echo$savebanner = $this->commonObj->curlhitApi($data,'customer');
         exit;
     }
     public function paytomerchantAction() {
         $request = (array) $this->getRequest()->getPost();
         $request['method'] = 'paytomerchant';
-        echo$savebanner = $this->commonObj->curlhitApi($request,'application/customer');
+        echo$savebanner = $this->commonObj->curlhitApi($request,'customer');
         exit;
     }
     
@@ -529,7 +529,7 @@ class DashboardController extends AbstractActionController {
         $data['start_date'] = $request['start_date'].' 00:00:00';
         $data['end_date'] = $request['end_date'].' 23:59:59';
         
-        $legerdata = $this->commonObj->curlhitApi($data,'application/customer');
+        $legerdata = $this->commonObj->curlhitApi($data,'customer');
         
         $this->downloadCsv($legerdata);
     }

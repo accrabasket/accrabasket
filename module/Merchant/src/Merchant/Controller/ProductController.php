@@ -170,6 +170,13 @@ class ProductController extends AbstractActionController {
         if ($storeList['status'] == 'success') {
             $this->view->storeList = $storeList['data'];
         }
+        $this->view->store_id = 0;
+        if(empty($request['store_id']) && !empty($storeList['data'])) {
+            $storeData = array_values($storeList['data']);            
+            $this->view->store_id = $storeData[0]['id'];
+        }else{
+            $this->view->store_id = $request['store_id'];
+        }
         
         return $this->view;
     }
@@ -254,7 +261,7 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])) {
             $request['page'] = $request['page'];
         }
-        echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
+        echo $productList = $this->commonObj->curlhitApi($request,'customer');
         exit;
     }
     
@@ -263,7 +270,7 @@ class ProductController extends AbstractActionController {
         $request['method'] = 'updateOrderstatus';
         $request['merchant_id'] = $this->session['user']['data'][0]['id'];
         
-        echo $productList = $this->commonObj->curlhitApi($request,'application/customer');
+        echo $productList = $this->commonObj->curlhitApi($request,'customer');
         exit;
     }
     function stockAction() {

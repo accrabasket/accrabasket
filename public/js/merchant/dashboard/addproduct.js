@@ -1,5 +1,5 @@
 var app = angular.module('product', []);
-app.controller('productController', function ($scope, $http, $sce, $timeout, inventryDetail) {
+app.controller('productController', function ($scope, $http, $sce, $timeout, inventryDetail, store_id) {
     $scope.errorShow = false;
     $scope.showAttr = false;
     $scope.productData = {};
@@ -7,6 +7,7 @@ app.controller('productController', function ($scope, $http, $sce, $timeout, inv
     $scope.index = 0;
     $scope.indexVal = [];
     $scope.taxList = {};
+    $scope.store_id = store_id;
     $scope.inventryDetails = inventryDetail;
     $scope.inventryData = {};
     $scope.showAttrDiv = function () {
@@ -21,7 +22,8 @@ app.controller('productController', function ($scope, $http, $sce, $timeout, inv
         if($scope.inventryDetails[$scope.store_id] != undefined) {
             $scope.inventryData = $scope.inventryDetails[$scope.store_id];
         }
-    }    
+    }
+    $scope.changeStore();
     function showAttrDiv() {
         $scope.showAttr = true;
         var a = ($scope.indexVal).length + 1;

@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" ng-app="app" id="managedashboard" ng-controller="managedashboard"  ng-cloak="true">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1> Dashboard <small>Control panel</small> </h1>
@@ -12,32 +12,46 @@
     <section class="content container-fluid">
         <div class="box-body">
             <div class="row">
-                <div class="col-lg-5 col-xs-12">
+                <div class="col-md-2 col-xs-12">
                     <div class="form-group">
-                        <label>Filter By</label>
-                        <select class="form-control select2" style="width: 100%;">
-                            <option selected="selected">Current Date</option>
-                            <option>Last Week</option>
-                            <option>Current Month</option>
-                            <option>Current Year</option>
-                        </select>
+                        <label>Report</label>
+                        <div class="input-group">    
+                            <select class="form-control select2" ng-model="filter.report" ng-init="filter.report='day'">
+                                <option value="day">Day Wise</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>          
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xs-12">
+                <div class="col-md-3 col-xs-12">
                     <div class="form-group">
-                        <label>Date range:</label>
+                        <label>Start Date</label>
 
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" id="reservation" class="form-control pull-right">
+                            <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.startDate">
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>                
+                <div class="col-md-3 col-xs-12">
+                    <div class="form-group">
+                        <label>End Date</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input class="datepicker" data-date-format="yyyy-mm-dd" ng-model="filter.endDate">
                         </div>
                         <!-- /.input group -->
                     </div>
                 </div>
-                <div class="col-lg-2 col-xs-12 no-rpad"><label>&nbsp;</label>
-                    <button class="btn btn-block btn-primary" type="button">Apply</button>
+                <div class="col-md-2 col-xs-12 no-rpad"><label>&nbsp;</label>
+                    <button class="btn btn-block btn-primary" type="button" ng-click="applyFilter()">Apply</button>
                 </div>
             </div>
 
@@ -46,14 +60,14 @@
                     <div class="box box-info">
                         <div id="container14" style="width: 100%; max-width: 850px; height: 350px; margin: 0 auto;"> </div>
                     </div>
-                </div>
+                </div>                
                 <div class="col-lg-4 col-md-4 col-xs-12 ">
                     <div class="row">
                         <div class="col-lg-6 col-xs-12 no-rpad">
                             <!-- small box -->
                             <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <h3>150</h3>
+                                    <h3>{{analytics.customerData.data.totalOrder}}</h3>
                                     <p>Total sales confirmed</p>
                                 </div>
                                 <div class="icon"> <i class="ion ion-bag"></i> </div>
@@ -64,7 +78,7 @@
                             <!-- small box -->
                             <div class="small-box bg-olive">
                                 <div class="inner">
-                                    <h3>530</h3>
+                                    <h3>{{analytics.customerData.data.totalConfirmedOrder}}</h3>
                                     <p>Total Order Confirmed</p>
                                 </div>
                                 <div class="icon"> <i class="ion ion-clipboard"></i> </div>
@@ -74,8 +88,8 @@
                             <!-- small box -->
                             <div class="small-box bg-red">
                                 <div class="inner">
-                                    <h3>530</h3>
-                                    <p>No of Active Customer</p>
+                                    <h3>{{totalActiveCustomer}}</h3>
+                                    <p>Total No of Active Customer</p>
                                 </div>
                                 <div class="icon"> <i class="fa fa-users"></i> </div>
                             </div>
@@ -84,28 +98,21 @@
                             <!-- small box -->
                             <div class="small-box bg-yellow">
                                 <div class="inner">
-                                    <h3>530</h3>
-                                    <p>No of product added</p>
+                                    <h3>{{totalNumberOfProduct}}</h3>
+                                    <p>Total No of product added</p>
                                 </div>
                                 <div class="icon"> <i class="fa fa-dropbox"></i> </div>
                             </div>
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-12 col-xs-12 no-rpad">
-                            <!-- small box -->
-                            <div class="small-box bg-bllue-dark">
-                                <div class="inner">
-                                    <h3>44</h3>
-                                    <p>No of Merchant Added</p>
-                                </div>
-                                <div class="icon"> <i class="fa fa-bank"></i> </div>
-                            </div>
-                        </div>
-                        <!-- ./col -->
                     </div>
                 </div>
             </div>
+        </div>   
+        <div style="position: fixed; top: 0; left: 0; background: rgba(0,0,0,0.3); z-index: 99999999; width: 100%; height: 100%;"  ng-show="ajaxLoadingData">
+            <img style="position: absolute; top: 40%; left: 45%; width: 250px; " alt="loader" src="<?=$this->basePath()?>/public/img/loading_cart.gif">
+        </div>        
     </section>
+    
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
@@ -114,115 +121,14 @@
 <!-- /.control-sidebar -->
 <!-- Add the sidebar's background. This div must be placed
 immediately after the control sidebar -->
-
-<div class="control-sidebar-bg"></div>
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
 <script type="text/javascript" src="<?=$this->basePath()?>/public/js/highcharts.js"></script>
 <script type="text/javascript" src="<?=$this->basePath()?>/public/js/exporting.js"></script>
 <script type="text/javascript" src="<?=$this->basePath()?>/public/js/waypoints.js"></script>
 <script>
     $(function () {
-        $('#container13').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Today Order'
-            },
-            xAxis: {
-                categories: [
-                    '9:00AM',
-                    '10:00AM',
-                    '11:00AM',
-                    '12:00AM',
-                    '1:00PM',
-                    '2:00PM',
-                    '3:00PM',
-                    '4:00PM',
-                    '5:00PM',
-                    '6:00PM'
-                ],
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Sales'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                    name: 'Web Sales',
-                    data: [49.9, 371.5, 106.4, 129.2, 144.0, 376.0, 135.6, 148.5, 216.4, 434.3]
-                }, {
-                    name: 'Mobile Sales',
-                    data: [83.6, 278.8, 98.5, 93.4, 106.0, 464.5, 105.0, 104.3, 91.2, 134.3]
-                }, ]
-        });
+        $('.datepicker').datepicker();
     });
-</script>
-<script type='text/javascript'>
-    $(function () {
-        $('#container14').highcharts({
-            title: {
-                text: 'Order Status',
-                x: -20 //center
-            },
-            subtitle: {
-                text: '',
-                x: -20
-            },
-            xAxis: {
-                categories: ['1/01/2017', '1/02/2017', '1/03/2017', '1/04/2017', '1/05/2017', '1/06/2017',
-                    '1/07/2017', '1/08/2017', '1/08/2017', '1/09/2017', '1/10/2017', '1/11/2017', '1/12/2017']
-            },
-            yAxis: {
-                title: {
-                    text: 'No Of Order'
-                },
-                plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-            },
-            tooltip: {
-                valueSuffix: ''
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                    name: 'No of Confirmed Order',
-                    data: [7.0, 10.9, 14.5, 18.5, 22.2, 25.5, 29.2, 32.5, 86.3, 42.3, 48.9, 54.6]
-                }, {
-                    name: 'Confirmed Order Amount',
-                    data: [10.2, 10.8, 15.7, 21.3, 27.0, 32.0, 34.8, 44.1, 70.1, 44.1, 50.6, 50]
-                }, {
-                    name: 'No of Cancelled Order',
-                    data: [10.9, 20.6, 23.5, 28.4, 33.5, 37.0, 48.6, 57.9, 64.3, 90.0, 60.9, 75.0]
-                }, {
-                    name: 'Cancelled Order Amount',
-                    data: [13.9, 54.2, 45.7, 38.5, 81.9, 85.2, 77.0, 66.6, 54.2, 50.3, 60.6, 40.8]
-                }]
-        });
-    });
+var app = angular.module('app', []);    
 </script> 
+<script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/dashboard.js' ?>">
+</script>

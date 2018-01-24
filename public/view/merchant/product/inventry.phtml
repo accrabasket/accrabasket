@@ -194,6 +194,7 @@
 <script>
     app.value('productList', '<?php echo !empty($this->productList['atribute'])?count($this->productList['atribute']):'';?>');
     app.value('inventryDetail', <?php echo json_encode($this->inventryDetails)?>);
+    app.value('store_id', <?=$this->store_id?>);
 </script>
 <?php
 
