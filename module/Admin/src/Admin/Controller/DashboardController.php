@@ -589,6 +589,24 @@ class DashboardController extends AbstractActionController {
     die();          
         echo $csvData; exit();        
     }
-
+    public function getNotificationAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'getnotification';
+        $postParams['user_type'] = 'admin';
+        $notificationList = $this->commonObj->curlhitApi($postParams, 'customer');
+        echo $notificationList;
+        
+        exit;        
+    }
+    
+    public function updateNotificationAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'updatenotification';
+        $postParams['user_type'] = 'admin';
+        $response = $this->commonObj->curlhitApi($postParams, 'customer');
+        echo $response;
+        
+        exit;        
+    }    
 
 }

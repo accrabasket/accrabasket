@@ -51,6 +51,8 @@ function getNotification(type, baseUrl) {
 function updateNotification(type) {
     if(type=='merchant') {
         var baseUrl = serverMerchantApp;
+    }else if('admin') {
+        var baseUrl = serverAdminApp;
     }
     $.ajax({
         method: "POST",
