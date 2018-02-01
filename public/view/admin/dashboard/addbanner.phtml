@@ -46,6 +46,17 @@
                                             <!-- /.input group -->
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Product Status</label>
+                                            <div class="clearfix"></div>
+                                            <label class="mr10">Active</label>					
+                                            <input type="radio" name="status" value="1" ng-model="bannerData.status" class="minimal">
+
+                                            <label class="mr10 ml10">Inactive</label>					
+                                            <input type="radio" name="status" value="0" class="minimal" ng-model="bannerData.status">
+                                        </div>  
+                                    </div>    
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -64,5 +75,9 @@
     </section>
     <!-- /.content -->
 </div>
+<script>
+    var app = angular.module('app', []);
+    app.value('bannerData', <?=json_encode($this->bannerData)?>);
+</script>
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/managebanner.js' ?>">
 </script>

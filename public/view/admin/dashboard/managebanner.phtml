@@ -55,19 +55,10 @@
                                                         <td class=""><?= $value['image_name'] ?></td>
                                                         <td class=""><?= $value['description'] ?></td>
                                                         <td>
-                                                            <?php
-                                                            if($value['status']){
-                                                            ?>
-                                                            <a href="updatebanner?id=<?= $value['id'] ?>&status=1">
-                                                               <i> Active</i></a>
-                                                            <?php
-                                                            }else{
-                                                            ?>
-                                                            <a href="updatebanner?id=<?= $value['id'] ?>&status=0">
-                                                                <i style="color:red"> In-Active</i></a>
-                                                            <?php
-                                                            }
-                                                            ?>
+                                                            <a href="<?=$this->basePath()?>/admin/dashboard/addbanner?id=<?= $value['id']?>">
+                                                               <i> Edit</i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
     <?php }
 } ?>

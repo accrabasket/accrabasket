@@ -461,14 +461,25 @@ class DashboardController extends AbstractActionController {
     }
     
     public function addbannerAction() {
+        $data = array();
         $request = (array) $this->getRequest()->getQuery();
+        $this->view->bannerData = array();
+        if(!empty($request['id'])) {
+            $data['id'] = $request['id'];
+            $data['method'] = 'banner';
+            $banner = $this->commonObj->curlhitApi($data);
+            $getBannerData = json_decode($banner, true);
+            if (!empty($getBannerData['data'][0])) {
+                $this->view->bannerData = $getBannerData['data'][0];
+            }            
+        }
         return $this->view;
     }
     
     public function savebannerAction() {
         $request = (array) $this->getRequest()->getPost();
         $request['method'] = 'addEditBanner';
-        $request['status'] = 1;
+        $request['status'] = isset($request['status'])?$request['status']:1;
 //        print_r($request);die;
         $saveCategory = $this->commonObj->curlhitApi($request);
         $response = json_decode($saveCategory, true);
@@ -478,7 +489,7 @@ class DashboardController extends AbstractActionController {
         echo $saveCategory;
         exit;
     }
-    public function updatebannerAction() {
+    /*public function updatebannerAction() {
         $request = (array) $this->getRequest()->getQuery();
         $request['method'] = 'addEditBanner';
         $savebanner = $this->commonObj->curlhitApi($request);
@@ -487,7 +498,7 @@ class DashboardController extends AbstractActionController {
         header('Location:' . $path);
 
         exit;
-    }
+    }*/
     public function managebannerAction() {
         $postParams['method'] = 'banner';
         $postParams['status'] = 1;

@@ -1,8 +1,7 @@
-var app = angular.module('app', []);
-app.controller('managebanner', function ($scope, $http, $sce,$timeout) {
+app.controller('managebanner', function ($scope, $http, $sce,$timeout, bannerData) {
     $scope.errorShow = false;
     
-    $scope.bannerData = {};
+    $scope.bannerData = bannerData;
     $scope.id = '';
     
 //    if(taxList != ''){
@@ -15,13 +14,14 @@ app.controller('managebanner', function ($scope, $http, $sce,$timeout) {
     
     $scope.savebanner = function (bannerData) {
 		var error = ' ';
-                
-		if($('#banner_img').val() != ''){
-			$scope.bannerData.image = $('#banner_img').val();
-                        $scope.bannerData.image_name = $('#image_name').val();
-		}else{
-                    error = 'Please select image' ;
-                }  
+                if(bannerData.id == undefined || $('#banner_img').val() != '') {
+                    if($('#banner_img').val() != ''){
+                            $scope.bannerData.image = $('#banner_img').val();
+                            $scope.bannerData.image_name = $('#image_name').val();
+                    }else{
+                        error = 'Please select image' ;
+                    }  
+                }
                 if(bannerData.link == undefined || bannerData.link == ''){
 			error = 'Please enter redirect link' ;
 		}
