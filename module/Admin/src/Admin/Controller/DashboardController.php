@@ -604,12 +604,16 @@ class DashboardController extends AbstractActionController {
         $postParams = (array) $this->getRequest()->getPost();
         $postParams['method'] = 'getnotification';
         $postParams['user_type'] = 'admin';
+        $postParams['pagination'] = 1;
         $notificationList = $this->commonObj->curlhitApi($postParams, 'customer');
         echo $notificationList;
         
         exit;        
     }
     
+    public function notificationAction() {
+        return $this->view;
+    }
     public function updateNotificationAction() {
         $postParams = (array) $this->getRequest()->getPost();
         $postParams['method'] = 'updatenotification';
