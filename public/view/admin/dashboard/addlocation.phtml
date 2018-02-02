@@ -89,6 +89,7 @@
  <script>
     var app = angular.module('app', []);
     app.value('locationId', '<?php echo isset($this->params['id'])?$this->params['id']:0?>');
+    app.value('restrictedLocationId', '0');
 </script>
 <script src="<?php echo $this->basePath() . '/public/js/dashboard/managelocation.js' ?>">
 </script>
