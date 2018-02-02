@@ -1,0 +1,61 @@
+<div class="content-wrapper" ng-app="app" ng-controller="managelocation">
+<section class="content-header">
+      <h1> Area Locatin</h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Systems setup</a></li>
+        <li class="active"> Manage Area Locaiton</li>
+      </ol>
+    </section>
+<section class="content container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"> Manage Area Locaiton</h3>
+              <div class="pull-right"> 
+                  <a href="<?php echo $this->basePath()?>/admin/dashboard/addrestrictedlocation" class="btn btn-info"> Add Restricted Location Area</a>
+              </div>              
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting">Location name</th>
+                          <th class="sorting">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr role="row" class="odd" ng-repeat="location in restrictedLocationList">
+                                <td class="">
+                                    {{location.address}}
+                                </td>
+                                <td>
+                                    <a href="<?= $this->basePath()?>/admin/dashboard/addrestrictedlocation?id={{location.id}}"><i class="fa fa-edit"></i></a>                                    
+                                </td>
+                            </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+ <script>
+    var app = angular.module('app', []);
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/locationlist.js' ?>">
+</script>

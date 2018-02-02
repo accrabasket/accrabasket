@@ -1,0 +1,74 @@
+<div class="content-wrapper" ng-app="app" id="managelocation" ng-controller="managelocation"  ng-cloak="true">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Add Area Location</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Area Location</a></li>
+            <li class="active"> Add Area Location</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title">Area Restricted Location</h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Restricted Location</label>
+                                            <input type="text" placeholder="Location Address" class="form-control"  name="name"   ng-model="locationData.address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Select Country</label>
+                                            <select class="form-control select2" ng-change="getCity(locationData.country_id)" style="width: 100%;" ng-model="locationData.country_id">
+                                                <option value="0">Select Country</option>
+                                                <option  ng-repeat="country in countrylist" value="{{country.id}}">{{country.country_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Select City</label>
+                                            <select class="form-control select2" style="width: 100%;" ng-model="locationData.city_id">
+                                                <option value="0" >Select City</option>
+                                                <option  ng-repeat="city in citylist" ng-selected="city.id == locationData.city_id" value="{{city.id}}">{{city.city_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <a href="<?php echo $this->basePath() ?>/admin/dashboard/location" class="btn btn-info"> Cancel</a>
+                            <button class="btn btn-info" ng-click="saveRestrictedLocation(locationData)">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+ <script>
+    var app = angular.module('app', []);
+    app.value('locationId', '<?php echo isset($this->params['id'])?$this->params['id']:0?>');
+</script>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/managelocation.js' ?>">
+</script>
