@@ -129,13 +129,15 @@
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Price(In GHC)</label>
-                                                    <input type="text" ng-model="inventryData[<?=$value['id']?>].price" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
+                                                    <input type="text" ng-if="inventryData[<?=$value['id']?>].price" ng-model="inventryData[<?=$value['id']?>].price" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
+                                                    <input type="text" ng-if="!inventryData[<?=$value['id']?>].price" id="attribute_price" value="" name="attribute_price[]" placeholder="Price" class="form-control" >
                                                 </div>
                                             </div>                                            
                                             <div class="col-lg-6 col-sm-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Item in Store</label>
-                                                    <input type="text" ng-model="inventryData[<?=$value['id']?>].stock" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
+                                                    <input ng-if="inventryData[<?=$value['id']?>].stock" type="text" ng-model="inventryData[<?=$value['id']?>].stock" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
+                                                    <input ng-if="!inventryData[<?=$value['id']?>].stock" type="text" id="attribute_stock" value="" name="stock[]" placeholder="Total item in stock" class="form-control" >
                                                 </div>
                                             </div>                                             
                                         </div>
@@ -165,32 +167,6 @@
     <!-- /.content -->
 </div>
 <script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/addproduct.js' ?>"></script>
-<script>
-    $(function () {
-        // Multiple images preview in browser
-        var imagesPreview = function (input, placeToInsertImagePreview) {
-
-            if (input.files) {
-                var filesAmount = input.files.length;
-
-                for (i = 0; i < filesAmount; i++) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (event) {
-                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-                    }
-
-                    reader.readAsDataURL(input.files[i]);
-                }
-            }
-
-        };
-
-        $('#gallery-photo-add').on('change', function () {
-            imagesPreview(this, 'p.gallery');
-        });
-    });
-</script>
 <script>
     app.value('productList', '<?php echo !empty($this->productList['atribute'])?count($this->productList['atribute']):'';?>');
     app.value('inventryDetail', <?php echo json_encode($this->inventryDetails)?>);

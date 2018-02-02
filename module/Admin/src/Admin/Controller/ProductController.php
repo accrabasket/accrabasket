@@ -158,8 +158,12 @@ class ProductController extends AbstractActionController {
                             if(!empty($dataArr[$i][$counter])) {
                                 $featuredBulletsDetails[] = $dataArr[$i][$counter]; 
                             }
-                            break;                          
-                                 
+                            break;
+                        case 'merchant name':
+                            if(!empty($dataArr[$i][$counter])) {
+                                $data['merchant_name'][] = $dataArr[$i][$counter];
+                            }
+                            break; 
                     }
                     $counter++;
                 }
