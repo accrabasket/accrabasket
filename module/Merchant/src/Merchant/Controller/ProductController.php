@@ -23,6 +23,7 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
         }
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
         $productList = $this->commonObj->curlhitApi($request);
         if(!empty($query['download_csv'])) {
             $this->downloadCsv($productList);
