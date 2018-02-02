@@ -40,8 +40,10 @@
                             <tr role="row" class="odd">
                                 <td class=""><?php if(empty($value['active'])){?><i class="fa fa-close red"></i> &nbsp;<?php } ?><?= $value['address']?></td>
                               <td class=""><?= $value['googlelocation']?></td>
-                              <td><a href="<?= $this->basePath()?>/admin/dashboard/addlocation?id=<?= $value['id']?>"><i class="fa fa-edit"></i> 
-                                  <i class="fa fa-trash-o"></i></a></td>
+                              <td>
+                                  <a href="<?= $this->basePath()?>/admin/dashboard/addlocation?id=<?= $value['id']?>"><i class="fa fa-edit"></i> 
+                                  </a>
+                              </td>
                             </tr>
                           <?php }}?>
                       </tbody>
