@@ -68,6 +68,7 @@ app.controller('userController', function ($scope, $http,$timeout) {
             $scope.userList = {};
             if(response.status == 'success'){
                 $scope.userList = response.data;
+                $scope.numberOfRecord = response.totalNumberOfUser;
             }else{
                 $scope.numberOfRecord = 0;
             }
