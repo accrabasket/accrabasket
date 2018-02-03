@@ -48,6 +48,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
         $scope.arr = new Array();
         $scope.totalOrder = new Array();
         $scope.totalConfirmedOrder = new Array();        
+        $scope.totalCancelledOrder = new Array();        
         $scope.dt = new Date(start);
         if($scope.filter.report=='monthly'){
             while ($scope.dt <= end) {
@@ -64,6 +65,11 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
                     $scope.analytics.customerData.data.completedOrderByDate[formateDate].count = 0;
                 }
                 $scope.totalConfirmedOrder.push($scope.analytics.customerData.data.completedOrderByDate[formateDate].count);
+                if($scope.analytics.customerData.data.cancelledOrderByDate[formateDate] == undefined) {
+                    $scope.analytics.customerData.data.cancelledOrderByDate[formateDate] = {};
+                    $scope.analytics.customerData.data.cancelledOrderByDate[formateDate].count = 0;
+                }
+                $scope.totalCancelledOrder.push($scope.analytics.customerData.data.cancelledOrderByDate[formateDate].count);                                
                 
             }
         }else {
@@ -83,10 +89,16 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
                 }
                 $scope.totalConfirmedOrder.push($scope.analytics.customerData.data.completedOrderByDate[formateDate].count);
                 
+                if($scope.analytics.customerData.data.cancelledOrderByDate[formateDate] == undefined) {
+                    $scope.analytics.customerData.data.cancelledOrderByDate[formateDate] = {};
+                    $scope.analytics.customerData.data.cancelledOrderByDate[formateDate].count = 0;
+                }
+                $scope.totalCancelledOrder.push($scope.analytics.customerData.data.cancelledOrderByDate[formateDate].count);                                
+                
                 $scope.dt.setDate($scope.dt.getDate() + 1);
             }
         }
-        $scope.highcharts($scope.arr, $scope.totalConfirmedOrder, $scope.totalOrder);
+        $scope.highcharts($scope.arr, $scope.totalConfirmedOrder, $scope.totalOrder, $scope.totalCancelledOrder);
     };    
         
     $scope.getWeekArray = function(start, end) {
@@ -96,6 +108,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
         $scope.arr = new Array();
         $scope.totalOrder = new Array();
         $scope.totalConfirmedOrder = new Array();
+        $scope.totalCancelledOrder = new Array();        
         $scope.dt = new Date(start);
         while ($scope.dt <= end) {
             var startDate = formatDate($scope.dt)
@@ -104,6 +117,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
             var counterEndDt = $scope.dt;
             var totalNumberOfOrder = 0 ;
             var totalNumberOfConfirmedOrder = 0;
+            var totalNumberOfCancelledOrder = 0;            
             while(countetStartDt<=counterEndDt){
                 var date = formatDate(countetStartDt);
                 if($scope.analytics.customerData.data.allOrderByDate[date] != undefined) {
@@ -112,19 +126,25 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
                 if($scope.analytics.customerData.data.completedOrderByDate[date] != undefined) {
                     totalNumberOfConfirmedOrder = totalNumberOfConfirmedOrder+$scope.analytics.customerData.data.completedOrderByDate[date].count;
                 } 
+                if($scope.analytics.customerData.data.cancelledOrderByDate[date] != undefined) {
+                    totalNumberOfCancelledOrder = totalNumberOfCancelledOrder+$scope.analytics.customerData.data.cancelledOrderByDate[date].count;
+                }                
                 countetStartDt.setDate(countetStartDt.getDate()+1);
             }
             var endDate = formatDate($scope.dt)
             $scope.arr.push(startDate+' To '+endDate);
             $scope.analytics.customerData.data.allOrderByDate[startDate+' To '+endDate] = {};
             $scope.analytics.customerData.data.completedOrderByDate[startDate+' To '+endDate] = {};
+            $scope.analytics.customerData.data.cancelledOrderByDate[startDate+' To '+endDate] = {};            
             $scope.analytics.customerData.data.allOrderByDate[startDate+' To '+endDate].count= totalNumberOfOrder;
             $scope.analytics.customerData.data.completedOrderByDate[startDate+' To '+endDate].count= totalNumberOfConfirmedOrder;
+            $scope.analytics.customerData.data.cancelledOrderByDate[startDate+' To '+endDate].count = totalNumberOfCancelledOrder;            
             $scope.totalOrder.push(totalNumberOfOrder);
             $scope.totalConfirmedOrder.push(totalNumberOfConfirmedOrder);            
+            $scope.totalCancelledOrder.push(totalNumberOfCancelledOrder);            
             $scope.dt.setDate($scope.dt.getDate() + 1);
         }
-        $scope.highcharts($scope.arr, $scope.totalConfirmedOrder, $scope.totalOrder);
+        $scope.highcharts($scope.arr, $scope.totalConfirmedOrder, $scope.totalOrder, $scope.totalCancelledOrder);
     };
     
     function formatDate(date) {
@@ -142,7 +162,7 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
         }
     }
     
-    $scope.highcharts = function(category, confirmedOrder, totalOrder){
+    $scope.highcharts = function(category, confirmedOrder, totalOrder, cancelledOrder){
     $('#container14').highcharts({
         title: {
             text: 'Order Status',
@@ -178,8 +198,11 @@ app.controller('managedashboard', function ($scope, $http, $sce,$timeout, $filte
                 name: 'Total Order Confirmed',
                 data: confirmedOrder
             }, {
-                name: 'Total Order Amount',
+                name: 'Total Order ',
                 data: totalOrder
+            }, {
+                name: 'Total cancelled Order',
+                data: cancelledOrder
             }]
     });        
     };    
