@@ -285,9 +285,23 @@ class DashboardController extends AbstractActionController {
         exit;
     }
 
-    function orderlistAction() {
+    function userlistAction() {
        $request = (array) $this->getRequest()->getQuery();
         return $this->view;
+    }
+    
+    function getUserListAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'userlist';
+        $request['pagination'] = 1;
+        if(!empty($request['page'])) {
+            $request['page'] = $request['page'];
+        }
+        $userList = $this->commonObj->curlhitApi($request,'customer');
+        $userList = json_decode($userList, true);
+        $userList['data'] = array_values($userList['data']);
+        echo json_encode($userList);
+        exit;
     }
     
     public function savelocationAction() {
