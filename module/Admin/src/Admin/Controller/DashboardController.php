@@ -271,6 +271,25 @@ class DashboardController extends AbstractActionController {
         echo $saveLocationResponse;
         exit;        
     }
+    
+    public function deleterestrictedlocationAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        $request['method'] = 'deleteRestrictedLocation';
+        $response = $this->commonObj->curlhitApi($request, 'customer');        
+        $response = json_decode($response, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }        
+        $path = $GLOBALS['HTTP_SITE_ADMIN_URL'] . 'dashboard/restrictedlocation';
+        header('Location:' . $path);   
+        exit;
+    }
+
+    function orderlistAction() {
+       $request = (array) $this->getRequest()->getQuery();
+        return $this->view;
+    }
+    
     public function savelocationAction() {
         $request = (array) $this->getRequest()->getPost();
         $request['method'] = 'addEditLocation';
