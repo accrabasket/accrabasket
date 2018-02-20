@@ -134,6 +134,8 @@
                                                     Rider Mobile - {{rider_list[order_assignment_list[data.order_details.order_id].rider_id].mobile_number}}<br/>
                                                 </td>
                                                 <td>
+                                                    <a href="<?php echo $this->basePath()?>/merchant/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
+                                                    &nbsp; | &nbsp;
                                                     <a ng-show="data.order_details.order_status == 'order_placed'" ng-click="changeStatus(data.order_details.store_id, data.order_details.order_id)" href="javascript:void(0)" data-toggle="modal" data-target="#assignRiderModal"> 
                                                         <span> Ready To Dispatch</span>
                                                     </a>
