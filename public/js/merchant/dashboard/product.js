@@ -10,6 +10,7 @@ app.controller('productController', function ($scope, $http, $sce,$timeout) {
         $scope.selected_filter_level = id.replace("_", " ");
     }
     $scope.querySearch = function(){
+        $scope.errorStatus = false;
         if($scope.selected_filter_level == 'Action'){
            $scope.errorStatus = true;
            $scope.errorMsg = 'Please select a action '; 

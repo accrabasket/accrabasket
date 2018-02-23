@@ -26,6 +26,7 @@ app.controller('productController', function ($scope, $http,count,productList) {
     $scope.numberOfRecord = count;
     
     $scope.querySearch = function(){
+        $scope.errorStatus = false;
         if($scope.selected_filter_level == 'Action'){
            $scope.errorStatus = true;
            $scope.errorMsg = 'Please select a action '; 
