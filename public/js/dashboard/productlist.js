@@ -3,6 +3,8 @@ app.controller('productController', function ($scope, $http,count,productList) {
     $scope.errorShow = false;
     $scope.showAttr = false;
     $scope.productData = {};
+    $scope.productIdList = {};
+    $scope.productIdToDelete = [];
     $scope.filter = {};
     $scope.index = 0;
     $scope.ajaxLoadingData = false;
@@ -76,8 +78,27 @@ app.controller('productController', function ($scope, $http,count,productList) {
         });
     }    
     
-    
-    
+    $scope.deleteSelectedProduct = function() {
+        $scope.ajaxLoadingData = true;
+        var params = {};
+        params.product_id = $scope.productIdToDelete;
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'product/deleteProduct',
+            data : ObjecttoParams(params),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            location.reload();
+        });        
+    }    
+    $scope.changeProductList = function(){
+        $scope.productIdToDelete = [];
+        angular.forEach($scope.productIdList, function(value, key) {
+            if(value) {
+                $scope.productIdToDelete.push(key);
+            }
+        });     
+    }
 	
 });	
 

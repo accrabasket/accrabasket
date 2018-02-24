@@ -18,6 +18,9 @@
                         <div class="pull-right"> 
                             <a href="<?php echo $this->basePath() ?>/admin/product/addproduct" class="btn btn-info"> Add Product</a>
                         </div>
+                        <div class="pull-right" ng-show="productIdToDelete.length>0"> 
+                            <a href="javascript:void(0);" ng-click="deleteSelectedProduct()" class="btn btn-info"> Delete Product</a>
+                        </div>                        
                     </div>
                     <!-- /.box-header -->
                     <div class="col-sm-10 col-lg-10  no-rpad">
@@ -89,6 +92,7 @@
                                     <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
                                         <thead>
                                             <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending"> &nbsp;</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Attribute Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Attribute Unit</th>
@@ -101,7 +105,11 @@
                                         </thead>
                                         <tbody>
                                             <tr role="row" class="odd" ng-repeat="data in productList">
-                                                <td class=""><i class="fa fa-close red"></i> &nbsp;{{data.product_name}}</td>
+                                                <td>
+                                                    <i class="fa fa-close red" ng-if="!data.status"></i> 
+                                                    <input type="checkbox" value="{{data.id}}" name="product_id[]" ng-model="productIdList[data.id]" ng-change="changeProductList()">
+                                                </td>
+                                                <td class="">{{data.product_name}}</td>
                                                 <td class="">{{data['atribute'][0].name}}</td>
                                                 <td class="">{{data['atribute'][0].unit}}</td>
                                                 <td class="sorting_1">{{data['atribute'][0].quantity}}</td>

@@ -273,6 +273,10 @@ class ProductController extends AbstractActionController {
 
     function deleteProductAction() {
         $request = (array)$this->getRequest()->getQuery();
+        if(empty($request)) {
+            $request = (array)$this->getRequest()->getPost();
+            $request['product_id'] = explode(',', $request['product_id']);
+        }
         if(!empty($request['product_id'])) {
             $request['method'] = 'deleteproduct';
             $deleteStatus = $this->commonObj->curlhitApi($request);
@@ -284,7 +288,11 @@ class ProductController extends AbstractActionController {
             }        
         }
         $path = $GLOBALS['HTTP_SITE_ADMIN_URL'].'product';
-        header('Location:'.$path);        
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+
+        }else{
+            header('Location:'.$path);        
+        }
         exit;
     }
     function getProductListAction() {
