@@ -73,15 +73,39 @@ class ProductController extends AbstractActionController {
     }
     
     public function importproductAction() {
+        require_once __DIR__ . '/../../../../../vendor/PHPExcel/IOFactory.php';
         ini_set('max_execution_time', -1);
         //move_uploaded_file($_FILES["product_csv"]["tmp_name"],'productimport.csv');
         $dataArr = array();
-        if (($handle = fopen($_FILES["product_csv"]["tmp_name"], "r")) !== FALSE) {
+        /* FOR CSV 
+         if (($handle = fopen($_FILES["product_csv"]["tmp_name"], "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $dataArr[] = $data;
             }
             fclose($handle);
-        }
+        } ---END FOR CSV*/
+        
+        /*FOR EXCEL*/
+    $inputFileName = $_FILES['product_csv']['tmp_name'];
+    $inputFileType = \PHPExcel_IOFactory::identify($inputFileName);
+    $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+    $objPHPExcel = $objReader->load($inputFileName);
+//  Get worksheet dimensions
+    $sheet = $objPHPExcel->getSheet(0); 
+    $highestRow = $sheet->getHighestRow(); 
+    $highestColumn = $sheet->getHighestColumn();
+
+//  Loop through each row of the worksheet in turn
+    for ($row = 1; $row <= $highestRow; $row++){ 
+        //  Read a row of data into an array
+        $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                                        NULL,
+                                        TRUE,
+                                        FALSE);
+        $dataArr[] = $rowData[0];
+    }
+    //echo "<pre>";print_r($dataArr);die;    
+        /* END FOR EXCEL */
         $params = array();
         //$params['data'] = $dataArr;
         $totalNumOfProduct = count($dataArr);
