@@ -238,6 +238,8 @@ class ProductController extends AbstractActionController {
             }
         }
         $params = array();
+        $params['page'] = 1;
+        $params['pagination'] = 'pagination';
         $params['method'] = 'stockList';
         $params['merchant_id'] = $this->session['user']['data'][0]['id'];
         $storeList = $this->commonObj->curlhitApi($params);
@@ -266,6 +268,20 @@ class ProductController extends AbstractActionController {
         $productList = json_decode($productList, true);
         $productList['data'] = array_values($productList['data']);
         echo json_encode($productList);
+        exit;
+    }
+    
+    function stockInAction() {
+        $request = (array)$this->getRequest()->getPost();
+        $request['method'] = 'stockList';
+        $request['merchant_id'] = $this->session['user']['data'][0]['id'];
+        $request['pagination'] = 1;
+        if(!empty($request['page'])) {
+            $request['page'] = $request['page'];
+        }
+        $storeList = $this->commonObj->curlhitApi($request);
+        $storeList = json_decode($storeList, true);
+        echo json_encode($storeList);
         exit;
     }
     

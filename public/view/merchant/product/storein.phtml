@@ -1,4 +1,4 @@
-<div class="content-wrapper" ng-app="app" ng-controller="productController">
+<div class="content-wrapper" ng-app="app" ng-controller="storeController">
     <section class="content-header">
         <h1> Manage Store</h1>
         <ol class="breadcrumb">
@@ -32,42 +32,27 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Stock In</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            if (!empty($this->stockList)) {
-                                                foreach ($this->stockList as $key => $value) {
-                                                    ?>
-                                                    <tr role="row" class="odd">
-                                                        <td class=""><?= $value['product_name'] ?></td>
-                                                        <td class=""><?= $value['name'] ?></td>
-                                                        <td class=""><?= $value['quantity'] ?></td>
-                                                        <td class=""><?= $value['price'] ?></td>
-                                                        <td class=""><?= $value['stock'] ?></td>
+                                        <tbody>    
+                                            <tr role="row" class="odd" ng-repeat="data in storeList">
+                                                        <td class="">{{data.product_name}}</td>
+                                                        <td class="">{{data.name}}</td>
+                                                        <td class="">{{data.quantity}}</td>
+                                                        <td class="">{{data.price}}</td>
+                                                        <td class="">{{data.stock}}</td>
                                                     </tr>
-    <?php }
-} ?>
                                         </tbody>
 
                                     </table>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing <?= count($this->marchantList) ?> entries</div>
+                            <div class="col-sm-4">
+                                <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Total {{numberOfRecord}} entries</div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                    <pagination  class="pagination pull-right mt0" ng-model="currentPage" total-items="numberOfRecord" max-size="3" boundary-links="true" ng-click="selectPage(currentPage)"></pagination>
                                 </div>
-                                <div class="col-sm-8">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                        <ul class="pagination pull-right mt0">
-                                            <li class="paginate_button previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
-                                            <li class="paginate_button active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a></li>
-                                            <!--                        <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a></li>
-                                                                    <li class="paginate_button "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a></li>-->
-                                            <li class="paginate_button next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +64,9 @@
     </section>
 </div>
 <script>
-    var app = angular.module('app', []);
+    var PAGE_COUNT = 5;
+    var PAGING_GAP = 3;
+    var app = angular.module('app', ['ui.bootstrap']);
 </script>
-<script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/product.js' ?>"></script>
+<script src="<?php echo $this->basePath() . '/public/js/merchant/dashboard/storein.js' ?>"></script>
 
