@@ -97,6 +97,9 @@ class ProductController extends AbstractActionController {
                 foreach($dataArr[0] as $column) {
                     $column = trim(strtolower($column));
                     switch($column) {
+                        case 'item code':
+                            $data['item_code'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;                        
                         case 'product name':
                             $data['product_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
