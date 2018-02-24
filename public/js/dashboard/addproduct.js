@@ -81,6 +81,10 @@ function checkform(){
 //        msg = 'Product category id should not blank';
 //        ret = false;
 //    }
+    if($('#item_code').val() == ''){
+        msg = 'Item code should not blank';
+        ret = false;
+    }
     if($('#product_name').val() == ''){
         msg = 'Product name should not blank';
         ret = false;
