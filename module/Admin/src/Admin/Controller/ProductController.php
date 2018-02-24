@@ -216,6 +216,7 @@ class ProductController extends AbstractActionController {
            $product['brand_name'] = $request['brand_name'];
            $product['nutrition'] = $request['nutrition'];
            $product['category_id'] = $request['category_id'];
+           $product['item_code'] = $request['item_code'];
            $product['hotdeals'] = !empty($request['hotdeals'])?$request['hotdeals']:0;
            $product['offers'] = !empty($request['offers'])?$request['offers']:0;
            $product['new_arrival'] = !empty($request['new_arrival'])?$request['new_arrival']:0;
