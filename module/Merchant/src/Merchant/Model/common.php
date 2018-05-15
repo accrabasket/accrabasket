@@ -20,6 +20,8 @@ class common{
             $queryStr = json_encode($params);
         }
         $data['parameters'] = $queryStr;
+        $data['rqid'] = $this->genrateRqid($data['parameters']);
+        
         $url = BASKET_API.$module.'/'.$controller.'?'.http_build_query($data);
         return $this->cObj->callCurl($url);
     }
@@ -43,4 +45,8 @@ class common{
         
         return $this->curlhitApi($params);
     }
+    
+    public function genrateRqid($parameters) {
+        return $rqid = hash('sha512',APIKEY.$parameters);
+    }    
 }

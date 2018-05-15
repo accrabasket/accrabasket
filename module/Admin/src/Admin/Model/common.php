@@ -23,6 +23,7 @@ class common{
 //            $queryStr = json_encode($queryStr);
         }
         $data['parameters'] = $queryStr;
+        $data['rqid'] = $this->genrateRqid($data['parameters']);
         $url = BASKET_API.$module.'/'.$controller;
         $parametes = http_build_query($data);        
 //        echo $url = $url.'?'.$parametes;die;
@@ -47,5 +48,9 @@ class common{
         $params['method'] = 'getLocationList';
         
         return $this->curlhitApi($params);
+    }
+    
+    public function genrateRqid($parameters) {
+        return $rqid = hash('sha512',APIKEY.$parameters);
     }
 }

@@ -22,7 +22,12 @@ class basketapi{
 //            $queryStr = http_build_query($params);
 //            $queryStr = json_encode($queryStr);
         }
-        $url = BASKET_API.$controller.'?parameters='.$queryStr;
+        $rqid = $this->genrateRqid($queryStr);
+        $url = BASKET_API.$controller.'?parameters='.$queryStr."&rqid=".$rqid;
         return $this->cObj->callCurl($url);
     }
+    
+    public function genrateRqid($parameters) {
+        return $rqid = hash('sha512',APIKEY.$parameters);
+    }    
 }
