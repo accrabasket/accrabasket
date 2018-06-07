@@ -73,6 +73,7 @@ app.controller('orderController', function ($scope, $http,$timeout) {
                 $scope.numberOfRecord = response.totalNumberOfOrder;
                 $scope.order_assignment_list = response.order_assignment_list;
                 $scope.rider_list = response.rider_list;
+                $scope.time_slot_list = response.time_slot_list;
             }else{
                 $scope.numberOfRecord = 0;
             }

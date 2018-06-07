@@ -108,6 +108,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
                                                 <th class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">Rider Info</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                <th class="sorting" tabindex="0" rowspan="1">Delivery Date Time &nbsp;
                                                 <th class="sorting" tabindex="0" rowspan="1">Order Date &nbsp;
                                                     <a href="#" ng-click="shortByDate('asc')"><i class="fa fa-sort-desc" aria-hidden="true"></i></a>
                                                     &nbsp;|&nbsp;&nbsp;
@@ -138,6 +139,7 @@
                                                     </a>
                                                     
                                                 </td>
+                                                <td>{{data.order_details.delivery_date}} <br/>Time Slot:{{time_slot_list[data.order_details.time_slot_id].start_time_slot}}-{{time_slot_list[data.order_details.time_slot_id].end_time_slot}}</td>
                                                 <td>{{data.order_details.created_date}}</td>
                                             </tr>
                                             
