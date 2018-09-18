@@ -101,7 +101,9 @@
  
 function download_csv() {
     var csv = ''
-    csv = 'Shiping Address :- ,'+"<?=$shippingAdd?>"+"\n";
+    
+    csv = 'Order Id :- ,'+"<?=$value['order_details']['order_id']?>"+"\n";
+    csv += 'Shiping Address :- ,'+"<?=$shippingAdd?>"+"\n";
     data.forEach(function(row) {
             csv += row.product_name+','+row.number_of_item+","+row.amount;
             csv += "\n";
@@ -113,7 +115,7 @@ function download_csv() {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
+    hiddenElement.download = '<?=$value['order_details']['order_id']?>.csv';
     hiddenElement.click();
 }
 </script>
