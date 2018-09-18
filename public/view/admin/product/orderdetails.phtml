@@ -6,7 +6,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"> Order Details</h3>
-                            
+              <div class="pull-right"><a href="javascript:void(0)" onclick="download_csv()">Download csv</a></div>              
             </div>
             <!-- /.box-header -->            
             <div class="box-body">
@@ -34,9 +34,18 @@
                       </thead>
                       <tbody>
                             <?php
+                                $csvData = array();
+                                $csvData[0]['product_name'] = 'Product Name';
+                                $csvData[0]['number_of_item'] = 'Quantity';
+                                $csvData[0]['amount'] = 'Amount';
+                                //echo "<pre>";print_r($this->productDetails);die;
                                 if(!empty($this->productDetails)){
                                     foreach ($this->productDetails['data'] as $key => $value) {
                                         foreach ($value['orderitem'] as $keys => $orderitem) {
+                                            $counter++;
+                                            $csvData[$counter]['product_name'] = $orderitem['product_dump']['product_details']['product_name'];
+                                            $csvData[$counter]['number_of_item'] = $orderitem['number_of_item'];
+                                            $csvData[$counter]['amount'] = $orderitem['amount'];
                                             $imgpath = $this->productDetails['imageRootPath'].'/'.$orderitem['product_dump']['product_image_data'][0]['type'].'/'.$orderitem['product_dump']['product_details']['product_id'].'/'.$orderitem['product_dump']['product_image_data'][0]['image_name'];
 
                             ?>
@@ -53,18 +62,19 @@
                                         <td class=""><?=$orderitem['commission_amount']?></td>
                                         <td class=""><?=$orderitem['discount_amount']?></td>
                                         <td class=""><?=$orderitem['tax_amount']?></td>
-                                        <td class=""><?=$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['house_number'].' '
+                                        <td class=""><?php $shippingAdd = $this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['house_number'].' '
                                                     .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['street_detail'].' '
                                                     .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['area'].' '
                                                     .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['city_name'].' '
-                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['zipcode']?></td>
+                                                    .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['zipcode'];
+                                        echo $shippingAdd;?></td>
                                         <td class=""><img src="<?=$imgpath?>"  height="60" width="60"></td>
                                     </tr>
                             <?php            
                                     }
                                 }
                             }
-
+                            
                             ?>
                       </tbody>
                       
@@ -80,3 +90,30 @@
     </section>
 </div>
 
+<script>
+    var data = <?= json_encode($csvData)?>;
+/*var data = [
+   ['Foo', 'programmer'],
+   ['Bar', 'bus driver'],
+   ['Moo', 'Reindeer Hunter']
+];*/
+ 
+ 
+function download_csv() {
+    var csv = ''
+    csv = 'Shiping Address :- ,'+"<?=$shippingAdd?>"+"\n";
+    data.forEach(function(row) {
+            csv += row.product_name+','+row.number_of_item+","+row.amount;
+            csv += "\n";
+    });
+    csv += "\n";
+    csv += 'Payable Amount,'+"<?=$value['order_details']['payable_amount']?>,"+'payment status,'+"<?=$value['order_details']['payment_status']?>";
+ 
+    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'people.csv';
+    hiddenElement.click();
+}
+</script>
