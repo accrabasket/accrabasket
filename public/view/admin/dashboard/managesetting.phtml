@@ -37,7 +37,12 @@
                                             <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" placeholder="free delivery amount" class="form-control"  name="free_delivery"   ng-model="settingData.free_delivery">
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Shipping Charges</label>
+                                            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" placeholder="Shipping Charges" class="form-control"  name="shipping_charges"   ng-model="settingData.shipping_charges">
+                                        </div>
+                                    </div>
                                     
                                     <div class="clearfix"></div>
                                 </div>
