@@ -376,7 +376,7 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])) {
             $request['page'] = $request['page'];
         }
-        echo $productList = $this->commonObj->curlhitApi($request,'application');
+        echo $productList = $this->commonObj->curlhitApi($request);
         exit;        
     }
     
