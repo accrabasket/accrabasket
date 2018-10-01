@@ -109,7 +109,10 @@ function download_csv() {
             csv += "\n";
     });
     csv += "\n";
-    csv += 'Payable Amount,'+"<?=$value['order_details']['payable_amount']?>,"+'payment status,'+"<?=$value['order_details']['payment_status']?>";
+    csv += 'Discount Amount, ,'+"-<?=$value['order_details']['discount_amount']?>\n";
+    csv += 'Shipping Charges, ,'+"<?=$value['order_details']['shipping_charges']?>\n";
+    csv += 'Payable Amount, ,'+"<?=$value['order_details']['payable_amount']?>\n";
+    csv += 'payment status, ,'+"<?=$value['order_details']['payment_status']?>";
  
     console.log(csv);
     var hiddenElement = document.createElement('a');
