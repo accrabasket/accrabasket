@@ -1,6 +1,6 @@
-<div class="content-wrapper">
+<div class="content-wrapper" ng-app="order" ng-controller="orderDetailController">
 
-<section class="content container-fluid">
+    <section class="content container-fluid">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -21,6 +21,7 @@
                     <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr role="row">
+                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">&nbsp;</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Name</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending"> Quantity </th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Product amount</th>
@@ -38,6 +39,7 @@
                                 $csvData[0]['product_name'] = 'Product Name';
                                 $csvData[0]['number_of_item'] = 'Quantity';
                                 $csvData[0]['amount'] = 'Amount';
+                                $csvData[0]['status'] = 'Status';                                
                                 //echo "<pre>";print_r($this->productDetails);die;
                                 if(!empty($this->productDetails)){
                                     foreach ($this->productDetails['data'] as $key => $value) {
@@ -46,11 +48,23 @@
                                             $csvData[$counter]['product_name'] = $orderitem['product_dump']['product_details']['product_name'];
                                             $csvData[$counter]['number_of_item'] = $orderitem['number_of_item'];
                                             $csvData[$counter]['amount'] = $orderitem['amount'];
+                                            $csvData[$counter]['status'] = $orderitem['status'];
                                             $imgpath = $this->productDetails['imageRootPath'].'/'.$orderitem['product_dump']['product_image_data'][0]['type'].'/'.$orderitem['product_dump']['product_details']['product_id'].'/'.$orderitem['product_dump']['product_image_data'][0]['image_name'];
 
                             ?>
 
                               <tr role="row" class="odd">
+                                        <td>
+                                            <?php
+                                            if($orderitem['status'] == 'out_of_stock') {
+                                                echo "$orderitem[status]";
+                                            }else {
+                                            ?>
+                                            <input type="checkbox" ng-model="order_item_ids[<?=$orderitem['id']?>]" ng-change="AddItemToMarkOutOfStock()">
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
                                         <td class="">
                                             <?=$orderitem['product_dump']['product_details']['product_name']?>
                                         </td>
@@ -77,8 +91,15 @@
                             
                             ?>
                       </tbody>
-                      
+                      <tr>
+                          <td colspan="10"> 
+                                <div class="pull-right" ng-show="orderItemIdsToMarkOutOfStock.length>0"> 
+                                    <a href="javascript:void(0);" ng-click="markOrderItemOutOfStock('<?=$value['order_details']['order_id']?>')" class="btn btn-info"> Delete Product</a>
+                                </div>                               
+                          </td>
+                      </tr>
                     </table>
+                      
                   </div>
                 </div>
               </div>
@@ -89,7 +110,7 @@
       </div>
     </section>
 </div>
-
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/orderdetails.js' ?>"></script>
 <script>
     var data = <?= json_encode($csvData)?>;
 /*var data = [
@@ -105,7 +126,7 @@ function download_csv() {
     csv = 'Order Id :- ,'+"<?=$value['order_details']['order_id']?>"+"\n";
     csv += 'Shiping Address :- ,'+"<?=$shippingAdd?>"+"\n";
     data.forEach(function(row) {
-            csv += row.product_name+','+row.number_of_item+","+row.amount;
+            csv += row.product_name+','+row.number_of_item+","+row.amount+","+row.status;
             csv += "\n";
     });
     csv += "\n";

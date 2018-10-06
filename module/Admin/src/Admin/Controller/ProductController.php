@@ -16,6 +16,7 @@ use Zend\Session\Container;
 use Admin\Model\common;
 use Admin\Model\basketapi;
 class ProductController extends AbstractActionController {
+    public $commonObj;
     public function __construct() {
         $this->view =  new ViewModel();
         $this->session = new Container('User');
@@ -385,5 +386,20 @@ class ProductController extends AbstractActionController {
         $request['method'] = 'getMarchantList';
         echo $productList = $this->commonObj->curlhitApi($request);
         exit;        
+    }
+    
+    function markOrderItemOutOfStockAction() {
+        $params = array();
+        $request = (array)$this->getRequest()->getPost();
+        $params['method'] = 'modifyOrder';
+        $params['order_id'] = $request['order_id'];
+        //print_r($this->session['user']);die;
+        $params['user_id'] = $this->session['user']['data'][0]['id'];
+        $params['order_item_ids'] = $request['order_item_ids'];
+        $params['status'] = 'out_of_stock';
+        $response = $this->commonObj->curlhitApi($params,'customer');
+        
+        echo $response;
+        exit;
     }
 }
