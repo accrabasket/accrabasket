@@ -23,7 +23,11 @@ app.controller('orderDetailController', function ($scope, $http, $timeout) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
             $scope.ajaxLoadingData = false;
-            console.log(response);
+           if(response.status == 'success') {
+               location.reload();
+           }else{
+               alert(response.msg);
+           } 
            
         });        
     }
