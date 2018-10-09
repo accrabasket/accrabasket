@@ -12,10 +12,11 @@ app.controller('orderDetailController', function ($scope, $http, $timeout) {
         }); 
     };   
     
-    $scope.markOrderItemOutOfStock = function(orderId) {
+    $scope.markOrderItemOutOfStock = function(orderId, userId) {
         $scope.params = {};
         $scope.params.order_item_ids =  $scope.orderItemIdsToMarkOutOfStock;
         $scope.params.order_id =  orderId;
+        $scope.params.user_id =  userId;
         $http({
             method: 'POST',
             url: serverAdminApp + 'product/markOrderItemOutOfStock',

@@ -94,7 +94,7 @@
                       <tr>
                           <td colspan="10"> 
                                 <div class="pull-right" ng-show="orderItemIdsToMarkOutOfStock.length>0"> 
-                                    <a href="javascript:void(0);" ng-click="markOrderItemOutOfStock('<?=$value['order_details']['order_id']?>')" class="btn btn-info"> Delete Product</a>
+                                    <a href="javascript:void(0);" ng-click="markOrderItemOutOfStock('<?=$value['order_details']['order_id']?>', '<?=$value['order_details']['user_id']?>')" class="btn btn-info">Mark Product Out Of Stock</a>
                                 </div>                               
                           </td>
                       </tr>
