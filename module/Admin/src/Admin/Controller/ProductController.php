@@ -402,4 +402,15 @@ class ProductController extends AbstractActionController {
         echo $response;
         exit;
     }
+    
+    function cashCollectedAction() {
+        $params = array();
+        $request = (array)$this->getRequest()->getPost();
+        $params['method'] = 'cashCollected';
+        $params['order_id'] = $request['order_id'];
+        $params['payment_status'] = 'cash_collected';
+        $response = $this->commonObj->curlhitApi($params,'product');
+        echo $response;
+        exit;
+    }
 }
