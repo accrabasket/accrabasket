@@ -622,6 +622,7 @@ class DashboardController extends AbstractActionController {
     header("Content-Disposition: attachment;filename={$filename}");
     header("Content-Transfer-Encoding: binary");        
         $data = json_decode($data, true);
+        unset($data['data']['total_summery']);
         //$csvData = '';
         if(!empty($data['data'])) {
             $data = $data['data'];
@@ -632,25 +633,21 @@ class DashboardController extends AbstractActionController {
             $csvData[$counter][]= 'Commission Amount';
             $csvData[$counter][]= 'Type';
             $csvData[$counter][]= 'Transection Date';
-            $counter ++;
             foreach ($data as $key=>$row) {
-                if($key !='total_summery'){
-                        $csvData[$counter][] = empty($row['order_id'])?'Cash':$row['order_id'];
-                        $csvData[$counter][] = $row['total_amount'];
-                        $csvData[$counter][] = $row['merchant_amount'];
-                        $csvData[$counter][] = $row['commission_amount'];
-                        $csvData[$counter][] = $row['type'];
-                        $csvData[$counter][] = $row['created_date'];
-                }  else {
-                    $csvData[$counter][] = 'Total Summary';
-                    $csvData[$counter][] = $row['total_revenue'];
-                    $csvData[$counter][] = $row['total_merchant_amount'];
-                    $csvData[$counter][] = $row['total_commission'];
-                    $csvData[$counter][] = '---';
-                    $csvData[$counter][] = $row['created_date'];
-                }
                 $counter++;
+                $csvData[$counter][] = empty($row['order_id'])?'Cash':$row['order_id'];
+                $csvData[$counter][] = $row['total_amount'];
+                $csvData[$counter][] = $row['merchant_amount'];
+                $csvData[$counter][] = $row['commission_amount'];
+                $csvData[$counter][] = $row['type'];
+                $csvData[$counter][] = $row['created_date'];
             }
+            /*$csvData[$counter][] = 'Total Summary';
+            $csvData[$counter][] = $row['total_revenue'];
+            $csvData[$counter][] = $row['total_merchant_amount'];
+            $csvData[$counter][] = $row['total_commission'];
+            $csvData[$counter][] = '---';
+            $csvData[$counter][] = $row['created_date'];    */        
         }
         $df = fopen("php://output", 'w');
         foreach ($csvData as $row) {
