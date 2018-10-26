@@ -635,14 +635,14 @@ class DashboardController extends AbstractActionController {
             $counter ++;
             foreach ($data as $key=>$row) {
                 if($key !='total_summery'){
-                        $csvData[$counter][] = $row['order_id'] == 0?'Cash':$row['order_id'];
+                        $csvData[$counter][] = empty($row['order_id'])?'Cash':$row['order_id'];
                         $csvData[$counter][] = $row['total_amount'];
                         $csvData[$counter][] = $row['merchant_amount'];
                         $csvData[$counter][] = $row['commission_amount'];
                         $csvData[$counter][] = $row['type'];
                         $csvData[$counter][] = $row['created_date'];
                 }  else {
-                    $csvData[$counter][] = 'Total Summery';
+                    $csvData[$counter][] = 'Total Summary';
                     $csvData[$counter][] = $row['total_revenue'];
                     $csvData[$counter][] = $row['total_merchant_amount'];
                     $csvData[$counter][] = $row['total_commission'];
