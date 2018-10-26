@@ -141,6 +141,26 @@ app.controller('orderController', function ($scope, $http,$timeout) {
     };
     
     $scope.fetchMerchant();
+    
+    $scope.cashCollected = function(order_id) {
+        var data = {};
+        data.order_id = order_id;        
+        if(confirm('Are you sure, You have collected Cash from rider.')) {
+            $http({
+                method: 'POST',
+                url: serverAdminApp + 'product/cashCollected',
+                data : ObjecttoParams(data),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            }).success(function (response) {
+                if(response.status == 'success'){
+                    $scope.getOrderList();
+                }else {
+                    alert(response.msg);
+                }
+            });
+        }
+    };
+    
 });	
 
 
