@@ -106,6 +106,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Commission amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Payment status</th>
                                                 <th class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">Rider Info</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
                                                 <th class="sorting" tabindex="0" rowspan="1">Delivery Date Time &nbsp;
@@ -126,6 +127,7 @@
                                                 <td class="">{{data.order_details.commission_amount}}</td>
                                                 <td>{{data.order_details.payable_amount}}</td>
                                                 <td>{{data.order_details.order_status|underscoreless}}</td>
+                                                <td>{{data.order_details.payment_status}}</td>
                                                 <td class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">
                                                     Rider Name - {{rider_list[order_assignment_list[data.order_details.order_id].rider_id].name}}<br/>
                                                     Rider Mobile - {{rider_list[order_assignment_list[data.order_details.order_id].rider_id].mobile_number}}<br/>
@@ -137,6 +139,7 @@
                                                         <span ng-if="data.order_details.order_status == 'assigned_to_rider'"> Reassign Order</span>
                                                         <span ng-if="data.order_details.order_status != 'assigned_to_rider'">  Assign Rider</span>
                                                     </a>
+                                                    <a style="cursor:pointer" ng-show="data.order_details.order_status == 'completed' && data.order_details.payment_status=='unpaid' " ng-click="cashCollected(data.order_details.order_id)"> Cash Collected </a>
                                                     
                                                 </td>
                                                 <td>{{data.order_details.delivery_date}} <br/>Time Slot:{{time_slot_list[data.order_details.time_slot_id].start_time_slot}}-{{time_slot_list[data.order_details.time_slot_id].end_time_slot}}</td>
