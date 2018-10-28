@@ -23,6 +23,7 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
         }
+        $request['all_product'] = 1;
         $request['merchant_id'] = $this->session['user']['data'][0]['id'];
         $productList = $this->commonObj->curlhitApi($request);
         if(!empty($query['download_csv'])) {
@@ -155,6 +156,7 @@ class ProductController extends AbstractActionController {
         $this->view->inventryDetails = array();
         if (!empty($request)) {
             $request['method'] = 'getProductList';
+            $request['all_product'] = 1;
             $request['merchant_id'] = $this->session['user']['data'][0]['id'];
             $productList = $this->commonObj->curlhitApi($request);
             $productList = json_decode($productList, true);
@@ -231,6 +233,7 @@ class ProductController extends AbstractActionController {
         $request = (array) $this->getRequest()->getQuery();
         if (!empty($request)) {
             $request['method'] = 'getProductList';
+            $request['all_product'] = 1;
             $productList = $this->commonObj->curlhitApi($request);
             $productList = json_decode($productList, true);
             if ($productList['status'] == 'success') {
