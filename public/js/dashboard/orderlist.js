@@ -141,6 +141,7 @@ app.controller('orderController', function ($scope, $http,$timeout) {
                 angular.forEach(response.data, function(value, key) {
                     $scope.merchantListByIds[value.id] = value;
                 });
+                console.log($scope.merchantListByIds);
             }
         });        
     };
