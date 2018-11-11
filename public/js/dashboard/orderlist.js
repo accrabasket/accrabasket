@@ -4,6 +4,7 @@ app.controller('orderController', function ($scope, $http,$timeout) {
     $scope.showAttr = false;
     $scope.productData = {};
     $scope.filter = {};
+    $scope.merchantListByIds = {};
     $scope.index = 0;
     $scope.filter.order_status = 'current_order';
     
@@ -136,6 +137,10 @@ app.controller('orderController', function ($scope, $http,$timeout) {
             $scope.merchantList = {};
             if(response.status == 'success'){
                 $scope.merchantList = response.data;
+                
+                angular.forEach(response.data, function(value, key) {
+                    $scope.merchantListByIds[value.id] = value;
+                });
             }
         });        
     };
