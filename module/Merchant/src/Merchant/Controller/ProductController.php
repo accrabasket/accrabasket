@@ -20,6 +20,8 @@ class ProductController extends AbstractActionController {
         $request = (array) $this->getRequest()->getPost();
         $query = (array) $this->getRequest()->getQuery();
         $request['method'] = 'getProductList';
+        $request['page'] = 1;
+        $request['pagination'] = 'pagination';
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
         }
@@ -123,6 +125,9 @@ class ProductController extends AbstractActionController {
                         case 'category name':
                             $data['category_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
+                        case 'code':
+                            $data['merchant_product_code'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;
                         case 'atribute id':
                             $data['attribute_id'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
@@ -138,6 +143,9 @@ class ProductController extends AbstractActionController {
                         case 'stock':
                             $data['stock'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
                             break;
+                        case 'stoock':
+                            $data['stock'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            break;                        
                            
                     }
                     $counter++;
