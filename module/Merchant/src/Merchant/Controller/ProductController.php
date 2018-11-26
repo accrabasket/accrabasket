@@ -20,10 +20,11 @@ class ProductController extends AbstractActionController {
         $request = (array) $this->getRequest()->getPost();
         $query = (array) $this->getRequest()->getQuery();
         $request['method'] = 'getProductList';
-        $request['page'] = 1;
-        $request['pagination'] = 'pagination';
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
+        }else {
+            $request['page'] = 1;
+            $request['pagination'] = 'pagination';            
         }
         $request['all_product'] = 1;
         $request['merchant_id'] = $this->session['user']['data'][0]['id'];
