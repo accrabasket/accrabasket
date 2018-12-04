@@ -23,8 +23,8 @@ class ProductController extends AbstractActionController {
         if(!empty($request['page'])){
             $request['pagination'] = 'pagination';
         }else {
-            $request['page'] = 1;
-            $request['pagination'] = 'pagination';            
+            //$request['page'] = 1;
+            //$request['pagination'] = 'pagination';            
         }
         $request['all_product'] = 1;
         $request['merchant_id'] = $this->session['user']['data'][0]['id'];
