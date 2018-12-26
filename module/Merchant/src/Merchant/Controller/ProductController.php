@@ -106,58 +106,104 @@ class ProductController extends AbstractActionController {
         }
         $params = array();
         $totalNumOfProduct = count($dataArr);
-        for ($i = 0; $i < $totalNumOfProduct; $i++){
-            if($i==0){
+        for ($i = 0; $i < $totalNumOfProduct; $i++) {
+            if ($i == 0) {
                 
-            }else{
+            } else {
                 $counter = 0;
                 $index = 1;
                 $data = array();
                 $featuredBulletsDetails = array();
-                foreach($dataArr[0] as $column) {
+                foreach ($dataArr[0] as $column) {
                     $column = trim(strtolower($column));
-                    switch($column) {
+                    switch ($column) {
                         case 'product name':
-                            $data['product_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['product_name'] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'product id':
-                            $data['product_id'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['product_id'] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'category name':
-                            $data['category_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['category_name'] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'code':
-                            $data['merchant_product_code'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['merchant_product_code'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'atribute id':
-                            $data['attribute_id'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['attribute_id'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'atribute name':
-                            $data['atribute_name'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['atribute_name'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'store name':
-                            $data['store_name'] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['store_name'] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'price':
-                            $data['price'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['price'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'stock':
-                            $data['stock'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
+                            $data['stock'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
                             break;
                         case 'stoock':
-                            $data['stock'][] = !empty($dataArr[$i][$counter])?$dataArr[$i][$counter]:'';
-                            break;                        
-                           
+                            $data['stock'][] = !empty($dataArr[$i][$counter]) ? $dataArr[$i][$counter] : '';
+                            break;
+                        case 'url':
+                            if (!empty($dataArr[$i][$counter])) {
+                                
+                                $dataFromOtherSite = $this->getProductDetails($dataArr[$i][$counter], $data);
+                            }
+                            break;
                     }
                     $counter++;
                 }
+                if(!empty($dataFromOtherSite)) {
+                    $exportAsCsv[] = $dataFromOtherSite;
+                    $dataFromOtherSite = array();
+                }else{
                 $data['method'] = 'addInventryByCsv';
                 $data['merchant_id'] = $this->session['user']['data'][0]['id'];
                 $response[$data['product_name']] = json_decode($this->commonObj->curlhitApi($data));
+                }
             }
         }
-        $this->flashMessenger()->addMessage('Inventry updated :'.  json_encode($response));    
-        return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_MERCHANT_URL'].'product');
+        if(!empty($exportAsCsv)) {
+            echo "<pre>";print_r($exportAsCsv);die;
+        }
+        $this->flashMessenger()->addMessage('Inventry updated :' . json_encode($response));
+        return $this->redirect()->toUrl($GLOBALS['HTTP_SITE_MERCHANT_URL'] . 'product');
+    }
+
+    public function getProductDetails($url, $data) {
+        //error_reporting(E_ALL); ini_set('display_errors', 1);
+     // Retrieve the DOM from a given URL
+         $html = file_get_contents($url);
+     // Find all "A" tags and print their HREFs
+         //echo $html;
+        $dom = new \DOMDocument(); 
+
+        /*** load the html into the object ***/ 
+        $dom->loadHTML($html); 
+        $finder = new \Zend\Dom\DOMXPath($dom);
+        /*** discard white space ***/ 
+        $dom->preserveWhiteSpace = false;
+        $arr = array();
+        $classname="_35KyD6";
+        $nodes = $finder->query("//*[contains(@class, '$classname')]");
+        $arr['product_name'] = $nodes->item(0)->nodeValue;  
+
+        $classname="_1vC4OE _3qQ9m1";
+        $nodes = $finder->query("//*[contains(@class, '$classname')]");
+        $arr['price'] = $nodes->item(0)->nodeValue; 
+
+        $classname="VGWI6T _1iCvwn _9Z7kX3";
+        $nodes = $finder->query("//*[contains(@class, '$classname')]");
+        $arr['discount'] = $nodes->item(0)->nodeValue;  
+
+
+        $classname="fUBI-_";
+        $nodes = $finder->query("//*[contains(@class, '$classname')]");
+        $arr['size'] = $nodes->item(0)->nodeValue;     
+        return $arr;
     }
     
     public function inventryAction() {
