@@ -29,6 +29,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
         $scope.categoryData.category_name = categoryData.category_name;
         $scope.categoryData.category_des = categoryData.category_des;
         $scope.categoryData.parent_category_id = categoryData.parent_category_id;
+        $scope.categoryData.category_sequence = categoryData.category_sequence;
         $scope.id = categoryData.id;
     }
     
