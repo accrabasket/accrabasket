@@ -55,6 +55,11 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <label>Merchant Image</label>
+                                        <input type="file" id="uploadfile"  ng-model="upload_file" onchange="uploadImageInTemp(this)">
+                                        <input type="hidden" id="merchant_img">
+                                    </div>                                    
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Company Bank Name </label>
                                             <input type="text" placeholder="Company Bank Name" class="form-control"  name="name"   ng-model="marchantData.bank_name">
