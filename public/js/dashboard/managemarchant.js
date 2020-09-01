@@ -27,7 +27,9 @@ app.controller('marchantController', function ($scope, $http, $sce,$timeout, mar
 		if($scope.marchantData.name == undefined || $scope.marchantData.name == ''){
 			error = 'Please enter owner name' ;
 		}                
-                
+                 if($('#merchant_img').val() != ''){
+			$scope.marchantData.image = $('#merchant_img').val();
+		}      
                 
 		if(error == ' '){
 			$http({
