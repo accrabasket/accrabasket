@@ -28,7 +28,7 @@
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Product Des.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Commission amount</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Discount amount</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tax amount</th>
+                          th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Product Code</th>  
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Shipping address</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Product Image</th>
                         </tr>
@@ -37,6 +37,7 @@
                             <?php
                                  $csvData = array();
                                 $csvData[0]['product_name'] = 'Product Name';
+				$csvData[0]['merchant_product_code'] = 'Merchant Product Code';
                                 $csvData[0]['number_of_item'] = 'Quantity';
                                 $csvData[0]['amount'] = 'Amount';                           
                                 if(!empty($this->productDetails)){
@@ -46,6 +47,7 @@
                                             $csvData[$counter]['product_name'] = $orderitem['product_dump']['product_details']['product_name'];
                                             $csvData[$counter]['number_of_item'] = $orderitem['number_of_item'];
                                             $csvData[$counter]['amount'] = $orderitem['amount'];                                
+					    $csvData[$counter]['merchant_product_code'] = $orderitem['product_dump']['product_details']['merchant_product_code'];
                                             $imgpath = $this->productDetails['imageRootPath'].'/'.$orderitem['product_dump']['product_image_data'][0]['type'].'/'.$orderitem['product_dump']['product_details']['product_id'].'/'.$orderitem['product_dump']['product_image_data'][0]['image_name'];
 
                             ?>
@@ -62,7 +64,7 @@
                                         <td class=""><?=$orderitem['product_dump']['product_details']['product_desc']?></td>
                                         <td class=""><?=$orderitem['commission_amount']?></td>
                                         <td class=""><?=$orderitem['discount_amount']?></td>
-                                        <td class=""><?=$orderitem['tax_amount']?></td>
+                                        <td class=""><?=$orderitem['product_dump']['product_details']['merchant_product_code']?></td>
                                         <td class=""><?php $shippingAdd = $this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['house_number'].' '
                                                     .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['street_detail'].' '
                                                     .$this->productDetails['shipping_address_list'][$value['order_details']['shipping_address_id']]['area'].' '
@@ -106,7 +108,7 @@ function download_csv() {
     csv = 'Order Id :- ,'+"<?=$value['order_details']['order_id']?>"+"\n";
     csv += 'Shiping Address :- ,'+"<?=$shippingAdd?>"+"\n";
     data.forEach(function(row) {
-            csv += row.product_name+','+row.number_of_item+","+row.amount;
+            csv += row.product_name+','+row.merchant_product_code+','+row.number_of_item+","+row.amount;
             csv += "\n";
     });
     csv += "\n";
