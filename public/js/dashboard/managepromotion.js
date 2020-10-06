@@ -35,7 +35,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
     
     getCategory();
     
-    $scope.savecategory = function (categoryData) {
+    $scope.savepromotion = function (categoryData) {
 		var error = ' ';
 		if(categoryData.category_name == undefined || categoryData.category_name == ''){
 			error = 'Please enter Category name' ;
@@ -52,7 +52,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
 			$http({
 				method: 'POST',
 				data : ObjecttoParams(categoryData),
-				url: serverAdminApp + 'dashboard/savecategory',
+				url: serverAdminApp + 'dashboard/savepromotion',
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			}).success(function (response) {
 				if (response.status == 'success') {
