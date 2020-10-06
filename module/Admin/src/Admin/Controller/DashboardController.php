@@ -186,6 +186,18 @@ class DashboardController extends AbstractActionController {
         echo $saveCategory;
         exit;
     }
+	
+    public function savepromotionAction() {
+        $request = (array) $this->getRequest()->getPost();
+        $request['method'] = 'addEditPromotion';
+        $saveCategory = $this->commonObj->curlhitApi($request);
+        $response = json_decode($saveCategory, true);
+        if ($response['status'] == 'success') {
+            $this->flashMessenger()->addMessage($response['msg']);
+        }
+        echo $saveCategory;
+        exit;
+    }	
 
     public function managecategoryAction() {
         $request = array();
