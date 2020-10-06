@@ -53,6 +53,8 @@ class ProductController extends AbstractActionController {
     header("Content-Transfer-Encoding: binary");        
         $data = json_decode($data, true);
         //$csvData = '';
+	$inventoryDetails =  array_values($data['inventry_detail']);
+	$inventoryDetail = $inventoryDetails[0];
         if(!empty($data['data'])) {
             $data = $data['data'];
             $counter = 0;
@@ -69,13 +71,16 @@ class ProductController extends AbstractActionController {
             foreach($data as $row) {
                 if(!empty($row['atribute'])) {
                     foreach ($row['atribute'] as $key => $value) {
+
                         $csvData[$counter][]= $row['id'];
                         $csvData[$counter][] = $row['product_name'];
                         $csvData[$counter][] = $row['category_name'];
                         $csvData[$counter][] = $value['name'];
                         $csvData[$counter][] = $value['id'];
                         $csvData[$counter][] = $value['quantity'].' '.$value['unit'];
-
+			$csvData[$counter][] = '';
+			 $csvData[$counter][]= $inventoryDetail[$value['id']]['price'];
+	            	$csvData[$counter][]= $inventoryDetail[$value['id']]['stock'];
                         $counter++;
                     }
                 }

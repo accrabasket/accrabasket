@@ -25,8 +25,9 @@ class common{
         $data['parameters'] = $queryStr;
         $data['rqid'] = $this->genrateRqid($data['parameters']);
         $url = BASKET_API.$module.'/'.$controller;
-        $parametes = http_build_query($data);        
-//        echo $url = $url.'?'.$parametes;die;
+        $parametes = http_build_query($data); 
+      /* if($params['method'] == 'getcustomersaledetail')      
+{        echo $url = $url.'?'.$parametes;die;}*/
         return $this->cObj->callPostCurl($url, $parametes);
     }
     

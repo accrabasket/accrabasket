@@ -1,0 +1,76 @@
+<div class="content-wrapper" ng-app="app" ng-controller="managecategory"  ng-cloak="true">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1> Add Category</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manage Promotion</a></li>
+            <li class="active"> Add Promotion</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <p class="danger" style="color:red" ng-show="errorShow">{{errorMsg}}</p>
+                        <p class="danger" style="color:green" ng-show="successShow">{{successMsg}}</p>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="box-header">
+                                    <h3 class="box-title"> Add Promotion</h3>
+                                    <p>Lorem ipsum is a dummy text</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Promotion Name</label>
+                                            <input type="text" placeholder="Promotion Name" class="form-control"  name="name"   ng-model="categoryData.category_name">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Value</label>
+                                            <input type="text" class="form-control" name="description" ng-model="categoryData.category_des">
+                                            <!-- /.input group -->
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <label>Promotion Image</label>
+                                        <input type="file" id="uploadfile"  ng-model="upload_file" onchange="uploadImageInTemp(this)">
+                                        <input type="hidden" id="cat_img">
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Promotion Sequence</label>
+                                            <input type="text" placeholder="Category Name" class="form-control"  name="name"   ng-model="categoryData.category_sequence">
+                                        </div>
+                                    </div>                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <a href="<?php echo $this->basePath() ?>/admin/dashboard/managecategory" class="btn btn-info"> Cancel</a>
+                            <button class="btn btn-info" ng-click="savecategory(categoryData)">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<script src="<?php echo $this->basePath() . '/public/js/dashboard/managecategory.js' ?>">
+</script>
+<script>
+    
+    app.value('categoryData', '<?php echo !empty($this->categoryList)?json_encode($this->categoryList):'';?>');
+</script>

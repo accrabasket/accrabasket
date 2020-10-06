@@ -149,10 +149,12 @@ class DashboardController extends AbstractActionController {
         $request['method'] = 'getMarchantList';
         $getMarchantList = $this->commonObj->curlhitApi($request);
         $getMarchantList = json_decode($getMarchantList, true);
+	
         if (!empty($getMarchantList['data'])) {
             $this->view->marchantList = $getMarchantList['data'];
             $this->view->marchantListImg = $getMarchantList['images'];
         }
+//print_r($getMarchantList);die;
         return $this->view;
     }
 
@@ -193,6 +195,34 @@ class DashboardController extends AbstractActionController {
         if (!empty($getMarchantList['data'])) {
             $this->view->categoryList = $getMarchantList['data'];
         }
+        return $this->view;
+    }
+
+    public function managepromotionAction() {
+        $request = array();
+        $request['method'] = 'promotionList';
+        $getMarchantList = $this->commonObj->curlhitApi($request);
+        $getMarchantList = json_decode($getMarchantList, true);
+        if (!empty($getMarchantList['data'])) {
+            $this->view->categoryList = $getMarchantList['data'];
+        }
+        return $this->view;
+    }
+
+    public function addpromotionAction() {
+        $request = (array) $this->getRequest()->getQuery();
+        if (!empty($request)) {
+            $request['method'] = 'promotionList';
+            $categoryList = $this->commonObj->curlhitApi($request);
+            $categoryList = json_decode($categoryList, true);
+            if (!empty($categoryList['data'])) {
+                foreach ($categoryList['data'] as $key => $value) {
+                    $data = $value;
+                }
+                $this->view->categoryList = $data;
+            }
+        }
+
         return $this->view;
     }
 
