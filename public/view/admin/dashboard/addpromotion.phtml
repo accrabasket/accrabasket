@@ -31,11 +31,19 @@
                                             <input type="text" placeholder="Promotion Name" class="form-control"  name="name"   ng-model="categoryData.category_name">
                                         </div>
                                     </div>
-                                   
+                                   <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <select name="type" ng-model="categoryData.value">
+                                                <option value="percent"> Percentage</option>
+                                                <option value="flat"> Flat</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label>Value</label>
-                                            <input type="text" class="form-control" name="description" ng-model="categoryData.category_des">
+                                            <input type="text" class="form-control" name="description" ng-model="categoryData.value">
                                             <!-- /.input group -->
                                         </div>
                                     </div>
