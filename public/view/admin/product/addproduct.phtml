@@ -306,6 +306,18 @@
                                                     <input type="text"  name="attribute_discount_value[]"  placeholder="value " class="form-control" >
                                                 </div>
                                             </div>
+<!--start promotion-->
+                                                                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control select2" style="width: 100%;" id="category_id" name="category_id" ng-model="productData.category_id">
+                                                <option selected="selected" value="">select category</option>
+                                                <option ng-repeat="data in categoryList" ng-selected="data.id ==<?=$this->productList['category_id']?>" value="{{data.id}}">{{data.category_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+<!--end-->                                            
+                                            
                                         </div>
                                         <div class="clearfix border-top">&nbsp;</div>
                                     </div>
