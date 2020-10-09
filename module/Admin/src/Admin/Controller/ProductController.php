@@ -71,6 +71,13 @@ class ProductController extends AbstractActionController {
         echo $getMarchantList;
         exit;
     }
+    public function getPromotionListAction() {
+        $postParams = (array) $this->getRequest()->getPost();
+        $postParams['method'] = 'promotionList';
+        $getMarchantList = $this->commonObj->curlhitApi($postParams);
+        echo $getMarchantList;
+        exit;
+    }
     public function importcsvAction() {
         return $this->view;
     }
