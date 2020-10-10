@@ -44,9 +44,9 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
             data : ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
-            $scope.categoryList = {};
+            $scope.promotionList = {};
             if(response.status == 'success'){
-                $scope.categoryList = response.data;
+                $scope.promotionList = response.data;
             }
         });
     }    
