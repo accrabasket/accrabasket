@@ -10,7 +10,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
         filter.categoryHavingNoProduct = 1;
         $http({
             method: 'POST',
-            url: serverAdminApp + 'dashboard/getCategoryList',
+            url: serverAdminApp + 'dashboard/getPromotionList',
             data : ObjecttoParams(filter),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         }).success(function (response) {
@@ -26,10 +26,10 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
     
     if(categoryData != ''){
         var categoryData = jQuery.parseJSON(categoryData);
-        $scope.categoryData.category_name = categoryData.category_name;
-        $scope.categoryData.category_des = categoryData.category_des;
-        $scope.categoryData.parent_category_id = categoryData.parent_category_id;
-        $scope.categoryData.category_sequence = categoryData.category_sequence;
+        $scope.categoryData.promotion_name = categoryData.promotion_name;
+        $scope.categoryData.type = categoryData.type;
+        $scope.categoryData.value = categoryData.value;
+        $scope.categoryData.promotion_sequence = categoryData.promotion_sequence;
         $scope.id = categoryData.id;
     }
     
@@ -37,7 +37,7 @@ app.controller('managecategory', function ($scope, $http, $sce,$timeout, categor
     
     $scope.savepromotion = function (categoryData) {
 		var error = ' ';
-		if(categoryData.category_name == undefined || categoryData.category_name == ''){
+		if(categoryData.promotion_name == undefined || categoryData.promotion_name == ''){
 			error = 'Please enter Category name' ;
 		}
 		if($scope.id != ''){
