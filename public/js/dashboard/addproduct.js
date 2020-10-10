@@ -35,6 +35,22 @@ app.controller('productController', function ($scope, $http, $sce,$timeout,produ
         $scope.index++;
         ($scope.indexVal).push(a);
     }
+    function getPromotion() {
+        var filter = {};
+        filter.categoryHavingNoChild = 1;        
+        $http({
+            method: 'POST',
+            url: serverAdminApp + 'product/getPromotionList',
+            data : ObjecttoParams(filter),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }).success(function (response) {
+            $scope.categoryList = {};
+            if(response.status == 'success'){
+                $scope.categoryList = response.data;
+            }
+        });
+    }    
+    getPromotion();
     
     function getCategory() {
         var filter = {};
