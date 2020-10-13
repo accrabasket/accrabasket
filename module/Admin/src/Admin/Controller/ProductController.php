@@ -217,7 +217,7 @@ class ProductController extends AbstractActionController {
     public function saveproductAction() {
         $saveCategory = array();
         $request = (array)$this->getRequest()->getPost();
-        
+      
         if(!empty($request)){
             $attribute = array();
             if (!empty($request['attribute_name'])) {
@@ -253,6 +253,7 @@ class ProductController extends AbstractActionController {
            $product['brand_name'] = $request['brand_name'];
            $product['nutrition'] = $request['nutrition'];
            $product['category_id'] = $request['category_id'];
+           $product['promotion_id'] = $request['promotion_id'];
            $product['item_code'] = $request['item_code'];
            $product['hotdeals'] = !empty($request['hotdeals'])?$request['hotdeals']:0;
            $product['offers'] = !empty($request['offers'])?$request['offers']:0;
