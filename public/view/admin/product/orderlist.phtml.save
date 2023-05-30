@@ -96,32 +96,36 @@
                                 <div class="col-sm-6"></div>
                             </div>
                             <div class="row">
-                                    <table id="example2" class="orderlist">
-                                            <tr>
-                                                <th>Order id</th>
-                                                <th >User Name</th>
-                                                <th>Shipping Address</th>
-                                                <th>Merchant Details</th>
-                                                <th>Commission amount</th>
-                                                <th>Amount</th>
-                                                <th>Order status</th>
-                                                <th>Payment status</th>
-                                                <th ng-if="filter.order_status != 'order_placed'">Rider Info</th>
-                                                <th>Action</th>
-                                                <th>Delivery Date Time &nbsp;
-                                                <th>Order Date &nbsp;
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover dataTable" id="example2" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Order id</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">User Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Shipping Address</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Merchant Details</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Commission amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Amount</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Order status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Payment status</th>
+                                                <th class="sorting" tabindex="0" rowspan="1" ng-if="filter.order_status != 'order_placed'">Rider Info</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                <th class="sorting" tabindex="0" rowspan="1">Delivery Date Time &nbsp;
+                                                <th class="sorting" tabindex="0" rowspan="1">Order Date &nbsp;
                                                     <a href="#" ng-click="shortByDate('asc')"><i class="fa fa-sort-desc" aria-hidden="true"></i></a>
                                                     &nbsp;|&nbsp;&nbsp;
                                                     <a href="#" ng-click="shortByDate('desc')"><i class="fa fa-sort-asc" aria-hidden="true"></i></a>
                                                 </th>
                                             </tr>
-                                            <tr class="odd" ng-repeat="data in orderList">
-                                                <td><i class="fa fa-close red"></i> &nbsp;{{data.order_details.order_id}}</td>
-                                                <td class="">{{user_details[data.order_details.user_id].name}}<br/>Ph-{{user_details[data.order_details.user_id].mobile_number}}<br/>Email-{{user_details[data.order_details.user_id].email}}</td>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="odd" ng-repeat="data in orderList">
+                                                <td class=""><i class="fa fa-close red"></i> &nbsp;{{data.order_details.order_id}}</td>
+                                                <td class="">{{user_details[data.order_details.user_id].name}}</td>
                                                 <td class="">{{shipping_address_list[data.order_details.shipping_address_id].address_nickname}}
                                                 {{shipping_address_list[data.order_details.shipping_address_id].house_number}}
                                                 {{shipping_address_list[data.order_details.shipping_address_id].city}}</td>
-                                                <td class=""> {{merchantListByIds[data.order_details.merchant_id].first_name}}</td>
+                                                <td class="">{{}}{{merchantListByIds[data.order_details.merchant_id].first_name}}</td>
                                                 <td class="">{{data.order_details.commission_amount}}</td>
                                                 <td>{{data.order_details.payable_amount}}</td>
                                                 <td>{{data.order_details.order_status|underscoreless}}</td>
@@ -143,32 +147,12 @@
                                                 <td>{{data.order_details.delivery_date}} <br/>Time Slot:{{time_slot_list[data.order_details.time_slot_id].start_time_slot}}-{{time_slot_list[data.order_details.time_slot_id].end_time_slot}}</td>
                                                 <td>{{data.order_details.created_date}}</td>
                                             </tr>
+                                            
+                                        </tbody>
 
                                     </table>
-                                    <table width="100%" class="hideforlg">
-                                    	<tr>
-		                            	<th width="33%"> Order id</th>
-		                            	<th width="33%"> User Name</th> 
-		                            	<th width="33%"> Action</th>                                  	                                    	
-                                    	</tr>
-                                    	<tr class="odd" ng-repeat="data in orderList">
-                                                <td>{{data.order_details.order_id}}</td>
-                                                <td class="">{{user_details[data.order_details.user_id].name}}<br/>Ph-{{user_details[data.order_details.user_id].mobile_number}}<br/></td>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php echo $this->basePath()?>/admin/product/orderdetails?order_id={{data.order_details.order_id}}">Order Details</a>
-                                                    &nbsp; | &nbsp;
-                                                    <a ng-show="{{data.order_details.order_status == 'order_placed'|| data.order_details.order_status == 'ready_to_dispatch' || data.order_details.order_status == 'assigned_to_rider'}}" ng-click="fetchRiders(data.order_details.store_id, data.order_details.order_id)" href="javascript:void(0)" data-toggle="modal" data-target="#assignRiderModal"> 
-                                                        <span ng-if="data.order_details.order_status == 'assigned_to_rider'"> Reassign Order</span>
-                                                        <span ng-if="data.order_details.order_status != 'assigned_to_rider'">  Assign Rider</span>
-                                                    </a>
-                                                    <a style="cursor:pointer" ng-show="data.order_details.order_status == 'completed' && data.order_details.payment_status=='unpaid' " ng-click="cashCollected(data.order_details.order_id)"> Cash Collected </a>
-                                                    
-                                                </td>
-                                    	</tr>
-                                    </table>
+                                </div>
                             </div>
-                            
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Total {{numberOfRecord}} entries</div>
@@ -234,19 +218,3 @@ $(document).ready(function(){
 });
   
 </script>
-
-<style>
-
-
-@media screen and (max-width: 480px) {
-  table.orderlist {
-   display:none;
-  }
-}
-@media screen and (min-width: 480px) {
-  table.hideforlg {
-   display:none;
-  }
-}
-
-</style>
